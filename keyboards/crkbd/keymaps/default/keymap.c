@@ -1,9 +1,11 @@
 #include QMK_KEYBOARD_H
 
-
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
+#endif
+#ifdef SSD1306OLED
+#    include "ssd1306.h"
 #endif
 
 extern uint8_t is_master;
