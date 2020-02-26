@@ -48,6 +48,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 17
 #define RGBLIGHT_VAL_STEP 17
 
+#define RGBLIGHT_SPLIT
+#define RGBLED_SPLIT { 1, 1 }
+
 // Underglow
 /*
 #undef RGBLED_NUM
