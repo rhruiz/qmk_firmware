@@ -28,9 +28,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 #define EE_HANDS
 
-#define SSD1306OLED
-
 #define USE_SERIAL_PD2
+
+#ifdef OLED_FONT_H
+#  undef OLED_FONT_H
+#endif
+
+#define OLED_FONT_H "rhruiz_glcdfont_lily.c"
 
 #define TAPPING_FORCE_HOLD
 #undef TAPPING_TERM
@@ -54,6 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // bootloader
 
+#undef BOOTLOADER_CATERINA
 #define QMK_ESC_OUTPUT F6 // usually COL
 #define QMK_ESC_INPUT C6 // usually ROW
 #define QMK_LED D5

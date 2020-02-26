@@ -15,6 +15,7 @@ UNICODE_ENABLE = no         # Unicode
 BLUETOOTH_ENABLE = no       # Enable Bluetooth with the Adafruit EZ-Key HID
 RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
+OLED_DRIVER_ENABLE= yes      # OLED display
 RAW_ENABLE = yes
 LINK_TIME_OPTIMIZATION_ENABLE = yes
 BOOTLOADER = qmk-dfu
@@ -23,8 +24,7 @@ BOOTLOADER = qmk-dfu
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 # If you want to change the display of OLED, you need to change here
-SRC +=  ./lib/glcdfont.c \
-        ./lib/logo_reader.c \
+SRC +=  ./lib/logo_reader.c \
         ./lib/mode_icon_reader.c \
         # ./lib/rgb_state_reader.c \
         # ./lib/host_led_state_reader.c \
