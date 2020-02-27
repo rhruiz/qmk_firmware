@@ -35,6 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define OLED_FONT_H "rhruiz_glcdfont_lily.c"
+#define OLED_SCROLL_TIMEOUT 500
+#define OLED_SCROLL_TIMEOUT_RIGHT
 
 #define TAPPING_FORCE_HOLD
 #undef TAPPING_TERM
