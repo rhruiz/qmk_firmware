@@ -2,11 +2,6 @@
 #include "rhruiz.h"
 #include "rhruiz_kc_keys.h"
 
-#ifdef PROTOCOL_LUFA
-  #include "lufa.h"
-  #include "split_util.h"
-#endif
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BL] = LAYOUT_kc(
 // .-----+-----+-----+-----+-----+-----.                .-----+-----+-----+-----+-----+-----.
@@ -136,9 +131,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef OLED_DRIVER_ENABLE
 
+extern volatile bool isLeftHand;
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  if (!isLeftHand) {
+      return OLED_ROTATION_180;
+  }
   return rotation;
 }
 
@@ -174,7 +172,7 @@ void oled_task_user(void) {
   if (is_keyboard_master()) {
     rhruiz_render_logo_and_layer();
   } else {
-    oled_write_ln(read_logo(), false);
+    rhruiz_render_logo_and_layer();
   }
 }
 
