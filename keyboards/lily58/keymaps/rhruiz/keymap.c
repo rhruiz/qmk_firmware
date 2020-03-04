@@ -147,17 +147,16 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 // void set_timelog(void);
 // const char *read_timelog(void);
 
-static const char lc[][3][3] = {
-    [_BL] = { { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 } },
-    [_FN1] = { { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc0, 0xc1, 0 } },
-    [_FN2] = { { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc2, 0xc3, 0 } },
-    [_CFG] = { { 0x20, 0x20, 0 }, { 0xa4, 0xa5, 0 }, { 0xc4, 0xc5, 0 } },
-    [_NUM] = { { 0x20, 0x20, 0 }, { 0x82, 0x83, 0 }, { 0xa2, 0xa3, 0 } },
+static const char lc[][4][3] = {
+    [_BL] = { { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 } },
+    [_FN1] = { { 0x11, 0x11, 0 }, { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc0, 0xc1, 0 } },
+    [_FN2] = { { 0x10, 0x10, 0 }, { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc2, 0xc3, 0 } },
+    [_CFG] = { { 0x20, 0x20, 0 }, { 0xa4, 0xa5, 0 }, { 0xc4, 0xc5, 0 }, { 0x20, 0x20, 0 } },
+    [_NUM] = { { 0x20, 0x20, 0 }, { 0x82, 0x83, 0 }, { 0xa2, 0xa3, 0 }, { 0x20, 0x20, 0 } },
 };
 
 void rhruiz_render_oled(void) {
     layer_state_t layer = biton32(layer_state);
-    oled_write_ln(" ", false);
 
     oled_write("           ", false);
     oled_write_ln(lc[layer][0], false);
@@ -167,6 +166,9 @@ void rhruiz_render_oled(void) {
 
     oled_write("           ", false);
     oled_write_ln(lc[layer][2], false);
+
+    oled_write("           ", false);
+    oled_write_ln(lc[layer][3], false);
 }
 
 void rhruiz_render_logo_and_layer(void) {
