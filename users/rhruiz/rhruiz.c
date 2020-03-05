@@ -96,6 +96,7 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
 
     if (state != last_state) {
         state = update_tri_layer_state(state, _FN1, _FN2, _CFG);
+        state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
 
         switch (biton32(state)) {
             case _BL:
