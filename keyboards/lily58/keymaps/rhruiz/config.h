@@ -24,53 +24,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* Select hand configuration */
 
-// #define MASTER_LEFT
-// #define MASTER_RIGHT
 #define EE_HANDS
 
 #define USE_SERIAL_PD2
 
 #ifdef OLED_FONT_H
-#  undef OLED_FONT_H
+#    undef OLED_FONT_H
 #endif
 
 #define OLED_FONT_H "rhruiz_glcdfont_lily.c"
-#define OLED_SCROLL_TIMEOUT 5000
-#define OLED_SCROLL_TIMEOUT_RIGHT
-
 
 #define TAPPING_FORCE_HOLD
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
 
-#undef RGBLED_NUM
-#define RGBLIGHT_ANIMATIONS
-#define RGBLED_NUM 128
-#define RGBLIGHT_LIMIT_VAL 120
-#define RGBLIGHT_HUE_STEP 10
-#define RGBLIGHT_SAT_STEP 17
-#define RGBLIGHT_VAL_STEP 17
+#ifdef RGB_LIGHT_ENABLE
+#    undef RGBLED_NUM
+#    define RGBLIGHT_ANIMATIONS
+#    define RGBLED_NUM 128
+#    define RGBLIGHT_LIMIT_VAL 120
+#    define RGBLIGHT_HUE_STEP 10
+#    define RGBLIGHT_SAT_STEP 17
+#    define RGBLIGHT_VAL_STEP 17
 
-#define RGBLIGHT_SPLIT
-#define RGBLED_SPLIT { 64, 64 }
-
-// Underglow
-/*
-#undef RGBLED_NUM
-#define RGBLED_NUM 14    // Number of LEDs
-#define RGBLIGHT_ANIMATIONS
-#define RGBLIGHT_SLEEP
-*/
+#    define RGBLIGHT_SPLIT
+#    define RGBLED_SPLIT \
+        { 64, 64 }
+#endif
 
 // bootloader
 
 #undef BOOTLOADER_CATERINA
-#define QMK_ESC_OUTPUT F6 // usually COL
-#define QMK_ESC_INPUT C6 // usually ROW
+#define QMK_ESC_OUTPUT F6  // usually COL
+#define QMK_ESC_INPUT C6   // usually ROW
 #define QMK_LED D5
 #define QMK_SPEAKER B0
 
 // lazy lauout
+// clang-format off
 #define LAYOUT_kc( \
   L00, L01, L02, L03, L04, L05,           R00, R01, R02, R03, R04, R05, \
   L10, L11, L12, L13, L14, L15,           R10, R11, R12, R13, R14, R15, \

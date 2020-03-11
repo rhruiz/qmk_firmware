@@ -4,6 +4,12 @@
 
 #define KC__GFN1 MO(_GAMEFN1)
 
+#ifdef OLED_DRIVER_ENABLE
+static uint32_t      oled_timer = 0;
+extern volatile bool isLeftHand;
+#endif
+
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BL] = LAYOUT_kc(
 // .-----+-----+-----+-----+-----+-----.                .-----+-----+-----+-----+-----+-----.
@@ -158,31 +164,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //                `-----+-----+----'/-----/          \-----\'----+-----+-----'
 */
 };
+// clang-format on
 
 #ifdef OLED_DRIVER_ENABLE
 
-extern volatile bool isLeftHand;
+oled_rotation_t oled_init_user(oled_rotation_t rotation) { return rotation; }
 
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  return rotation;
-}
-
-// When add source files to SRC in rules.mk, you can use functions.
-// const char *read_logo(void);
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
+// clang-format off
 static const char lc[][4][3] = {
-    [_BL] = { { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 }, { 0x20, 0x20, 0 } },
-    [_FN1] = { { 0x11, 0x11, 0 }, { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc0, 0xc1, 0 } },
-    [_FN2] = { { 0x10, 0x10, 0 }, { 0x80, 0x81, 0 }, { 0xa0, 0xa1, 0 }, { 0xc2, 0xc3, 0 } },
-    [_CFG] = { { 0x20, 0x20, 0 }, { 0xa4, 0xa5, 0 }, { 0xc4, 0xc5, 0 }, { 0x20, 0x20, 0 } },
-    [_NUM] = { { 0x20, 0x20, 0 }, { 0x82, 0x83, 0 }, { 0x20, 0x20, 0 }, { 0xa2, 0xa3, 0 } },
-    [_GAME] = { { 0x20, 0x20, 0 }, { 0xb0, 0xb1, 0 }, { 0xd0, 0xd1, 0 }, { 0x20, 0x20, 0 } },
-    [_GAMEFN1] = { { 0x20, 0x20, 0 }, { 0xb0, 0xb1, 0 }, { 0xd0, 0xd1, 0 }, { 0xc0, 0xc1, 0 } },
+    [_BL]      = {{0x20, 0x20, 0}, {0x20, 0x20, 0}, {0x20, 0x20, 0}, {0x20, 0x20, 0}},
+    [_FN1]     = {{0x11, 0x11, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}, {0xc0, 0xc1, 0}},
+    [_FN2]     = {{0x10, 0x10, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}, {0xc2, 0xc3, 0}},
+    [_CFG]     = {{0x20, 0x20, 0}, {0xa4, 0xa5, 0}, {0xc4, 0xc5, 0}, {0x20, 0x20, 0}},
+    [_NUM]     = {{0x20, 0x20, 0}, {0x82, 0x83, 0}, {0x20, 0x20, 0}, {0xa2, 0xa3, 0}},
+    [_GAME]    = {{0x20, 0x20, 0}, {0xb0, 0xb1, 0}, {0xd0, 0xd1, 0}, {0x20, 0x20, 0}},
+    [_GAMEFN1] = {{0x20, 0x20, 0}, {0xb0, 0xb1, 0}, {0xd0, 0xd1, 0}, {0xc0, 0xc1, 0}},
 };
+// clang-format on
 
 void rhruiz_render_oled(void) {
     layer_state_t layer = biton32(layer_state);
@@ -203,21 +201,40 @@ void rhruiz_render_oled(void) {
 void rhruiz_render_logo_and_layer(void) {
     layer_state_t layer = biton32(layer_state);
 
-    const char logo1[] = { 0x20, 0x20, 0x20, 0x9e, 0x20, 0x20, 0x20, 0x20, 0x88, 0x20, 0x20, 0x20, 0x20, 0x20, 0x16, 0x20, 0x20, 0x20, lc[layer][0][0], lc[layer][0][1], 0 };
-    const char logo2[] = { 0x20, 0x20, 0xbd, 0xbe, 0xbf, 0x20, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xc9, 0xae, 0xaf, 0x20, lc[layer][1][0], lc[layer][1][1], 0 };
-    const char logo3[] = { 0x20, 0x20, 0xdd, 0xde, 0xdf, 0x20, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xc9, 0xce, 0xcf, 0x20, lc[layer][2][0], lc[layer][2][1], 0 };
+    const char logo_line_1[] = {0x20, 0x20, 0x20, 0x9e, 0x20, 0x20, 0x20, 0x20, 0x88, 0x20, 0x20, 0x20, 0x20, 0x20, 0x16, 0x20, 0x20, 0x20, lc[layer][0][0], lc[layer][0][1], 0};
+    const char logo_line_2[] = {0x20, 0x20, 0xbd, 0xbe, 0xbf, 0x20, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xc9, 0xae, 0xaf, 0x20, lc[layer][1][0], lc[layer][1][1], 0};
+    const char logo_line_3[] = {0x20, 0x20, 0xdd, 0xde, 0xdf, 0x20, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xc9, 0xce, 0xcf, 0x20, lc[layer][2][0], lc[layer][2][1], 0};
 
-    oled_write_ln(logo1, false);
-    oled_write_ln(logo2, false);
-    oled_write_ln(logo3, false);
+    oled_write_ln(logo_line_1, false);
+    oled_write_ln(logo_line_2, false);
+    oled_write_ln(logo_line_3, false);
 }
 
 void oled_task_user(void) {
-  if (is_keyboard_master()) {
-    rhruiz_render_oled();
-  } else {
-    rhruiz_render_logo_and_layer();
-  }
+    if (is_keyboard_master()) {
+        if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
+            oled_off();
+            return;
+        } else {
+            oled_on();
+        }
+
+        rhruiz_render_oled();
+    } else {
+        rhruiz_render_logo_and_layer();
+        oled_scroll_right();
+    }
 }
 
+void suspend_power_down_user(void) { oled_off(); }
+
+void suspend_wakeup_init_user(void) { oled_on(); }
+
 #endif
+
+bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
+#ifdef OLED_DRIVER_ENABLE
+    oled_timer = timer_read32();
+#endif
+    return true;
+}
