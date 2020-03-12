@@ -60,6 +60,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define QMK_LED D5
 #define QMK_SPEAKER B0
 
+// bootmagic
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 1
+
 // lazy lauout
 // clang-format off
 #define LAYOUT_kc( \
