@@ -173,29 +173,51 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return rotation; }
 // clang-format off
 static const char lc[][4][3] = {
     [_BL]      = {{0x20, 0x20, 0}, {0x20, 0x20, 0}, {0x20, 0x20, 0}, {0x20, 0x20, 0}},
-    [_FN1]     = {{0x11, 0x11, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}, {0xc0, 0xc1, 0}},
-    [_FN2]     = {{0x10, 0x10, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}, {0xc2, 0xc3, 0}},
+    [_FN1]     = {{0xb2, 0xb3, 0}, {0x92, 0x93, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}},
+    [_FN2]     = {{0x92, 0x93, 0}, {0xb2, 0xb3, 0}, {0x80, 0x81, 0}, {0xa0, 0xa1, 0}},
     [_CFG]     = {{0x20, 0x20, 0}, {0xa4, 0xa5, 0}, {0xc4, 0xc5, 0}, {0x20, 0x20, 0}},
-    [_NUM]     = {{0x20, 0x20, 0}, {0x82, 0x83, 0}, {0x20, 0x20, 0}, {0xa2, 0xa3, 0}},
+    [_NUM]     = {{0xae, 0xaf, 0}, {0xce, 0xcf, 0}, {0x20, 0x20, 0}, {0xd2, 0xd3, 0}},
     [_GAME]    = {{0x20, 0x20, 0}, {0xb0, 0xb1, 0}, {0xd0, 0xd1, 0}, {0x20, 0x20, 0}},
-    [_GAMEFN1] = {{0x20, 0x20, 0}, {0xb0, 0xb1, 0}, {0xd0, 0xd1, 0}, {0xc0, 0xc1, 0}},
+    [_GAMEFN1] = {{0x20, 0x20, 0}, {0xb0, 0xb1, 0}, {0xd0, 0xd1, 0}, {0x11, 0x11, 0}},
 };
 // clang-format on
 
 void rhruiz_render_oled(void) {
     layer_state_t layer = biton32(layer_state);
 
-    oled_write("           ", false);
-    oled_write_ln(lc[layer][0], false);
+    switch(layer) {
+        case _FN1:
+        case _FN2:
+            oled_write("\n", false);
 
-    oled_write("           ", false);
-    oled_write_ln(lc[layer][1], false);
+            oled_write("        ", false);
+            oled_write(lc[layer][0], false);
+            oled_write(lc[layer][0], false);
+            oled_write_ln(lc[layer][0], false);
 
-    oled_write("           ", false);
-    oled_write_ln(lc[layer][2], false);
+            oled_write("        ", false);
+            oled_write(lc[layer][1], false);
+            oled_write(lc[layer][1], false);
+            oled_write_ln(lc[layer][1], false);
+            break;
 
-    oled_write("           ", false);
-    oled_write_ln(lc[layer][3], false);
+        case _GAME:
+        case _CFG:
+        case _GAMEFN1:
+        default:
+            oled_write("           ", false);
+            oled_write_ln(lc[layer][0], false);
+
+            oled_write("           ", false);
+            oled_write_ln(lc[layer][1], false);
+
+            oled_write("           ", false);
+            oled_write_ln(lc[layer][2], false);
+
+            oled_write("           ", false);
+            oled_write_ln(lc[layer][3], false);
+            break;
+    }
 }
 
 void rhruiz_render_logo_and_layer(void) {
