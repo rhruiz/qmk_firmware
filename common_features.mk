@@ -482,6 +482,10 @@ ifeq ($(strip $(SPLIT_KEYBOARD)), yes)
         else
             QUANTUM_LIB_SRC += serial_$(strip $(SERIAL_DRIVER)).c
         endif
+
+        ifeq ($(strip $(SPLIT_TRANSPORT)), mirror)
+            OPT_DEFS += -DSPLIT_TRANSPORT_MIRROR
+        endif
     endif
     COMMON_VPATH += $(QUANTUM_PATH)/split_common
 endif
