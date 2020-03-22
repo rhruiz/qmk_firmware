@@ -35,6 +35,8 @@ ifneq ($(strip $(BOOTMAGIC_ENABLE)), no)
   endif
   ifeq ($(strip $(BOOTMAGIC_ENABLE)), lite)
       TMK_COMMON_DEFS += -DBOOTMAGIC_LITE
+      TMK_COMMON_SRC += $(COMMON_DIR)/bootmagic_lite.c
+
       TMK_COMMON_DEFS += -DMAGIC_ENABLE
       TMK_COMMON_SRC += $(COMMON_DIR)/magic.c
   else
@@ -163,11 +165,6 @@ ifeq ($(strip $(LINK_TIME_OPTIMIZATION_ENABLE)), yes)
     TMK_COMMON_DEFS += -DLINK_TIME_OPTIMIZATION_ENABLE
     TMK_COMMON_DEFS += -DNO_ACTION_MACRO
     TMK_COMMON_DEFS += -DNO_ACTION_FUNCTION
-endif
-
-# Bootloader address
-ifdef STM32_BOOTLOADER_ADDRESS
-    TMK_COMMON_DEFS += -DSTM32_BOOTLOADER_ADDRESS=$(STM32_BOOTLOADER_ADDRESS)
 endif
 
 # Search Path
