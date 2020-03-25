@@ -98,7 +98,7 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
 
 #    ifdef WPM_ENABLE
     uint8_t current_wpm = get_current_wpm();
-    if(current_wpm != i2c_buffer->current_wpm) {
+    if (current_wpm != i2c_buffer->current_wpm) {
         if (i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_WPM_START, (void *)&current_wpm, sizeof(current_wpm), TIMEOUT) >= 0) {
             i2c_buffer->current_wpm = current_wpm;
         }
@@ -306,7 +306,7 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
 #    endif
 
 #    ifdef WPM_ENABLE
-     set_current_wpm(serial_m2s_buffer.current_wpm);
+    set_current_wpm(serial_m2s_buffer.current_wpm);
 #    endif
 }
 
