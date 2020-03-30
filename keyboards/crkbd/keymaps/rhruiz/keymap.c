@@ -7,8 +7,6 @@ extern uint8_t is_master;
 static uint32_t oled_timer = 0;
 #endif
 
-#define KC_AFN2 LALT_T(KC_BSPC)
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BL] = LAYOUT_kc(
@@ -19,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
       LSFT,  Z  ,  X  ,  C  ,  V  ,  B  ,                       N  ,  M  , COMM, DOT , SLSH, RSFT,
   //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
-                              LGUI, _FN1, SPC ,    ENT , _FN2, AFN2
+                              LGUI, _FN1, SPC ,    ENT , _FN2, ALBS
                           //`-----------------'  `-----------------'
   ),
 
