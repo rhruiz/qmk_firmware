@@ -50,6 +50,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGBLIGHT_VAL_STEP 17
 #endif
 
+// bootmagic
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 1
+
 // bootloader
 
 #define QMK_ESC_OUTPUT F4  // usually COL
