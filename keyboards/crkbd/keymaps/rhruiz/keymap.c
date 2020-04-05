@@ -141,7 +141,10 @@ void matrix_init_keymap(void) {
 
 void rhruiz_update_layer_colors(layer_state_t state) {
     if (isLeftHand && layer_state_cmp(state, _FN1)) {
-        writePinLow(D5); writePinLow(B0); } else if (!isLeftHand && layer_state_cmp(state, _FN2)) { writePinLow(D5);
+        writePinLow(D5);
+        writePinLow(B0);
+    } else if (!isLeftHand && layer_state_cmp(state, _FN2)) {
+        writePinLow(D5);
         writePinLow(B0);
     } else {
         writePinHigh(D5);
