@@ -28,7 +28,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef OLED_DRIVER_ENABLE
 #    undef SSD1306OLED
+#    ifdef OLED_FONT_H
+#        undef OLED_FONT_H
+#    endif
 #    define OLED_FONT_H "users/rhruiz/glcdfont.c"
+#    define OLED_SCROLL_TIMEOUT 8000
 #endif
 
 #undef USE_I2C
