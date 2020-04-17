@@ -38,6 +38,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
 
+#ifdef OLED_DRIVER_ENABLE
+#define OLED_FONT_H "users/rhruiz/glcdfont.c"
+#endif
+
 #define NO_ACTION_ONESHOT
 
 #ifdef RGBLIGHT_ENABLE
