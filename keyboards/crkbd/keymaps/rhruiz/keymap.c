@@ -96,26 +96,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-#ifndef OLED_DRIVER_ENABLE
-
 void matrix_init_keymap(void) {
     setPinOutput(B0);
     setPinOutput(D5);
     writePinHigh(D5);
     writePinHigh(B0);
 }
-
-void rhruiz_update_layer_colors(layer_state_t state) {
-    if (isLeftHand && layer_state_cmp(state, _FN1)) {
-        writePinLow(D5);
-        writePinLow(B0);
-    } else if (!isLeftHand && layer_state_cmp(state, _FN2)) {
-        writePinLow(D5);
-        writePinLow(B0);
-    } else {
-        writePinHigh(D5);
-        writePinHigh(B0);
-    }
-}
-
-#endif
