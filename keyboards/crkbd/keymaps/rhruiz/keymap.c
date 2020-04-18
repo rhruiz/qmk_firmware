@@ -7,6 +7,7 @@ extern volatile bool isLeftHand;
 #endif
 
 #define KC__ALTZ LALT_T(KC_Z)
+#define KC__GSLS RGUI_T(KC_SLSH)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -16,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
       CESC,  A  ,  S  ,  D  ,  F  ,  G  ,                       H  ,  J  ,  K  ,  L  , SCLN, QUOT,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-      LSFT,_ALTZ,  X  ,  C  ,  V  ,  B  ,                       N  ,  M  , COMM, DOT , SLSH, RSFT,
+      LSFT,_ALTZ,  X  ,  C  ,  V  ,  B  ,                       N  ,  M  , COMM, DOT ,_GSLS, RSFT,
   //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
                               LGUI, _FN1, SPC ,    ENT , _FN2, ALBS
                           //`-----------------'  `-----------------'
