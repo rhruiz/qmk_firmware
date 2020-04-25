@@ -92,10 +92,6 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
     encoder_update_raw(i2c_buffer->encoder_state);
 #    endif
 
-    i2c_buffer->sync_time = timer_read32();
-    sync_timer_update(i2c_buffer->sync_time);
-    i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_SYNC_TIME_START, (void *)&i2c_buffer->sync_time, sizeof(i2c_buffer->sync_time), TIMEOUT);
-
 #    ifdef WPM_ENABLE
     uint8_t current_wpm = get_current_wpm();
     if (current_wpm != i2c_buffer->current_wpm) {
@@ -104,6 +100,9 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
         }
     }
 #    endif
+    i2c_buffer->sync_time = timer_read32();
+    sync_timer_update(i2c_buffer->sync_time);
+    i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_SYNC_TIME_START, (void *)&i2c_buffer->sync_time, sizeof(i2c_buffer->sync_time), TIMEOUT);
     return true;
 }
 
@@ -274,13 +273,14 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
     encoder_update_raw((uint8_t *)serial_s2m_buffer.encoder_state);
 #    endif
 
-    sync_timer_update(timer_read32());
-    serial_m2s_buffer.sync_timer = sync_timer_read32();
 
 #    ifdef WPM_ENABLE
     // Write wpm to slave
     serial_m2s_buffer.current_wpm = get_current_wpm();
 #    endif
+
+    sync_timer_update(timer_read32());
+    serial_m2s_buffer.sync_timer = sync_timer_read32();
     return true;
 }
 
