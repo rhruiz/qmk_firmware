@@ -13,6 +13,20 @@
 #define KC__F9 KC_F9
 #define KC__F10 KC_F10
 
+#ifdef HOME_ROW_MODS
+#define KC_GF LGUI_T(KC_F)
+#define KC_GJ LGUI_T(KC_J)
+
+#define KC_SS LSFT_T(KC_S)
+#define KC_SL LSFT_T(KC_L)
+
+#define KC_AA LALT_T(KC_A)
+#define KC_ASCLN LALT_T(KC_SCLN)
+
+#define KC_CD LCTL_T(KC_D)
+#define KC_CK LCTL_T(KC_K)
+#endif
+
 //                            .----+----+----+----+----.
 #define _____NUMBERS_LEFT_____   1 ,  2 ,  3 ,  4 ,  5
 //                            |----+----+----+----+----|
@@ -33,7 +47,11 @@
 //                             |----+----+----+----+----|
 #define ________L_BL_R2________   Q ,  W ,  E ,  R ,  T
 //                             |----+----+----+----+----|
-#define ________L_BL_R3________   A ,  S ,  D ,  F ,  G
+#ifdef HOME_ROW_MODS        // |    |    |    |    |    |
+#define ________L_BL_R3________  AA , SS , CD , GF ,  G
+#else                       // |    |    |    |    |    |
+#define ________L_BL_R3________  A  ,  S ,  D ,  F ,  G
+#endif                      // |    |    |    |    |    |
 //                             |----+----+----+----+----|
 #define ________L_BL_R4________   Z ,  X ,  C ,  V ,  B
 //                             `----+----+----+----+----'
@@ -43,7 +61,11 @@
 //                             |----+----+----+----+----|
 #define ________R_BL_R2________   Y ,  U ,  I ,  O ,  P
 //                             |----+----+----+----+----|
+#ifdef HOME_ROW_MODS        // |    |    |    |    |    |
+#define ________R_BL_R3________   H , GJ , CK , SL ,ASCLN
+#else                       // |    |    |    |    |    |
 #define ________R_BL_R3________   H ,  J ,  K ,  L ,SCLN
+#endif                      // |    |    |    |    |    |
 //                             |----+----+----+----+----|
 #define ________R_BL_R4________   N ,  M ,COMM, DOT,SLSH
 //                             `----+----+----+----+----'
@@ -73,9 +95,9 @@
 //                             |----+----+----+----+----|
 #define ________L_RSE_2________  _____NUMBERS_LEFT_____
 //                             |----+----+----+----+----|
-#define ________L_RSE_3________ PIPE,LCBR,RCBR,MINS,PLUS
+#define ________L_RSE_3________ BTN1, XXX,MS_U, XXX,PLUS
 //                             |----+----+----+----+----|
-#define ________L_RSE_4________ MS_L,MS_D,MS_U,MS_R,_BCK
+#define ________L_RSE_4________ BTN2,MS_L,MS_D,MS_R,MINS
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
@@ -85,7 +107,7 @@
 //                             |----+----+----+----+----|
 #define ________R_RSE_3________ EQL ,LEFT,DOWN, UP ,RGHT
 //                             |----+----+----+----+----|
-#define ________R_RSE_4________ ASTR,BTN1,BTN2,    ,
+#define ________R_RSE_4________ ASTR,    ,    ,    ,
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
