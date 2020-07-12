@@ -30,7 +30,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 
 #endif
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
+    switch (keycode) {
 #ifdef HOME_ROW_MODS
         case SFT_T(KC_S):
         case SFT_T(KC_L):
@@ -62,13 +62,13 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
 
 void rhruiz_send_make(bool should_flash, bool parallel) {
 #ifndef BOOTLOADER_CATERINA
-#ifdef RAW_ENABLE
+#    ifdef RAW_ENABLE
     if (should_flash) {
         rhruiz_send_make_args(false, parallel);
         SEND_STRING(" && VID=" _I(VENDOR_ID) " PID=" _I(PRODUCT_ID));
         SEND_STRING(" ~/dev/keyboard/hid_send/hid_send bootloader && ");
     }
-#endif
+#    endif
 #endif
     rhruiz_send_make_args(should_flash, parallel);
 }
@@ -114,10 +114,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
     }
-#   ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_DRIVER_ENABLE
 
     rhruiz_oled_activity();
-#   endif
+#endif
 
     return rhruiz_process_record(keycode, record);
 }
@@ -178,7 +178,7 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
 
 void rhruiz_rgblight_reset(void) {
 #ifdef RGBLIGHT_ENABLE
-#ifndef RGBLIGHT_LAYERS
+#    ifndef RGBLIGHT_LAYERS
     rgblight_config_t eeprom_config;
     eeprom_config.raw = eeconfig_read_rgblight();
 
@@ -188,7 +188,7 @@ void rhruiz_rgblight_reset(void) {
 
     rgblight_mode_noeeprom(eeprom_config.mode);
     rgblight_sethsv_noeeprom(eeprom_config.hue, eeprom_config.sat, eeprom_config.val);
-#endif
+#    endif
 #endif
 }
 

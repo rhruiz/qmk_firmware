@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define OLED_SCROLL_TIMEOUT 8000
 #    ifdef OLED_ROTATE
 #        define OLED_SCROLL_TIMEOUT_RIGHT
-#     endif
+#    endif
 #endif
 
 #undef USE_I2C
@@ -60,15 +60,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY          0
+#define MOUSEKEY_DELAY 0
 #undef MOUSEKEY_INTERVAL
-#define MOUSEKEY_INTERVAL       16
+#define MOUSEKEY_INTERVAL 16
 #undef MOUSEKEY_WHEEL_DELAY
-#define MOUSEKEY_WHEEL_DELAY    0
+#define MOUSEKEY_WHEEL_DELAY 0
 #undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      6
+#define MOUSEKEY_MAX_SPEED 6
 #undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX    64
+#define MOUSEKEY_TIME_TO_MAX 64
 
 // bootmagic
 
@@ -84,9 +84,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // combos
 #ifdef COMBO_ENABLE
-#   define COMBO_TERM 50
-#   define COMBO_COUNT 29
+#    define COMBO_TERM 50
+#    define COMBO_COUNT 29
 #endif
+
+#define ASETNIOP
+#define PERMISSIVE_HOLD_PER_KEY
 
 // todo: remove on split common
 #define NO_DEBUG_LEDS

@@ -1,16 +1,18 @@
 #include QMK_KEYBOARD_H
-#ifdef COMBO_ENABLE
+#include "rhruiz.h"
+#include "layouts/kc_keys.h"
 
-const uint16_t PROGMEM _combo_0[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM _combo_1[] = {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_2[] = {KC_A, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_3[] = {KC_A, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_4[] = {KC_A, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_5[] = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_6[] = {KC_A, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_7[] = {KC_S, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_8[] = {KC_S, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_9[] = {KC_S, KC_N, COMBO_END};
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM _combo_1[]  = {KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_2[]  = {KC_A, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_3[]  = {KC_A, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_4[]  = {KC_A, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_5[]  = {KC_A, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_6[]  = {KC_A, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_7[]  = {KC_S, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_8[]  = {KC_S, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_9[]  = {KC_S, KC_N, COMBO_END};
 const uint16_t PROGMEM _combo_10[] = {KC_S, KC_I, COMBO_END};
 const uint16_t PROGMEM _combo_11[] = {KC_S, KC_O, COMBO_END};
 const uint16_t PROGMEM _combo_12[] = {KC_S, KC_P, COMBO_END};
@@ -32,39 +34,20 @@ const uint16_t PROGMEM _combo_27[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM _combo_28[] = {KC_P, KC_S, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-    COMBO(_combo_0, KC_W),
-    COMBO(_combo_1, KC_X),
-    COMBO(_combo_2, KC_F),
-    COMBO(_combo_3, KC_Q),
-    COMBO(_combo_4, KC_Z),
-    COMBO(_combo_5, KC_LPRN),
-    COMBO(_combo_6, KC_SLASH),
-    COMBO(_combo_7, KC_D),
-    COMBO(_combo_8, KC_C),
-    COMBO(_combo_9, KC_J),
-    COMBO(_combo_10, KC_K),
-    COMBO(_combo_11, KC_DOT),
-    COMBO(_combo_12, KC_RPRN),
-    COMBO(_combo_13, KC_R),
-    COMBO(_combo_14, KC_Y),
-    COMBO(_combo_15, KC_COMMA),
-    COMBO(_combo_16, KC_MINUS),
-    COMBO(_combo_17, KC_QUOTE),
-    COMBO(_combo_18, KC_B),
-    COMBO(_combo_19, KC_V),
-    COMBO(_combo_20, KC_G),
-    COMBO(_combo_21, KC_BSPACE),
-    COMBO(_combo_22, KC_H),
-    COMBO(_combo_23, KC_U),
-    COMBO(_combo_24, KC_M),
-    COMBO(_combo_25, KC_L),
-    COMBO(_combo_26, KC_EXLM),
-    COMBO(_combo_27, KC_SCOLON),
-    COMBO(_combo_28, KC_LPRN),
+    COMBO(_combo_0, KC_W), COMBO(_combo_1, KC_X), COMBO(_combo_2, KC_F), COMBO(_combo_3, KC_Q), COMBO(_combo_4, KC_Z), COMBO(_combo_5, KC_LPRN), COMBO(_combo_6, KC_SLASH), COMBO(_combo_7, KC_D), COMBO(_combo_8, KC_C), COMBO(_combo_9, KC_J), COMBO(_combo_10, KC_K), COMBO(_combo_11, KC_DOT), COMBO(_combo_12, KC_RPRN), COMBO(_combo_13, KC_R), COMBO(_combo_14, KC_Y), COMBO(_combo_15, KC_COMMA), COMBO(_combo_16, KC_MINUS), COMBO(_combo_17, KC_QUOTE), COMBO(_combo_18, KC_B), COMBO(_combo_19, KC_V), COMBO(_combo_20, KC_G), COMBO(_combo_21, KC_BSPACE), COMBO(_combo_22, KC_H), COMBO(_combo_23, KC_U), COMBO(_combo_24, KC_M), COMBO(_combo_25, KC_L), COMBO(_combo_26, KC_EXLM), COMBO(_combo_27, KC_SCOLON), COMBO(_combo_28, KC_LPRN),
 };
 #endif
-#include "rhruiz.h"
-#include "layouts/kc_keys.h"
+
+#ifdef ASETNIOP
+#    define KC_LS1_A LT(ASETNIOP1, KC_A)
+#    define KC_LS2_S LT(ASETNIOP2, KC_S)
+#    define KC_LS3_E LT(ASETNIOP3, KC_E)
+#    define KC_LS4_T LT(ASETNIOP4, KC_T)
+#    define KC_LS5_N LT(ASETNIOP5, KC_N)
+#    define KC_LS6_I LT(ASETNIOP6, KC_I)
+#    define KC_LS7_O LT(ASETNIOP7, KC_O)
+#    define KC_LS8_P LT(ASETNIOP8, KC_P)
+#endif
 
 #define KC_ZALT LALT_T(KC_Z)
 
@@ -92,6 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           //`-----------------'  `-----------------'
   ),
 
+#ifdef COMBO_ENABLE
   [_GAME] = LAYOUT_kc(
   //,-----------------------------------.                    ,-----------------------------------.
           ,  A  ,  S  ,  E  ,  T  ,     ,                          ,  N  ,   I ,  O  ,  P  ,     ,
@@ -104,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           //`-----------------'  `-----------------'
     ),
 
-
+#endif
   [_KEY_OVERRIDE] = LAYOUT_kc(
   //,-----------------------------------.                    ,-----------------------------------.
           ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     , DEL ,
@@ -164,6 +148,116 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   ,     ,     ,        ,     , ALT0
                           //`-----------------'  `-----------------'
     ),
+#ifdef ASETNIOP
+
+  [_GAME] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,LS1_A,LS2_S,LS3_E,LS4_T,     ,                          ,LS5_N,LS6_I,LS7_O,LS8_P,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     , _TGM,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP1] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,     ,  W  ,  X  ,  F  ,     ,                          ,  Q  ,  Z  , LPRN,SLASH,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP2] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  W  ,     ,  D  ,  C  ,     ,                          ,  J  ,  K  , DOT , RPRN,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP3] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  X  ,  D  ,     ,  R  ,     ,                          ,  Y  ,COMMA,MINUS,QUOTE,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP4] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  F  ,  C  ,  R  ,     ,     ,                          ,  B  ,  V  ,  G  , BSPC,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP5] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  Q  ,  J  ,  Y  ,  B  ,     ,                          ,     ,  H  ,  U  ,  M  ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP6] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  Z  ,  K  ,COMMA,  V  ,     ,                          ,  H  ,     ,  L  , EXLM,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP7] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          , LPRN, DOT ,MINUS,  G  ,     ,                          ,  U  ,  L  ,     , SCLN,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+
+  [ASETNIOP8] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,SLASH, LPRN,QUOTE, BSPC,     ,                          ,  M  , EXLM, SCLN,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+  ),
+#endif // ASETNIOP
 
   /* template
   [_LAYER] = LAYOUT_kc(
@@ -198,4 +292,22 @@ void rhruiz_update_layer_colors(layer_state_t state) {
         writePinLow(B0);
     }
 #endif
+}
+
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+#ifdef ASETNIOP
+    switch (keycode) {
+        case KC_LS1_A:
+        case KC_LS2_S:
+        case KC_LS3_E:
+        case KC_LS4_T:
+        case KC_LS5_N:
+        case KC_LS6_I:
+        case KC_LS7_O:
+        case KC_LS8_P:
+            return false;
+        default:
+#endif  // ASETNIOP
+            return true;
+    }
 }
