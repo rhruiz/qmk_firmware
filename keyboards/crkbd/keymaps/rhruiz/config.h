@@ -84,7 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // combos
 #ifdef COMBO_ENABLE
-#   define COMBO_TERM 50
+#   define COMBO_TERM 100
 #   define COMBO_COUNT 29
 #endif
 
