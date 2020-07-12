@@ -6,7 +6,27 @@
 #    include "oled/oled.h"
 #endif
 
-enum rhruiz_layers { _BL, _GAME, _NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _CFG };
+enum rhruiz_layers {
+    _BL,
+    _GAME,
+    _NUM,
+    _KEY_OVERRIDE,
+#ifdef ASETNIOP
+    ASETNIOP0,
+    ASETNIOP1,
+    ASETNIOP2,
+    ASETNIOP3,
+    ASETNIOP4,
+    ASETNIOP5,
+    ASETNIOP6,
+    ASETNIOP7,
+    ASETNIOP8,
+#endif  // ASETNIOP
+    _FN1,
+    _FN2,
+    _GAMEFN1,
+    _CFG
+};
 
 enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, NEW_SAFE_RANGE };
 
