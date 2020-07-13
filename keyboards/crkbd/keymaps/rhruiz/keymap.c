@@ -1,16 +1,16 @@
 #include QMK_KEYBOARD_H
 #ifdef COMBO_ENABLE
 
-const uint16_t PROGMEM _combo_0[] = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM _combo_1[] = {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_2[] = {KC_A, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_3[] = {KC_A, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_4[] = {KC_A, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_5[] = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_6[] = {KC_A, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_7[] = {KC_S, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_8[] = {KC_S, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_9[] = {KC_S, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM _combo_1[]  = {KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_2[]  = {KC_A, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_3[]  = {KC_A, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_4[]  = {KC_A, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_5[]  = {KC_A, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_6[]  = {KC_A, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_7[]  = {KC_S, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_8[]  = {KC_S, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_9[]  = {KC_S, KC_N, COMBO_END};
 const uint16_t PROGMEM _combo_10[] = {KC_S, KC_I, COMBO_END};
 const uint16_t PROGMEM _combo_11[] = {KC_S, KC_O, COMBO_END};
 const uint16_t PROGMEM _combo_12[] = {KC_S, KC_P, COMBO_END};
@@ -75,8 +75,6 @@ combo_t key_combos[COMBO_COUNT] = {
 
 #define KC_ALDE LALT_T(KC_DEL)
 #define KC_ALT0 LALT_T(KC_0)
-
-#define KC_TFN2 LT(_FN2, KC_TAB)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
