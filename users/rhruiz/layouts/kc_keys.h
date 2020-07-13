@@ -16,6 +16,7 @@
 #define KC_SFN1 SPCFN1
 #define KC_BFN2 BKSFN2
 #define KC_EFN2 LT(_FN2, KC_ENTER)
+#define KC_TFN2 LT(_FN2, KC_TAB)
 #define KC_ALBS RALT_T(KC_BSPC)
 
 #define KC__RST RESET
