@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
-#ifdef COMBO_ENABLE
+#include "rhruiz.h"
+#include "layouts/kc_keys.h"
 
+#ifdef COMBO_ENABLE
 const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
 const uint16_t PROGMEM _combo_1[]  = {KC_A, KC_E, COMBO_END};
 const uint16_t PROGMEM _combo_2[]  = {KC_A, KC_T, COMBO_END};
@@ -31,6 +33,7 @@ const uint16_t PROGMEM _combo_26[] = {KC_I, KC_P, COMBO_END};
 const uint16_t PROGMEM _combo_27[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM _combo_28[] = {KC_P, KC_S, COMBO_END};
 
+// clang-format off
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(_combo_0, KC_W),
     COMBO(_combo_1, KC_X),
@@ -62,9 +65,8 @@ combo_t key_combos[COMBO_COUNT] = {
     COMBO(_combo_27, KC_SCOLON),
     COMBO(_combo_28, KC_LPRN),
 };
+// clang-format on
 #endif
-#include "rhruiz.h"
-#include "layouts/kc_keys.h"
 
 #define KC_ZALT LALT_T(KC_Z)
 
