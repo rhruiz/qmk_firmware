@@ -6,6 +6,34 @@
 #define KC_ESPC LSFT_T(KC_SPACE)
 #define KC__NBK LT(_NUM, KC__BCK)
 
+#define _____SYMBOLS_LEFT_____ EXLM, AT ,HASH, DLR,PERC
+//                            |----+----+----+----+----|
+#define _____SYMBOLS_RGHT_____ CIRC,AMPR,ASTR,LPRN,RPRN
+//                            `----+----+----+----+----'
+
+#undef ________L_LWR_2________
+#undef ________L_LWR_3________
+#undef ________L_LWR_4________
+#undef ________R_LWR_2________
+#undef ________R_LWR_3________
+#undef ________R_LWR_4________
+
+//                             .----+----+----+----+----.
+#define ________L_LWR_2________ EXLM, AT ,LCBR,RCBR,BSLS
+//                             |----+----+----+----+----|
+#define ________L_LWR_3________ HASH, DRL,LBRC,RBRC, EQL
+//                             |----+----+----+----+----|
+#define ________L_LWR_4________ PERC,CIRC,LRPN,RPRN,PLUS
+//                             `----+----+----+----+----'
+
+//                             .----+----+----+----+----.
+#define ________R_LWR_2________     ,AMPR,PIPE,    ,
+//                             |----+----+----+----+----|
+#define ________R_LWR_3________ PIPE,MINS,RCBR,LCBR,QUOT
+//                             |----+----+----+----+----|
+#define ________R_LWR_4________     ,UNDS, LT , GT ,QUES
+//                             `----+----+----+----+----'
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BL] = LAYOUT_kc_wrapper(
