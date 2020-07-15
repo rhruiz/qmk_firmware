@@ -18,6 +18,7 @@
 #define KC_EFN2 LT(_FN2, KC_ENTER)
 #define KC_TFN2 LT(_FN2, KC_TAB)
 #define KC_ALBS RALT_T(KC_BSPC)
+#define KC_ALDE LALT_T(KC_DEL)
 
 #define KC__RST RESET
 #define KC_MISS MISCTRL
