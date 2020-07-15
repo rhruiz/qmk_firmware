@@ -75,7 +75,6 @@ combo_t key_combos[COMBO_COUNT] = {
 #    define ________L_BL_R4________ ZALT, X, C, V, B
 #endif
 
-#define KC_ALDE LALT_T(KC_DEL)
 #define KC_ALT0 LALT_T(KC_0)
 
 // clang-format off
