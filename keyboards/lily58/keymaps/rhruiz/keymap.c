@@ -22,9 +22,9 @@
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
-#define ________R_LWR_2________     ,EPIP,ASTR,    ,
+#define ________R_LWR_2________     ,EPIP,ASTR,BSLS,DQUO
 //                             |----+----+----+----+----|
-#define ________R_LWR_3________ BSLS,AMPR,PIPE,CIRC,QUOT
+#define ________R_LWR_3________     ,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
 #define ________R_LWR_4________     ,UNDS, LT , GT ,QUES
 //                             `----+----+----+----+----'
