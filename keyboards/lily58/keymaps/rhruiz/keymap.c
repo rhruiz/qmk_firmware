@@ -13,6 +13,7 @@
 #undef ________R_LWR_3________
 #undef ________R_LWR_4________
 
+// clang-format off
 //                             .----+----+----+----+----.
 #define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,PERC
 //                             |----+----+----+----+----|
@@ -22,12 +23,13 @@
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
-#define ________R_LWR_2________     ,EPIP,ASTR,BSLS,DQUO
+#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,DQUO
 //                             |----+----+----+----+----|
-#define ________R_LWR_3________     ,AMPR,PIPE,CIRC,QUOT
+#define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
-#define ________R_LWR_4________     ,UNDS, LT , GT ,QUES
+#define ________R_LWR_4________     ,COLN, LT , GT ,QUES
 //                             `----+----+----+----+----'
+// clang-format on
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
