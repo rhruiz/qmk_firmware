@@ -14,31 +14,31 @@
 #define KC__F10 KC_F10
 
 #ifdef HOME_ROW_MODS
-#define KC_GF LGUI_T(KC_F)
-#define KC_GJ LGUI_T(KC_J)
+#    define KC_GF LGUI_T(KC_F)
+#    define KC_GJ LGUI_T(KC_J)
 
-#define KC_SS LSFT_T(KC_S)
-#define KC_SL LSFT_T(KC_L)
+#    define KC_SS LSFT_T(KC_S)
+#    define KC_SL LSFT_T(KC_L)
 
-#define KC_AA LALT_T(KC_A)
-#define KC_ASCLN LALT_T(KC_SCLN)
+#    define KC_AA LALT_T(KC_A)
+#    define KC_ASCLN LALT_T(KC_SCLN)
 
-#define KC_CD LCTL_T(KC_D)
-#define KC_CK LCTL_T(KC_K)
+#    define KC_CD LCTL_T(KC_D)
+#    define KC_CK LCTL_T(KC_K)
 #endif
 
 //                            .----+----+----+----+----.
-#define _____NUMBERS_LEFT_____   1 ,  2 ,  3 ,  4 ,  5
+#define _____NUMBERS_LEFT_____ 1, 2, 3, 4, 5
 //                            |----+----+----+----+----|
-#define _____NUMBERS_RGHT_____   6 ,  7 ,  8 ,  9 ,  0
+#define _____NUMBERS_RGHT_____ 6, 7, 8, 9, 0
 //                            |----+----+----+----+----|
-#define ____FUNCTIONS_LEFT____  _F1, _F2, _F3, _F4, _F5
+#define ____FUNCTIONS_LEFT____ _F1, _F2, _F3, _F4, _F5
 //                            |----+----+----+----+----|
-#define ____FUNCTIONS_RGHT____  _F6, _F7, _F8, _F9,_F10
+#define ____FUNCTIONS_RGHT____ _F6, _F7, _F8, _F9, _F10
 //                            |----+----+----+----+----|
-#define _____SYMBOLS_LEFT_____ EXLM, AT ,HASH, DLR,PERC
+#define _____SYMBOLS_LEFT_____ EXLM, AT, HASH, DLR, PERC
 //                            |----+----+----+----+----|
-#define _____SYMBOLS_RGHT_____ CIRC,AMPR,ASTR,LPRN,RPRN
+#define _____SYMBOLS_RGHT_____ CIRC, AMPR, ASTR, LPRN, RPRN
 //                            `----+----+----+----+----'
 
 // clang-format off
@@ -73,21 +73,21 @@
 //                             .----+----+----+----+----.
 #define ________L_LWR_1________  ____FUNCTIONS_LEFT____
 //                             |----+----+----+----+----|
-#define ________L_LWR_2________  _____SYMBOLS_LEFT_____
+#define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,PERC
 //                             |----+----+----+----+----|
-#define ________L_LWR_3________ BSLS,LBRC,RBRC,MINS, EQL
+#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS, EQL
 //                             |----+----+----+----+----|
-#define ________L_LWR_4________ EPIP,LPRN,RPRN,UNDS,PLUS
+#define ________L_LWR_4________  AT ,LPRN,RPRN,UNDS,PLUS
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
 #define ________R_LWR_1________  ____FUNCTIONS_RGHT____
 //                             |----+----+----+----+----|
-#define ________R_LWR_2________  _____SYMBOLS_RGHT_____
+#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,DQUO
 //                             |----+----+----+----+----|
-#define ________R_LWR_3________ PLUS,UNDS,RCBR,LCBR,QUOT
+#define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
-#define ________R_LWR_4________     ,    , LT , GT ,QUES
+#define ________R_LWR_4________     ,COLN, LT , GT ,QUES
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
