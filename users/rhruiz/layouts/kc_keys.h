@@ -25,6 +25,18 @@
 #define KC__VUP KC__VOLUP
 #define KC__VDN KC__VOLDOWN
 
+#ifdef AUDIO_ENABLE
+#    define KC__CUP CLICKY_UP
+#    define KC__CDN CLICKY_DOWN
+#    define KC__CTG CLICKY_TOGGLE
+#    define KC_MUTG MU_TOG
+#else
+#    define KC__CUP KC_TRNS
+#    define KC__CDN KC_TRNS
+#    define KC__CTG KC_TRNS
+#    define KC_MUTG KC_TRNS
+#endif
+
 #define KC_ENTS LSFT_T(KC_ENTER)
 
 #define KC__WN LCMD(KC_GRV)

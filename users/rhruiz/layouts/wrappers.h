@@ -21,27 +21,27 @@
 #    define KC_SL LSFT_T(KC_L)
 
 #    define KC_AA LALT_T(KC_A)
-#    define KC_ASCLN LALT_T(KC_SCLN)
+#    define KC_ASCL LALT_T(KC_SCLN)
 
 #    define KC_CD LCTL_T(KC_D)
 #    define KC_CK LCTL_T(KC_K)
 #endif
 
+// clang-format off
 //                            .----+----+----+----+----.
-#define _____NUMBERS_LEFT_____ 1, 2, 3, 4, 5
+#define _____NUMBERS_LEFT_____   1 ,  2 ,  3 ,  4 ,  5
 //                            |----+----+----+----+----|
-#define _____NUMBERS_RGHT_____ 6, 7, 8, 9, 0
+#define _____NUMBERS_RGHT_____   6 ,  7 ,  8 ,  9 ,  0
 //                            |----+----+----+----+----|
-#define ____FUNCTIONS_LEFT____ _F1, _F2, _F3, _F4, _F5
+#define ____FUNCTIONS_LEFT____  _F1, _F2, _F3, _F4, _F5
 //                            |----+----+----+----+----|
-#define ____FUNCTIONS_RGHT____ _F6, _F7, _F8, _F9, _F10
+#define ____FUNCTIONS_RGHT____  _F6, _F7, _F8, _F9,_F10
 //                            |----+----+----+----+----|
-#define _____SYMBOLS_LEFT_____ EXLM, AT, HASH, DLR, PERC
+#define _____SYMBOLS_LEFT_____ EXLM, AT ,HASH, DLR,PERC
 //                            |----+----+----+----+----|
-#define _____SYMBOLS_RGHT_____ CIRC, AMPR, ASTR, LPRN, RPRN
+#define _____SYMBOLS_RGHT_____ CIRC,AMPR,ASTR,LPRN,RPRN
 //                            `----+----+----+----+----'
 
-// clang-format off
 //                             .----+----+----+----+----.
 #define ________L_BL_R1________  _____NUMBERS_LEFT_____
 //                             |----+----+----+----+----|
@@ -62,7 +62,7 @@
 #define ________R_BL_R2________   Y ,  U ,  I ,  O ,  P
 //                             |----+----+----+----+----|
 #ifdef HOME_ROW_MODS        // |    |    |    |    |    |
-#define ________R_BL_R3________   H , GJ , CK , SL ,ASCLN
+#define ________R_BL_R3________   H , GJ , CK , SL ,ASCL
 #else                       // |    |    |    |    |    |
 #define ________R_BL_R3________   H ,  J ,  K ,  L ,SCLN
 #endif                      // |    |    |    |    |    |
@@ -87,7 +87,7 @@
 //                             |----+----+----+----+----|
 #define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
-#define ________R_LWR_4________     ,COLN, LT , GT ,QUES
+#define ________R_LWR_4________     ,    , LT , GT ,QUES
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
@@ -123,10 +123,10 @@
 //                             .----+----+----+----+----.
 #define ________R_CFG_1________     ,    ,    ,    ,
 //                             |----+----+----+----+----|
-#define ________R_CFG_2________     ,_BOL,_SBT,_STP,_EOL
+#define ________R_CFG_2________ _CUP,_BOL,_SBT,_STP,_EOL
 //                             |----+----+----+----+----|
-#define ________R_CFG_3________     , _WL,PGDN,PGUP, _WR
+#define ________R_CFG_3________ _CDN, _WL,PGDN,PGUP, _WR
 //                             |----+----+----+----+----|
-#define ________R_CFG_4________     ,    ,MRWD,MFFD,MPLY
+#define ________R_CFG_4________ _CTG,MUTG,MRWD,MFFD,MPLY
 //                             `----+----+----+----+----'
 // clang-format on
