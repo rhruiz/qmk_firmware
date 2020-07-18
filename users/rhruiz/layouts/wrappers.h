@@ -123,10 +123,10 @@
 //                             .----+----+----+----+----.
 #define ________R_CFG_1________     ,    ,    ,    ,
 //                             |----+----+----+----+----|
-#define ________R_CFG_2________     ,_BOL,_SBT,_STP,_EOL
+#define ________R_CFG_2________ _CUP,_BOL,_SBT,_STP,_EOL
 //                             |----+----+----+----+----|
-#define ________R_CFG_3________     , _WL,PGDN,PGUP, _WR
+#define ________R_CFG_3________ _CDN, _WL,PGDN,PGUP, _WR
 //                             |----+----+----+----+----|
-#define ________R_CFG_4________     ,    ,MRWD,MFFD,MPLY
+#define ________R_CFG_4________ _CTG,MUTG,MRWD,MFFD,MPLY
 //                             `----+----+----+----+----'
 // clang-format on

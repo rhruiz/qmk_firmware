@@ -2,6 +2,10 @@
 #include "quantum.h"
 #include "layouts/wrappers.h"
 
+#ifdef AUDIO_ENABLE
+#    include "audio/songs.h"
+#endif
+
 #ifdef OLED_DRIVER_ENABLE
 #    include "oled/oled.h"
 #endif
