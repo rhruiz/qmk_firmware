@@ -8,7 +8,17 @@ static uint32_t oled_timer = 0;
 #ifdef OLED_ROTATE
 static const char _game_layer_logo[][5] PROGMEM = {
     "\xa8\xa9\xaa\xab",
-    "\xc8\xc9\xca\xcb",
+    "\xc8\xc9\xca\xcb"
+};
+
+static const char _lower_layer_logo[][6] PROGMEM = {
+    "\x20\x20\x20\x8c\x8d",
+    "\x20\x20\x20\xac\xad"
+};
+
+static const char _raise_layer_logo[][6] PROGMEM = {
+    "\x20\x20\x20\x8e\x8f",
+    "\x20\x20\x20\xae\xaf"
 };
 #else
 
@@ -91,24 +101,19 @@ void rhruiz_render_oled(void) {
 
         case _FN1:
             oled_clear_half_except(6);
-            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
-            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
-            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
-            oled_clear_half_except(6);
+            for (uint8_t i = 0; i < 6; i++) {
+                oled_write_P(_lower_layer_logo[i % 2], false);
+            }
 
+            oled_clear_half_except(6);
             break;
 
         case _FN2:
             oled_clear_half_except(6);
-            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
-            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
-            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
-            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
+            for (uint8_t i = 0; i < 6; i++) {
+                oled_write_P(_raise_layer_logo[i % 2], false);
+            }
+
             oled_clear_half_except(6);
             break;
 
