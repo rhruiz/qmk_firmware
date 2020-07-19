@@ -10,25 +10,6 @@ static const char _game_layer_logo[][5] PROGMEM = {
     "\xa8\xa9\xaa\xab",
     "\xc8\xc9\xca\xcb",
 };
-
-/* static const char _up_arrow_logo[][5] PROGMEM = { */
-/*     "\x20\x82\x83\x84", */
-/*     "\x20\xa2\xa3\xa4", */
-/*     "\x20\xc2\xc3\xc4", */
-/* }; */
-
-/* static const char _down_arrow_logo[][5] PROGMEM = { */
-/*     "\x20\x85\x86\x87", */
-/*     "\x20\xa5\xa6\xa7", */
-/*     "\x20\xc5\xc6\xc7", */
-/* }; */
-
-/* static const char _cfg_logo[][6] PROGMEM = { */
-/*     "\x80\x81\x80\x81\x80", */
-/*     "\xa0\xa1\xa0\xa1\xa0", */
-/*     "\xc0\xc1\xc0\xc1\xc0" */
-/* }; */
-
 #else
 
 const char _spacer[] PROGMEM = "          ";
