@@ -11,23 +11,23 @@ static const char _game_layer_logo[][5] PROGMEM = {
     "\xc8\xc9\xca\xcb",
 };
 
-static const char _up_arrow_logo[][5] PROGMEM = {
-    "\x20\x82\x83\x84",
-    "\x20\xa2\xa3\xa4",
-    "\x20\xc2\xc3\xc4",
-};
+/* static const char _up_arrow_logo[][5] PROGMEM = { */
+/*     "\x20\x82\x83\x84", */
+/*     "\x20\xa2\xa3\xa4", */
+/*     "\x20\xc2\xc3\xc4", */
+/* }; */
 
-static const char _down_arrow_logo[][5] PROGMEM = {
-    "\x20\x85\x86\x87",
-    "\x20\xa5\xa6\xa7",
-    "\x20\xc5\xc6\xc7",
-};
+/* static const char _down_arrow_logo[][5] PROGMEM = { */
+/*     "\x20\x85\x86\x87", */
+/*     "\x20\xa5\xa6\xa7", */
+/*     "\x20\xc5\xc6\xc7", */
+/* }; */
 
-static const char _cfg_logo[][6] PROGMEM = {
-    "\x80\x81\x80\x81\x80",
-    "\xa0\xa1\xa0\xa1\xa0",
-    "\xc0\xc1\xc0\xc1\xc0"
-};
+/* static const char _cfg_logo[][6] PROGMEM = { */
+/*     "\x80\x81\x80\x81\x80", */
+/*     "\xa0\xa1\xa0\xa1\xa0", */
+/*     "\xc0\xc1\xc0\xc1\xc0" */
+/* }; */
 
 #else
 
@@ -66,9 +66,36 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return oled_init_keym
 
 #ifdef OLED_ROTATE
 void oled_clear_half_except(uint8_t lines) {
-    for (uint8_t j = 0; j < (oled_max_lines() - lines) / 2; j++) {
+    for (uint8_t j = 0; j < (oled_max_lines() - 4 - lines) / 2; j++) {
         oled_write("\n", false);
     }
+}
+
+void oled_cond_write_P(bool cond, const char *when_true, const char *when_false) {
+    if (cond) {
+        oled_write_P(when_true, false);
+    } else {
+        oled_write_P(when_false, false);
+    }
+}
+
+void oled_tri_cond_write_P(bool left, bool right, const char *when_left, const char *when_right, const char *when_both, const char *when_none) {
+    if (left && right) {
+        oled_write_P(when_both, false);
+        return;
+    }
+
+    if (left) {
+        oled_write_P(when_left, false);
+        return;
+    }
+
+    if (right) {
+        oled_write_P(when_right, false);
+        return;
+    }
+
+    oled_write_P(when_none, false);
 }
 
 void rhruiz_render_oled(void) {
@@ -83,24 +110,33 @@ void rhruiz_render_oled(void) {
 
         case _FN1:
             oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 6; i++) {
-                oled_write_ln_P(_down_arrow_logo[i % 3], false);
-            }
+            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
+            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
+            oled_write_P(PSTR("\x20\x20\x20\x8c\x8d"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xac\xad"), false);
             oled_clear_half_except(6);
+
             break;
 
         case _FN2:
             oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 6; i++) {
-                oled_write_ln_P(_up_arrow_logo[i % 3], false);
-            }
+            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
+            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
+            oled_write_P(PSTR("\x20\x20\x20\x8e\x8f"), false);
+            oled_write_P(PSTR("\x20\x20\x20\xae\xaf"), false);
             oled_clear_half_except(6);
             break;
 
         case _CFG:
-            for (uint8_t j = 0; j < oled_max_lines(); j++) {
-                oled_write_P(_cfg_logo[j % 3], false);
-            }
+            oled_clear_half_except(3);
+            oled_write_ln_P(PSTR("\x20\xcc\xcd\xcc"), false);
+            oled_write_ln_P(PSTR("\x20\xcd\xcc\xcc"), false);
+            oled_write_ln_P(PSTR("\x20\xcc\xcc\xcd"), false);
+            oled_clear_half_except(2);
             break;
 
         case _GAMEFN1:
@@ -131,6 +167,24 @@ void rhruiz_render_oled(void) {
             oled_clear_half_except(0);
             break;
     }
+
+    uint8_t mods = get_mods();
+
+    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\x80\x81"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_ALT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\x82\x83"), PSTR("\x20\x20"));
+
+    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_ALT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\xa2\xa3"), PSTR("\x20\x20"));
+
+    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\x84\x85"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_SHIFT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\x86\x87"), PSTR("\x20\x20"));
+
+    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\xa4\xa5"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_SHIFT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\xa6\xa7"), PSTR("\x20\x20"));
 }
 #else
 void rhruiz_render_oled(void) {
