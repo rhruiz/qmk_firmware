@@ -159,20 +159,20 @@ void rhruiz_render_oled(void) {
     uint8_t mods = get_mods();
 
     oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\x80\x81"), PSTR("\x20\x20"));
-    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_ALT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
-    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\x82\x83"), PSTR("\x20\x20"));
-
-    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
-    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_ALT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
-    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\xa2\xa3"), PSTR("\x20\x20"));
-
-    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\x84\x85"), PSTR("\x20\x20"));
-    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_SHIFT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
     oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\x86\x87"), PSTR("\x20\x20"));
 
-    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\xa4\xa5"), PSTR("\x20\x20"));
-    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_SHIFT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
     oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\xa6\xa7"), PSTR("\x20\x20"));
+
+    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\x84\x85"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\x82\x83"), PSTR("\x20\x20"));
+
+    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\xa4\xa5"), PSTR("\x20\x20"));
+    oled_tri_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"), PSTR("\x20"));
+    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\xa2\xa3"), PSTR("\x20\x20"));
 }
 #else
 void rhruiz_render_oled(void) {
