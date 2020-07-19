@@ -119,9 +119,9 @@ void rhruiz_render_oled(void) {
 
         case _CFG:
             oled_clear_half_except(3);
-            oled_write_ln_P(PSTR("\x20\xcc\xcd\xcc"), false);
-            oled_write_ln_P(PSTR("\x20\xcd\xcc\xcc"), false);
-            oled_write_ln_P(PSTR("\x20\xcc\xcc\xcd"), false);
+            oled_write_P(PSTR("\x20\x20\xcc\xcd\xcc"), false);
+            oled_write_P(PSTR("\x20\x20\xcd\xcc\xcc"), false);
+            oled_write_P(PSTR("\x20\x20\xcc\xcc\xcd"), false);
             oled_clear_half_except(2);
             break;
 
