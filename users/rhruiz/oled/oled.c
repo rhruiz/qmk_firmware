@@ -137,8 +137,10 @@ void rhruiz_render_oled(void) {
         case _GAME:
             oled_clear_half_except(2);
 
-            oled_write_ln_P(_game_layer_logo[0], false);
-            oled_write_ln_P(_game_layer_logo[1], false);
+            if (is_keyboard_left()) oled_write("\x20", false);
+            oled_write_P(_game_layer_logo[0], false);
+            if (is_keyboard_left()) oled_write("\x20", false);
+            oled_write_P(_game_layer_logo[1], false);
 
             oled_clear_half_except(2);
             break;
