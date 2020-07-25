@@ -50,7 +50,7 @@
 #ifdef HOME_ROW_MODS        // |    |    |    |    |    |
 #define ________L_BL_R3________  AA , SS , CD , GF ,  G
 #else                       // |    |    |    |    |    |
-#define ________L_BL_R3________  A  ,  S ,  D ,  F ,  G
+#define ________L_BL_R3________   A ,  S ,  D ,  F ,  G
 #endif                      // |    |    |    |    |    |
 //                             |----+----+----+----+----|
 #define ________L_BL_R4________   Z ,  X ,  C ,  V ,  B
