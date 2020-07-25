@@ -191,13 +191,12 @@ void rgb_matrix_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
         rgb_matrix_driver.set_color(index - k_rgb_matrix_split[0], red, green, blue);
     else if (is_keyboard_left() && index < k_rgb_matrix_split[0])
 #endif
-    rgb_matrix_driver.set_color(index, red, green, blue);
+        rgb_matrix_driver.set_color(index, red, green, blue);
 }
 
 void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
 #ifdef RGB_MATRIX_SPLIT
-    for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++)
-        rgb_matrix_set_color(i, red, green, blue);
+    for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) rgb_matrix_set_color(i, red, green, blue);
 #else
     rgb_matrix_driver.set_color_all(red, green, blue);
 #endif
@@ -285,16 +284,15 @@ static bool rgb_matrix_none(effect_params_t *params) {
 
 static void rgb_task_timers(void) {
 #if defined(RGB_MATRIX_KEYREACTIVE_ENABLED) || RGB_DISABLE_TIMEOUT > 0
-    uint32_t deltaTime = timer_elapsed32(rgb_timer_buffer);
+    uint32_t deltaTime = sync_timer_elapsed32(rgb_timer_buffer);
 #endif  // defined(RGB_MATRIX_KEYREACTIVE_ENABLED) || RGB_DISABLE_TIMEOUT > 0
-    rgb_timer_buffer = timer_read32();
+    rgb_timer_buffer = sync_timer_read32();
 
     // Update double buffer timers
-    uint16_t deltaTime  = sync_timer_elapsed32(rgb_counters_buffer);
-    rgb_counters_buffer = sync_timer_read32();
-    if (g_rgb_counters.any_key_hit < UINT32_MAX) {
-        if (UINT32_MAX - deltaTime < g_rgb_counters.any_key_hit) {
-            g_rgb_counters.any_key_hit = UINT32_MAX;
+#if RGB_DISABLE_TIMEOUT > 0
+    if (rgb_anykey_timer < UINT32_MAX) {
+        if (UINT32_MAX - deltaTime < rgb_anykey_timer) {
+            rgb_anykey_timer = UINT32_MAX;
         } else {
             rgb_anykey_timer += deltaTime;
         }
@@ -316,7 +314,7 @@ static void rgb_task_timers(void) {
 
 static void rgb_task_sync(void) {
     // next task
-    if (sync_timer_elapsed32(g_rgb_counters.tick) >= RGB_MATRIX_LED_FLUSH_LIMIT) rgb_task_state = STARTING;
+    if (sync_timer_elapsed32(g_rgb_timer) >= RGB_MATRIX_LED_FLUSH_LIMIT) rgb_task_state = STARTING;
 }
 
 static void rgb_task_start(void) {

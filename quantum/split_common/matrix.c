@@ -263,9 +263,6 @@ void matrix_post_scan(void) {
 #ifdef SPLIT_TRANSPORT_MIRROR
         matrix_scan_quantum();
 #else
-#    ifdef ENCODER_ENABLE
-        encoder_read();
-#    endif
         matrix_slave_scan_user();
 #endif
     }
