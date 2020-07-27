@@ -1,4 +1,4 @@
-/* Copyright 2019 hineybush
+/* Copyright 2020 Ibnu D. Aji
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,4 +16,8 @@
 
 #pragma once
 
-// place overrides here
+#ifdef KEYBOARD_squiggle_rev1
+    #include "rev1.h"
+#endif
+
+#include "quantum.h"
