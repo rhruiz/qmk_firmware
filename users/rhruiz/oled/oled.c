@@ -6,6 +6,9 @@ static uint32_t oled_timer = 0;
 // clang-format off
 
 #ifdef OLED_ROTATE
+
+bool is_keyboard_left(void);
+
 static const char _game_layer_logo[][5] PROGMEM = {"\xa8\xa9\xaa\xab", "\xc8\xc9\xca\xcb"};
 
 static const char _lower_layer_logo[][3] PROGMEM = {"\x8c\x8d", "\xac\xad"};
