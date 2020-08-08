@@ -83,7 +83,7 @@
 //                             .----+----+----+----+----.
 #define ________R_LWR_1________  ____FUNCTIONS_RGHT____
 //                             |----+----+----+----+----|
-#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,DQUO
+#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,
 //                             |----+----+----+----+----|
 #define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
