@@ -198,3 +198,9 @@ void rhruiz_update_layer_colors(layer_state_t state) {
     }
 #endif
 }
+
+void keyboard_post_init_keymap() {
+#ifdef COMBO_ENABLE
+    combo_disable();
+#endif
+}
