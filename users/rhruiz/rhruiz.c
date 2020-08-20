@@ -2,8 +2,8 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-#define _I(x) __I(x)
-#define __I(x) #x
+#define _rhI(x) __rhI(x)
+#define __rhI(x) #x
 
 __attribute__((weak)) void rhruiz_update_layer_colors(layer_state_t state) {}
 
@@ -65,7 +65,7 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
 #    ifdef RAW_ENABLE
     if (should_flash) {
         rhruiz_send_make_args(false, parallel);
-        SEND_STRING(" && VID=" _I(VENDOR_ID) " PID=" _I(PRODUCT_ID));
+        SEND_STRING(" && VID=" _rhI(VENDOR_ID) " PID=" _rhI(PRODUCT_ID));
         SEND_STRING(" ~/dev/keyboard/hid_send/hid_send bootloader && ");
     }
 #    endif
