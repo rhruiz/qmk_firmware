@@ -25,9 +25,13 @@ const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 void rhruiz_update_layer_colors(layer_state_t state) {
     if (state & (1 << _NUM)) {
         writePinLow(D5);
+#ifndef CONVERT_TO_PROTON_C
         writePinLow(B0);
+#endif
     } else {
         writePinHigh(D5);
+#ifndef CONVERT_TO_PROTON_C
         writePinHigh(B0);
+#endif
     }
 }

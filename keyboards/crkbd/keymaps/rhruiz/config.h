@@ -26,8 +26,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define EE_HANDS
 
+// OLED
 #ifdef OLED_DRIVER_ENABLE
 #    undef SSD1306OLED
+#    undef OLED_FONT_H
+#    define OLED_FONT_H RHRUIZ_OLED_FONT_H
+#    define OLED_SCROLL_TIMEOUT 8000
+#    ifdef OLED_ROTATE
+#        define OLED_SCROLL_TIMEOUT_RIGHT
+#    endif
 #endif
 
 #undef USE_I2C
@@ -35,8 +42,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
-#define PERMISSIVE_HOLD
+#define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
+#define HOME_ROW_MODS
 
 #define NO_ACTION_ONESHOT
 
@@ -50,9 +58,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define RGBLIGHT_VAL_STEP 17
 #endif
 
+// Mouse key speed and acceleration.
+#undef MOUSEKEY_DELAY
+#define MOUSEKEY_DELAY 0
+#undef MOUSEKEY_INTERVAL
+#define MOUSEKEY_INTERVAL 16
+#undef MOUSEKEY_WHEEL_DELAY
+#define MOUSEKEY_WHEEL_DELAY 0
+#undef MOUSEKEY_MAX_SPEED
+#define MOUSEKEY_MAX_SPEED 6
+#undef MOUSEKEY_TIME_TO_MAX
+#define MOUSEKEY_TIME_TO_MAX 64
+
+// bootmagic
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 1
+
 // bootloader
 
 #define QMK_ESC_OUTPUT F4  // usually COL
 #define QMK_ESC_INPUT D4   // usually ROW
 #define QMK_LED D5
 #define QMK_SPEAKER B0
+
+// combos
+#ifdef COMBO_ENABLE
+#    define COMBO_TERM 100
+#    define COMBO_COUNT 29
+#endif
+
+// todo: remove on split common
+#define NO_DEBUG_LEDS
+
+#ifdef AUDIO_ENABLE
+#    define B5_AUDIO
+#    define AUDIO_CLICKY
+#    define STARTUP_SONG SONG(MARIO_MUSHROOM);
+/* #    define STARTUP_SONG SONG(TO_BOLDLY_GO); */
+#endif

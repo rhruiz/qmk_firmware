@@ -1,27 +1,108 @@
 #include QMK_KEYBOARD_H
 #include "rhruiz.h"
-#include "rhruiz_kc_keys.h"
+#include "layouts/kc_keys.h"
 
-extern uint8_t is_master;
-#ifdef OLED_DRIVER_ENABLE
-static uint32_t oled_timer = 0;
+#ifdef COMBO_ENABLE
+const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
+const uint16_t PROGMEM _combo_1[]  = {KC_A, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_2[]  = {KC_A, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_3[]  = {KC_A, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_4[]  = {KC_A, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_5[]  = {KC_A, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_6[]  = {KC_A, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_7[]  = {KC_S, KC_E, COMBO_END};
+const uint16_t PROGMEM _combo_8[]  = {KC_S, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_9[]  = {KC_S, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_10[] = {KC_S, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_11[] = {KC_S, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_12[] = {KC_S, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_13[] = {KC_E, KC_T, COMBO_END};
+const uint16_t PROGMEM _combo_14[] = {KC_E, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_15[] = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_16[] = {KC_E, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_17[] = {KC_E, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_18[] = {KC_T, KC_N, COMBO_END};
+const uint16_t PROGMEM _combo_19[] = {KC_T, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_20[] = {KC_T, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_21[] = {KC_T, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_22[] = {KC_N, KC_I, COMBO_END};
+const uint16_t PROGMEM _combo_23[] = {KC_N, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_24[] = {KC_N, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_25[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM _combo_26[] = {KC_I, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_27[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM _combo_28[] = {KC_P, KC_S, COMBO_END};
+
+// clang-format off
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(_combo_0, KC_W),
+    COMBO(_combo_1, KC_X),
+    COMBO(_combo_2, KC_F),
+    COMBO(_combo_3, KC_Q),
+    COMBO(_combo_4, KC_Z),
+    COMBO(_combo_5, KC_LPRN),
+    COMBO(_combo_6, KC_SLASH),
+    COMBO(_combo_7, KC_D),
+    COMBO(_combo_8, KC_C),
+    COMBO(_combo_9, KC_J),
+    COMBO(_combo_10, KC_K),
+    COMBO(_combo_11, KC_DOT),
+    COMBO(_combo_12, KC_RPRN),
+    COMBO(_combo_13, KC_R),
+    COMBO(_combo_14, KC_Y),
+    COMBO(_combo_15, KC_COMMA),
+    COMBO(_combo_16, KC_MINUS),
+    COMBO(_combo_17, KC_QUOTE),
+    COMBO(_combo_18, KC_B),
+    COMBO(_combo_19, KC_V),
+    COMBO(_combo_20, KC_G),
+    COMBO(_combo_21, KC_BSPACE),
+    COMBO(_combo_22, KC_H),
+    COMBO(_combo_23, KC_U),
+    COMBO(_combo_24, KC_M),
+    COMBO(_combo_25, KC_L),
+    COMBO(_combo_26, KC_EXLM),
+    COMBO(_combo_27, KC_SCOLON),
+    COMBO(_combo_28, KC_LPRN),
+};
+// clang-format on
 #endif
 
-#define KC_AFN2 LALT_T(KC_BSPC)
+#define KC_ZALT LALT_T(KC_Z)
+
+#ifndef HOME_ROW_MODS
+#    undef ________L_BL_R4________
+#    define ________L_BL_R4________ ZALT, X, C, V, B
+#endif
+
+#define KC_ALT0 LALT_T(KC_0)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BL] = LAYOUT_kc(
+  [_BL] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
-      TAB ,  Q  ,  W  ,  E  ,  R  ,  T  ,                       Y  ,  U  ,  I  ,  O  ,  P  , BSPC,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-      CESC,  A  ,  S  ,  D  ,  F  ,  G  ,                       H  ,  J  ,  K  ,  L  , SCLN, QUOT,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-      LSFT,  Z  ,  X  ,  C  ,  V  ,  B  ,                       N  ,  M  , COMM, DOT , SLSH, RSFT,
-  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
-                              LGUI, _FN1, SPC ,    ENT , _FN2, AFN2
+      TAB ,   ________L_BL_R2________   ,                        ________R_BL_R2________   , BSPC,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+      CESC,   ________L_BL_R3________   ,                        ________R_BL_R3________   , QUOT,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+      LSFT,   ________L_BL_R4________   ,                        ________R_BL_R4________   ,TDSNU,
+  //|-----+-----------------+-----+-----+-----|  |-----+-----+-----+-----------------------+-----|
+                              LGUI, _FN1, _CSP,    ENTS, _FN2, ALBS
                           //`-----------------'  `-----------------'
   ),
+
+  [_GAME] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+          ,  A  ,  S  ,  E  ,  T  ,     ,                          ,  N  ,   I ,  O  ,  P  ,     ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     , _TGM,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                                  ,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+    ),
+
 
   [_KEY_OVERRIDE] = LAYOUT_kc(
   //,-----------------------------------.                    ,-----------------------------------.
@@ -35,51 +116,51 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           //`-----------------'  `-----------------'
     ),
 
-  [_FN1] = LAYOUT_kc(
+  [_FN1] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
-       GRV,  1  ,  2  ,  3  ,  4  ,  5  ,                       6  ,  7  ,  8  ,  9  ,  0  ,     ,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          , BSLS, LBRC, RBRC,MINUS, PLUS,                          ,     , LPRN, RPRN, COLN,     ,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
-  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
-                                  ,     ,     ,        ,     ,
+      TILD,   ________L_LWR_2________   ,                        ________R_LWR_2________   ,     ,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+          ,   ________L_LWR_3________   ,                        ________R_LWR_3________   ,     ,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+          ,   ________L_LWR_4________   ,                        ________R_LWR_4________   ,     ,
+  //|-----+-----------------+-----+-----+-----|  |-----+-----+-----+-----------------------+-----|
+                                  ,     ,     ,        ,     , ALDE
                           //`-----------------'  `-----------------'
     ),
 
-  [_FN2] = LAYOUT_kc(
+  [_FN2] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
-      TILD, EXLM,  AT , HASH, DLR , PERC,                      CIRC, AMPR, ASTR, LPRN, RPRN,     ,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          , PIPE, LCBR, RCBR, UNDS, EQL ,                          , LEFT, DOWN,  UP ,RIGHT,     ,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     ,     ,     ,                      EPIP,     ,  LT ,  GT , QUES,     ,
-  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+      GRV ,   ________L_RSE_2________   ,                        ________R_RSE_2________   ,     ,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+          ,   ________L_RSE_3________   ,                        ________R_RSE_3________   ,     ,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+          ,   ________L_RSE_4________   ,                        ________R_RSE_4________   ,     ,
+  //|-----+-----------------+-----+-----+-----|  |-----+-----+-----+-----------------------+-----|
                                   ,     ,     ,        ,     ,
                           //`-----------------'  `-----------------'
   ),
 
-  [_CFG] = LAYOUT_kc(
+  [_CFG] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
-      _RST, RTOG, RMOD,     , RSAI, RVAD,                          , _WL , _STP, _SBT, _WR , MAKE,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          , _VUP, _VDN, MUTE, RHUI, RHUD,                          , HOME, PGDN, PGUP, END , _TGN,
-  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     , RSAI, RSAD,                          ,     ,     ,     ,     ,     ,
-  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+      _RST,   ________L_CFG_2________   ,                        ________R_CFG_2________   , MAKE,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+      _TGM,   ________L_CFG_3________   ,                        ________R_CFG_3________   , _TGN,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+          ,   ________L_CFG_4________   ,                        ________R_CFG_4________   ,     ,
+  //|-----+-----------------+-----+-----+-----|  |-----+-----+-----+-----------------------+-----|
                                   ,     ,     ,        ,     ,
                           //`-----------------'  `-----------------'
   ),
 
   [_NUM] = LAYOUT_kc(
   //,-----------------------------------.                    ,-----------------------------------.
-          , BTN1, MS_U, BTN2, WH_D,     ,                       7  ,  8  ,  9  , ASTR,     ,     ,
+          , BTN2,  NO , MS_U,  NO , WH_D,                      ASTR,  7  ,  8  ,  9  , MINS,     ,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          , MS_L, MS_D, MS_R, WH_U,     ,                       4  ,  5  ,  6  , PLUS,     , _TGN,
+          , BTN1, MS_L, MS_D, MS_R, WH_U,                      SLSH,  4  ,  5  ,  6  , PLUS, _TGN,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     ,     ,     ,                       1  ,  2  ,  3  , MINS,     ,     ,
+          ,     ,     ,     ,     ,     ,                      COMM,  1  ,  2  ,  3  , DOT ,     ,
   //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
-                                  ,     ,     ,        ,  0  , DOT
+                                  ,     ,     ,        ,     , ALT0
                           //`-----------------'  `-----------------'
     ),
 
@@ -99,54 +180,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-#ifdef OLED_DRIVER_ENABLE
-oled_rotation_t oled_init_user(oled_rotation_t rotation) { return rotation; }
-
-void render_crkbd_logo(void) {
-    static const char PROGMEM crkbd_logo[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0};
-    oled_write_P(crkbd_logo, false);
-}
-
-void oled_task_user(void) {
-    if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
-        oled_off();
-        return;
+void rhruiz_update_layer_colors(layer_state_t state) {
+#ifdef COMBO_ENABLE
+    if (layer_state_cmp(state, _GAME)) {
+        combo_enable();
     } else {
-        oled_on();
+        combo_disable();
     }
-
-    if (is_master) {
-        render_crkbd_logo();
-    } else {
-        render_crkbd_logo();
-        oled_scroll_left();  // Turns on scrolling
-    }
-}
-
-void suspend_power_down_user(void) { oled_off(); }
-
-void suspend_wakeup_init_user(void) { oled_on(); }
-
-bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
-    oled_timer = timer_read32();
-    return true;
-}
-
 #endif
-
-void matrix_init_keymap(void) {
-    setPinOutput(B0);
-    setPinOutput(D5);
+#ifndef OLED_DRIVER_ENABLE
     writePinHigh(D5);
     writePinHigh(B0);
+
+    if (layer_state_cmp(state, _NUM)) {
+        writePinLow(D5);
+        writePinLow(B0);
+    }
+#endif
 }
 
-void rhruiz_update_layer_colors(layer_state_t state) {
-    if (isLeftHand && layer_state_cmp(state, _FN1)) {
-        writePinLow(D5); writePinLow(B0); } else if (!isLeftHand && layer_state_cmp(state, _FN2)) { writePinLow(D5);
-        writePinLow(B0);
-    } else {
-        writePinHigh(D5);
-        writePinHigh(B0);
-    }
+void keyboard_post_init_keymap() {
+#ifdef COMBO_ENABLE
+    combo_disable();
+#endif
 }

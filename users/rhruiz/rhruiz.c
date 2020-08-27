@@ -2,8 +2,8 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-#define _I(x) __I(x)
-#define __I(x) #x
+#define _rhI(x) __rhI(x)
+#define __rhI(x) #x
 
 __attribute__((weak)) void rhruiz_update_layer_colors(layer_state_t state) {}
 
@@ -23,6 +23,30 @@ __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
 #endif
 }
 
+#ifdef TAP_DANCE_ENABLE
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_RSHIFT_NUM] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _NUM),
+};
+
+#endif
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+#ifdef HOME_ROW_MODS
+        case SFT_T(KC_S):
+        case SFT_T(KC_L):
+        case ALT_T(KC_A):
+        case ALT_T(KC_SCLN):
+            return TAPPING_TERM + 50;
+#endif
+#ifdef TAP_DANCE_ENABLE
+        case TD(TD_RSHIFT_NUM):
+            return TAPPING_TERM + 50;
+#endif
+        default:
+            return TAPPING_TERM;
+    }
+}
+
 void rhruiz_send_make_args(bool should_flash, bool parallel) {
     SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP);
     if (should_flash) {
@@ -34,15 +58,21 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
 #ifndef OLED_DRIVER_ENABLE
     SEND_STRING(" OLED_DRIVER_ENABLE=no");
 #endif
+
+#ifdef OLED_ROTATE
+    SEND_STRING(" OLED_ROTATE=yes");
+#endif
 }
 
 void rhruiz_send_make(bool should_flash, bool parallel) {
 #ifndef BOOTLOADER_CATERINA
+#    ifdef RAW_ENABLE
     if (should_flash) {
         rhruiz_send_make_args(false, parallel);
-        SEND_STRING(" && VID=" _I(VENDOR_ID) " PID=" _I(PRODUCT_ID));
+        SEND_STRING(" && VID=" _rhI(VENDOR_ID) " PID=" _rhI(PRODUCT_ID));
         SEND_STRING(" ~/dev/keyboard/hid_send/hid_send bootloader && ");
     }
+#    endif
 #endif
     rhruiz_send_make_args(should_flash, parallel);
 }
@@ -51,18 +81,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_EPIP:
             if (!record->event.pressed) {
-                switch (biton32(layer_state)) {
-                    case _FN1:
-                        SEND_STRING(" { || }");
-                        tap_code(KC_LEFT);
-                        tap_code(KC_LEFT);
-                        tap_code(KC_LEFT);
-                        break;
-
-                    default:
-                        SEND_STRING("|> ");
-                        break;
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    SEND_STRING(" { || }");
+                    tap_code(KC_LEFT);
+                    tap_code(KC_LEFT);
+                    tap_code(KC_LEFT);
+                } else {
+                    SEND_STRING("|> ");
                 }
+
+                return true;
             }
 
             break;
@@ -88,15 +116,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
     }
-#   ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_DRIVER_ENABLE
 
     rhruiz_oled_activity();
-#   endif
+#endif
 
     return rhruiz_process_record(keycode, record);
 }
 
-void matrix_init_user(void) { matrix_init_keymap(); }
+void matrix_init_user(void) {
+#ifdef PRO_MICRO
+    setPinOutput(B0);
+    setPinOutput(D5);
+    writePinHigh(D5);
+    writePinHigh(B0);
+#endif
+    matrix_init_keymap();
+}
 
 void keyboard_post_init_user() {
     /* TODO: revisit this check if flashed promicros with dfu */
@@ -122,13 +158,12 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
                 state = state & ~(1UL << _KEY_OVERRIDE);
                 break;
 
+            case _GAMEFN1:
+                state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
+
             case _FN1:
             case _FN2:
                 state = state | (1UL << _KEY_OVERRIDE);
-                break;
-
-            case _GAMEFN1:
-                state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
                 break;
 
             default:
@@ -144,7 +179,7 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
 }
 
 void rhruiz_rgblight_reset(void) {
-#ifdef RGBLIGHT_ENABLE
+#if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_LAYERS)
     rgblight_config_t eeprom_config;
     eeprom_config.raw = eeconfig_read_rgblight();
 
