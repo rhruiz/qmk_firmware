@@ -75,9 +75,9 @@
 //                             |----+----+----+----+----|
 #define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,PERC
 //                             |----+----+----+----+----|
-#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS, EQL
+#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS,UNDS
 //                             |----+----+----+----+----|
-#define ________L_LWR_4________  AT ,LPRN,RPRN,UNDS,PLUS
+#define ________L_LWR_4________  AT ,LPRN,RPRN, EQL,PLUS
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
