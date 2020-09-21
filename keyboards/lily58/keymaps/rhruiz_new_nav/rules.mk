@@ -18,7 +18,7 @@ RGBLIGHT_ENABLE = no        # Enable WS2812 RGB underlight.
 SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 OLED_DRIVER_ENABLE = yes
 RAW_ENABLE = yes
-LINK_TIME_OPTIMIZATION_ENABLE = yes
+LTO_ENABLE = yes
 BOOTLOADER = qmk-dfu
 
 # Do not enable SLEEP_LED_ENABLE. it uses the same timer as BACKLIGHT_ENABLE

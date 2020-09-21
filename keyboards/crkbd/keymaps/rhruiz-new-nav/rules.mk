@@ -15,7 +15,7 @@ SWAP_HANDS_ENABLE = no      # Enable one-hand typing
 SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
 RAW_ENABLE = yes
 OLED_DRIVER_ENABLE = yes
-LINK_TIME_OPTIMIZATION_ENABLE = yes
+LTO_ENABLE = yes
 BOOTLOADER = qmk-dfu
 
 OPT_DEFS += -DPRO_MICRO
