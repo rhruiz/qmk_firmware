@@ -57,10 +57,10 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
     }
 #ifndef OLED_DRIVER_ENABLE
     SEND_STRING(" OLED_DRIVER_ENABLE=no");
-#endif
-
-#ifdef OLED_ROTATE
+#else
+#    ifdef OLED_ROTATE
     SEND_STRING(" OLED_ROTATE=yes");
+#    endif
 #endif
 }
 
