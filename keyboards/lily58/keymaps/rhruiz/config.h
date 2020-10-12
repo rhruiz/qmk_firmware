@@ -80,6 +80,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef MOUSEKEY_TIME_TO_MAX
 #define MOUSEKEY_TIME_TO_MAX    64
 
+// bootmagic
+
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 1
+
 // bootloader
 
 #undef BOOTLOADER_CATERINA
