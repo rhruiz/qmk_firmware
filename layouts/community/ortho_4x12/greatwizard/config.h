@@ -1,4 +1,4 @@
-/* Copyright 2019 HnahKB
+/* Copyright 2020 Guillaume Gérard
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
-// place overrides here
+#define LAYERS_ORTHO
+#define LAYER_GAME
+#define LAYER_GIT
+#define LAYER_FN
+
+#define TAP_DANCE_LALT_GIT
+#define TAP_DANCE_LSFT_CAPS
