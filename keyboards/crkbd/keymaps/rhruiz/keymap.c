@@ -200,6 +200,9 @@ void rhruiz_update_layer_colors(layer_state_t state) {
 }
 
 void keyboard_post_init_keymap() {
+#ifdef OLED_DRIVER_ENABLE
+    oled_set_brightness(0x8);
+#endif
 #ifdef COMBO_ENABLE
     combo_disable();
 #endif
