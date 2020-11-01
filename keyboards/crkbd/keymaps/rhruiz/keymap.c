@@ -201,9 +201,22 @@ void rhruiz_update_layer_colors(layer_state_t state) {
 
 void keyboard_post_init_keymap() {
 #ifdef OLED_DRIVER_ENABLE
-    oled_set_brightness(0x8);
+    oled_set_brightness(0x0);
 #endif
 #ifdef COMBO_ENABLE
     combo_disable();
 #endif
 }
+
+#ifdef OLED_DRIVER_ENABLE
+bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case KC_EJCT:
+            if (record->event.pressed) {
+                oled_set_brightness(oled_get_brightness() + ((get_mods() & MOD_MASK_SHIFT) ? -0x08 : 0x08));
+            }
+            return false;
+    }
+    return true;
+}
+#endif
