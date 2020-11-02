@@ -1,6 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "rhruiz.h"
 #include "layouts/kc_keys.h"
+#ifdef THUMBSTICK_ENABLE
+#    include "thumbstick.h"
+#endif
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};

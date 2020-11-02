@@ -21,3 +21,10 @@ BOOTLOADER = qmk-dfu
 
 OPT_DEFS += -DPRO_MICRO
 COMBO_ENABLE=yes
+
+ifeq ($(strip $(THUMBSTICK_ENABLE)), yes)
+    POINTING_DEVICE_ENABLE = yes
+    OPT_DEFS += -DTHUMBSTICK_ENABLE
+	SRC += analog.c
+	SRC += thumbstick.c
+endif
