@@ -88,12 +88,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    define COMBO_COUNT 29
 #endif
 
-// todo: remove on split common
-#define NO_DEBUG_LEDS
-
 #ifdef AUDIO_ENABLE
 #    define B5_AUDIO
 #    define AUDIO_CLICKY
 #    define STARTUP_SONG SONG(MARIO_MUSHROOM);
 /* #    define STARTUP_SONG SONG(TO_BOLDLY_GO); */
+#endif
+
+#ifdef THUMBSTICK_ENABLE
+#    define THUMBSTICK_FLIP_X
+#    define THUMBSTICK_PIN_X B5
+#    define THUMBSTICK_PIN_Y B6
 #endif
