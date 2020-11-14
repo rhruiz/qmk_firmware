@@ -1,6 +1,9 @@
 #include QMK_KEYBOARD_H
 #include "rhruiz.h"
 #include "layouts/kc_keys.h"
+#ifdef THUMBSTICK_ENABLE
+#    include "thumbstick.h"
+#endif
 
 #ifdef COMBO_ENABLE
 const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
@@ -200,7 +203,23 @@ void rhruiz_update_layer_colors(layer_state_t state) {
 }
 
 void keyboard_post_init_keymap() {
+#ifdef OLED_DRIVER_ENABLE
+    oled_set_brightness(0x0);
+#endif
 #ifdef COMBO_ENABLE
     combo_disable();
 #endif
 }
+
+#ifdef OLED_DRIVER_ENABLE
+bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
+    switch(keycode) {
+        case KC_EJCT:
+            if (record->event.pressed) {
+                oled_set_brightness(oled_get_brightness() + ((get_mods() & MOD_MASK_SHIFT) ? -0x08 : 0x08));
+            }
+            return false;
+    }
+    return true;
+}
+#endif

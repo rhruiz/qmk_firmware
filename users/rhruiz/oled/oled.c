@@ -115,7 +115,17 @@ void rhruiz_render_oled(void) {
             oled_write_padded_P(PSTR("\xcc\xcd\xcc"), 2);
             oled_write_padded_P(PSTR("\xcd\xcc\xcc"), 2);
             oled_write_padded_P(PSTR("\xcc\xcc\xcd"), 2);
-            oled_clear_half_except(2);
+            oled_clear_half_except(3);
+
+            char buf[4] = {0x20, 0x20, 0x0a, 0x0};
+
+            for (uint8_t i = 0; i < 2; i++) {
+                uint8_t digit = (oled_get_brightness() >> 4*i) & 0xf;
+                buf[1-i] = digit + (digit > 9 ? 55 : 48);
+            }
+
+            oled_write(buf, false);
+
             break;
 
         case _GAMEFN1:
