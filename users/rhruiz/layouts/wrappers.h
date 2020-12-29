@@ -73,49 +73,49 @@
 //                             .------------------------.
 #define ________L_LWR_1________  ____FUNCTIONS_LEFT____
 //                             |----+----+----+----+----|
-#define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,PERC
+#define ________L_LWR_2________  _____NUMBERS_LEFT_____
 //                             |----+----+----+----+----|
-#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS,UNDS
+#define ________L_LWR_3________  _____SYMBOLS_LEFT_____
 //                             |----+----+----+----+----|
-#define ________L_LWR_4________  AT ,LPRN,RPRN, EQL,PLUS
+#define ________L_LWR_4________  EQL,LBRC,RBRC,MINS,PLUS
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
 #define ________R_LWR_1________  ____FUNCTIONS_RGHT____
 //                             |----+----+----+----+----|
-#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,
+#define ________R_LWR_2________  _____NUMBERS_RGHT_____
 //                             |----+----+----+----+----|
-#define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
+#define ________R_LWR_3________ CIRC,AMPR,ASTR,PIPE,QUOT
 //                             |----+----+----+----+----|
-#define ________R_LWR_4________     ,    , LT , GT ,QUES
+#define ________R_LWR_4________     ,EPIP,LPRN,RPRN,BSLS
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
 #define ________L_RSE_1________ SLCK,PAUS,MISS,    ,
 //                             |----+----+----+----+----|
-#define ________L_RSE_2________  _____NUMBERS_LEFT_____
+#define ________L_RSE_2________     ,    ,MS_U,    ,
 //                             |----+----+----+----+----|
-#define ________L_RSE_3________  _WN,_TAP,_TAN,    ,PLUS
+#define ________L_RSE_3________     ,MS_L,MS_D,MS_R,
 //                             |----+----+----+----+----|
-#define ________L_RSE_4________     ,_BCK,_FWD,    ,MINS
+#define ________L_RSE_4________     ,_BCK,_FWD,    ,
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
 #define ________R_RSE_1________  _____SYMBOLS_RGHT_____
 //                             |----+----+----+----+----|
-#define ________R_RSE_2________  _____NUMBERS_RGHT_____
+#define ________R_RSE_2________     ,BTN1,WH_U,WH_D,BTN2
 //                             |----+----+----+----+----|
-#define ________R_RSE_3________ EQL ,LEFT,DOWN, UP ,RGHT
+#define ________R_RSE_3________     ,LEFT,DOWN, UP ,RGHT
 //                             |----+----+----+----+----|
-#define ________R_RSE_4________ ASTR,_BOL,_SBT,_STP,_EOL
+#define ________R_RSE_4________     ,_BOL,_SBT,_STP,_EOL
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
 #define ________L_CFG_1________ SLCK,PAUS,MISS,RVAD,RVAI
 //                             |----+----+----+----+----|
-#define ________L_CFG_2________ RTOG,RMOD,MS_U,    ,RVAI
+#define ________L_CFG_2________ RTOG,RMOD,    ,    ,RVAI
 //                             |----+----+----+----+----|
-#define ________L_CFG_3________     ,MS_L,MS_D,MS_R,RHUI
+#define ________L_CFG_3________  _WN,_TAP,_TAN,    ,RHUI
 //                             |----+----+----+----+----|
 #define ________L_CFG_4________ _VUP,_VDN,MUTE,EJCT,RSAI
 //                             `----+----+----+----+----'
@@ -123,7 +123,7 @@
 //                             .----+----+----+----+----.
 #define ________R_CFG_1________     ,    ,    ,    ,
 //                             |----+----+----+----+----|
-#define ________R_CFG_2________ _CUP,BTN1,WH_U,WH_D,BTN2
+#define ________R_CFG_2________ _CUP,    ,    ,    ,
 //                             |----+----+----+----+----|
 #define ________R_CFG_3________ _CDN, _WL,PGDN,PGUP, _WR
 //                             |----+----+----+----+----|
