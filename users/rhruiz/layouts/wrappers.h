@@ -73,11 +73,11 @@
 //                             .------------------------.
 #define ________L_LWR_1________  ____FUNCTIONS_LEFT____
 //                             |----+----+----+----+----|
-#define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,
+#define ________L_LWR_2________ EXLM,LCBR,RCBR, DLR,PERC
 //                             |----+----+----+----+----|
-#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS,
+#define ________L_LWR_3________ HASH,LBRC,RBRC,MINS,UNDS
 //                             |----+----+----+----+----|
-#define ________L_LWR_4________  AT ,PLUS, EQL,PERC,
+#define ________L_LWR_4________  AT ,LPRN,RPRN, EQL,PLUS
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
@@ -85,9 +85,9 @@
 //                             |----+----+----+----+----|
 #define ________R_LWR_2________     ,EPIP,ASTR,BSLS,
 //                             |----+----+----+----+----|
-#define ________R_LWR_3________     ,AMPR,PIPE,CIRC,QUOT
+#define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
-#define ________R_LWR_4________     , GRV,LPRN,RPRN,
+#define ________R_LWR_4________     ,    , LT , GT ,QUES
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
