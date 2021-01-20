@@ -1,4 +1,4 @@
-/* Copyright 2021 Craig Gardner
+/* Copyright 2020 Mesa Keyboards
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,14 +14,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include "quantum.h"
-
-#define LAYOUT_ortho_1x5( \
-    k01, k02, k03, k04, k05\
-  ) { \
-    { k01, k02, k03, k04, k05 } \
-}
-
-#define LAYOUT LAYOUT_ortho_1x5 
+#include "mesa_tkl.h"
