@@ -1,5 +1,5 @@
 /*
-Copyright 2012,2013 Jun Wako <wakojun@gmail.com>
+Copyright 2020 melonbred
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,4 +15,5 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "infinity60.h"
+#define PRODUCT_ID 0xF10B
+#define PRODUCT Program Yoink! Staggered
