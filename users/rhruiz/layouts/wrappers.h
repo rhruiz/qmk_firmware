@@ -83,7 +83,7 @@
 //                             .------------------------.
 #define ________R_LWR_1________  ____FUNCTIONS_RGHT____
 //                             |----+----+----+----+----|
-#define ________R_LWR_2________ TILD,EPIP,ASTR,BSLS,
+#define ________R_LWR_2________     ,EPIP,ASTR,BSLS,
 //                             |----+----+----+----+----|
 #define ________R_LWR_3________  GRV,AMPR,PIPE,CIRC,QUOT
 //                             |----+----+----+----+----|
@@ -95,9 +95,9 @@
 //                             |----+----+----+----+----|
 #define ________L_RSE_2________  _____NUMBERS_LEFT_____
 //                             |----+----+----+----+----|
-#define ________L_RSE_3________  _WN,_TAP,_TAN,    ,PLUS
+#define ________L_RSE_3________  _WN,_TAP,_TAN,MINS,
 //                             |----+----+----+----+----|
-#define ________L_RSE_4________ BTN2,    ,    ,    ,MINS
+#define ________L_RSE_4________     ,_BCK,_FWD,PLUS,
 //                             `----+----+----+----+----'
 
 //                             .------------------------.
@@ -105,28 +105,28 @@
 //                             |----+----+----+----+----|
 #define ________R_RSE_2________  _____NUMBERS_RGHT_____
 //                             |----+----+----+----+----|
-#define ________R_RSE_3________ EQL ,LEFT,DOWN, UP ,RGHT
+#define ________R_RSE_3________     ,LEFT,DOWN, UP ,RGHT
 //                             |----+----+----+----+----|
-#define ________R_RSE_4________ ASTR,    ,    ,    ,
+#define ________R_RSE_4________     ,ASTR,COMM, DOT,SLSH
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
 #define ________L_CFG_1________ SLCK,PAUS,MISS,RVAD,RVAI
 //                             |----+----+----+----+----|
-#define ________L_CFG_2________ RTOG,RMOD,MS_U,    ,RVAI
+#define ________L_CFG_2________ BTN1,WH_U,MS_U,WH_D,
 //                             |----+----+----+----+----|
-#define ________L_CFG_3________     ,MS_L,MS_D,MS_R,RHUI
+#define ________L_CFG_3________ BTN2,MS_L,MS_D,MS_R,
 //                             |----+----+----+----+----|
-#define ________L_CFG_4________ _VUP,_VDN,MUTE,EJCT,RSAI
+#define ________L_CFG_4________ _VUP,_VDN,MUTE,EJCT,
 //                             `----+----+----+----+----'
 
 //                             .----+----+----+----+----.
-#define ________R_CFG_1________     ,    ,    ,    ,
+#define ________R_CFG_1________ RTOG,    ,    ,    ,
 //                             |----+----+----+----+----|
-#define ________R_CFG_2________ _CUP,    ,    ,    ,
+#define ________R_CFG_2________ RMOD,    ,    ,    ,
 //                             |----+----+----+----+----|
-#define ________R_CFG_3________ _CDN,BTN1,PGDN,PGUP,BTN2
+#define ________R_CFG_3________ RSAI, _WL,PGDN,PGUP, _WR
 //                             |----+----+----+----+----|
-#define ________R_CFG_4________ _CTG,MUTG,MRWD,MFFD,MPLY
+#define ________R_CFG_4________ RVAI,RHUI,MRWD,MFFD,MPLY
 //                             `----+----+----+----+----'
 // clang-format on
