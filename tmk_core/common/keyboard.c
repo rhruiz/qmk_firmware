@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "led.h"
 #include "keycode.h"
 #include "timer.h"
+#include "sync_timer.h"
 #include "print.h"
 #include "debug.h"
 #include "command.h"
@@ -240,7 +241,14 @@ __attribute__((weak)) bool is_keyboard_left(void) { return true; }
  * Override this function if you have a condition where keypresses processing should change:
  *   - splits where the slave side needs to process for rgb/oled functionality
  */
-__attribute__((weak)) bool should_process_keypress(void) { return is_keyboard_master(); }
+__attribute__((weak)) bool should_process_keypress(void) {
+#if defined(SPLIT_KEYBOARD) && defined(SPLIT_TRANSPORT_MIRROR)
+    is_keyboard_master();
+    return true;
+#else
+    return is_keyboard_master();
+#endif
+}
 
 /** \brief housekeeping_task_kb
  *
@@ -262,6 +270,7 @@ __attribute__((weak)) void housekeeping_task_user(void) {}
  */
 void keyboard_init(void) {
     timer_init();
+    sync_timer_init();
     matrix_init();
 #ifdef VIA_ENABLE
     via_init();

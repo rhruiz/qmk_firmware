@@ -143,6 +143,13 @@ static uint32_t rgb_timer_buffer;
 static last_hit_t last_hit_buffer;
 #endif  // RGB_MATRIX_KEYREACTIVE_ENABLED
 
+// Extern driver internally, driver should not be used directly
+extern const rgb_matrix_driver_t rgb_matrix_driver;
+
+#ifdef RGB_MATRIX_SPLIT
+const uint8_t k_rgb_matrix_split[2] = RGB_MATRIX_SPLIT;
+#endif
+
 void eeconfig_read_rgb_matrix(void) { eeprom_read_block(&rgb_matrix_config, EECONFIG_RGB_MATRIX, sizeof(rgb_matrix_config)); }
 
 void eeconfig_update_rgb_matrix(void) { eeprom_update_block(&rgb_matrix_config, EECONFIG_RGB_MATRIX, sizeof(rgb_matrix_config)); }
@@ -180,9 +187,22 @@ uint8_t rgb_matrix_map_row_column_to_led(uint8_t row, uint8_t column, uint8_t *l
 
 void rgb_matrix_update_pwm_buffers(void) { rgb_matrix_driver.flush(); }
 
-void rgb_matrix_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) { rgb_matrix_driver.set_color(index, red, green, blue); }
+void rgb_matrix_set_color(int index, uint8_t red, uint8_t green, uint8_t blue) {
+#ifdef RGB_MATRIX_SPLIT
+    if (!is_keyboard_left() && index >= k_rgb_matrix_split[0])
+        rgb_matrix_driver.set_color(index - k_rgb_matrix_split[0], red, green, blue);
+    else if (is_keyboard_left() && index < k_rgb_matrix_split[0])
+#endif
+        rgb_matrix_driver.set_color(index, red, green, blue);
+}
 
-void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue) { rgb_matrix_driver.set_color_all(red, green, blue); }
+void rgb_matrix_set_color_all(uint8_t red, uint8_t green, uint8_t blue) {
+#ifdef RGB_MATRIX_SPLIT
+    for (uint8_t i = 0; i < DRIVER_LED_TOTAL; i++) rgb_matrix_set_color(i, red, green, blue);
+#else
+    rgb_matrix_driver.set_color_all(red, green, blue);
+#endif
+}
 
 bool process_rgb_matrix(uint16_t keycode, keyrecord_t *record) {
 #if RGB_DISABLE_TIMEOUT > 0
@@ -266,9 +286,9 @@ static bool rgb_matrix_none(effect_params_t *params) {
 
 static void rgb_task_timers(void) {
 #if defined(RGB_MATRIX_KEYREACTIVE_ENABLED) || RGB_DISABLE_TIMEOUT > 0
-    uint32_t deltaTime = timer_elapsed32(rgb_timer_buffer);
+    uint32_t deltaTime = sync_timer_elapsed32(rgb_timer_buffer);
 #endif  // defined(RGB_MATRIX_KEYREACTIVE_ENABLED) || RGB_DISABLE_TIMEOUT > 0
-    rgb_timer_buffer = timer_read32();
+    rgb_timer_buffer = sync_timer_read32();
 
     // Update double buffer timers
 #if RGB_DISABLE_TIMEOUT > 0
@@ -296,7 +316,7 @@ static void rgb_task_timers(void) {
 
 static void rgb_task_sync(void) {
     // next task
-    if (timer_elapsed32(g_rgb_timer) >= RGB_MATRIX_LED_FLUSH_LIMIT) rgb_task_state = STARTING;
+    if (sync_timer_elapsed32(g_rgb_timer) >= RGB_MATRIX_LED_FLUSH_LIMIT) rgb_task_state = STARTING;
 }
 
 static void rgb_task_start(void) {
