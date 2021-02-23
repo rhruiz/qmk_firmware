@@ -11,16 +11,16 @@ bool is_keyboard_left(void);
 
 static const char _game_layer_logo[][5] PROGMEM = {"\xa8\xa9\xaa\xab", "\xc8\xc9\xca\xcb"};
 
-static const char _lower_layer_logo[][3] PROGMEM = {"\x8c\x8d", "\xac\xad"};
+static const char _raise_layer_logo[3] PROGMEM = {"\x90\x91"};
 
-static const char _raise_layer_logo[][3] PROGMEM = {"\x8e\x8f", "\xae\xaf"};
+static const char _lower_layer_logo[3] PROGMEM = {"\x91\x90"};
 
-void oled_write_padded_P(const char *str, uint8_t size) {
+void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
     for (uint8_t i = 0; is_keyboard_left() && i < size; i++) {
         oled_write_P(PSTR("\x20"), false);
     }
 
-    oled_write_P(str, false);
+    oled_write_P(str, inverse);
 
     for (uint8_t i = 0; !is_keyboard_left() && i < size; i++) {
         oled_write_P(PSTR("\x20"), false);
@@ -88,14 +88,15 @@ void rhruiz_render_oled(void) {
     switch (layer) {
         case _NUM:
             oled_clear_half_except(1);
-            oled_write_padded_P(PSTR("\x88\x89\x8a"), 2);
+            oled_write_padded_P(PSTR("\x88\x89\x8a"), false, 2);
             oled_clear_half_except(1);
             break;
 
         case _FN1:
             oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 6; i++) {
-                oled_write_padded_P(_lower_layer_logo[i % 2], 3);
+            for (uint8_t i = 0; i < 3; i++) {
+                oled_write_padded_P(_lower_layer_logo, false, 3);
+                oled_write_padded_P(_lower_layer_logo, true, 3);
             }
 
             oled_clear_half_except(6);
@@ -103,8 +104,9 @@ void rhruiz_render_oled(void) {
 
         case _FN2:
             oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 6; i++) {
-                oled_write_padded_P(_raise_layer_logo[i % 2], 3);
+            for (uint8_t i = 0; i < 3; i++) {
+                oled_write_padded_P(_raise_layer_logo, false, 3);
+                oled_write_padded_P(_raise_layer_logo, true, 3);
             }
 
             oled_clear_half_except(6);
@@ -112,9 +114,9 @@ void rhruiz_render_oled(void) {
 
         case _CFG:
             oled_clear_half_except(3);
-            oled_write_padded_P(PSTR("\xcc\xcd\xcc"), 2);
-            oled_write_padded_P(PSTR("\xcd\xcc\xcc"), 2);
-            oled_write_padded_P(PSTR("\xcc\xcc\xcd"), 2);
+            oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 2);
+            oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 2);
+            oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 2);
             oled_clear_half_except(3);
 
             char buf[4] = {0x20, 0x20, 0x0a, 0x0};
@@ -144,8 +146,8 @@ void rhruiz_render_oled(void) {
 
         case _GAME:
             oled_clear_half_except(2);
-            oled_write_padded_P(_game_layer_logo[0], 1);
-            oled_write_padded_P(_game_layer_logo[1], 1);
+            oled_write_padded_P(_game_layer_logo[0], false, 1);
+            oled_write_padded_P(_game_layer_logo[1], false, 1);
             oled_clear_half_except(2);
             break;
 
