@@ -1,5 +1,5 @@
 /*
-Copyright 2020 imchipwood
+Copyright 2021 Yiancar
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -14,21 +14,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #pragma once
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x0913
-#define MANUFACTURER    imchipwood
-#define PRODUCT         dumbpad
-
-/* Column/Row IO definitions */
-#define DIODE_DIRECTION COL2ROW
-
-/* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
-#define DEBOUNCE 5
-
-/* Reduce tapdance required taps from 5 to 2 */
-#define TAPPING_TOGGLE 2
+#undef MATRIX_COL_PINS
+#define MATRIX_COL_PINS { A13, A10, A9, A14, A15, B8, B9, B1, B0, A7, A0, A1, A2, A3, A5 }
+// To enable debugger set A13 A14 -> A5 A7
