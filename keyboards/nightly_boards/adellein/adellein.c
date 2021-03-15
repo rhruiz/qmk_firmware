@@ -1,4 +1,4 @@
-/* Copyright 2019 Spaceman
+/* Copyright 2020 Neil Brian Ramirez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,16 +13,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-#include "config_common.h"
 
-/* Pancake default pinout */
-#define MATRIX_ROW_PINS { B5, D7, C6, D0 }
-#define MATRIX_COL_PINS { C7, D6, B7, B6, F0, D2, D3, F1, F4, F5, F6, F7 }
-#define UNUSED_PINS
+#include "adellein.h"
 
-#define AdafruitBleResetPin D4
-#define AdafruitBleCSPin B4
-#define AdafruitBleIRQPin E6
+void matrix_scan_kb(void) {
+    encoder_action_unregister();
+    matrix_scan_user();
+}
 
-#define VIA_HAS_BROKEN_KEYCODES
+void encoder_update_kb(uint8_t index, bool clockwise) {
+    encoder_action_register(index, clockwise);
+    // encoder_update_user(index, clockwise);
+};
