@@ -1,4 +1,4 @@
-/* Copyright 2020 kb-elmo<mail@elmo.space>
+/* Copyright 2020 noclew
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,4 +14,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kira80.h"
+#include "rev2.h"
