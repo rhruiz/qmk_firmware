@@ -40,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #undef USE_I2C
 #define USE_SERIAL_PD2
+#define SPLIT_TRANSPORT_MIRROR
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
