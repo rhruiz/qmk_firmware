@@ -50,6 +50,7 @@
 #define KC__FWD LCMD(KC_RBRC)
 #define KC__TAN LCMD(KC_RCBR)
 #define KC__TAP LCMD(KC_LCBR)
+#define KC__NXW LCMD(KC_TAB)
 
 #ifdef RGBLIGHT_ENABLE
 #    define KC_RVAD RGB_VAD
