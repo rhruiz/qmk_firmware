@@ -32,7 +32,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #    undef OLED_FONT_H
 #    define OLED_FONT_H RHRUIZ_OLED_FONT_H
 #    define OLED_SCROLL_TIMEOUT 8000
-#    define OLED_UPDATE_INTERVAL 50
 #    ifdef OLED_ROTATE
 #        define OLED_SCROLL_TIMEOUT_RIGHT
 #    endif
