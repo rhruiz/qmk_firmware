@@ -48,18 +48,24 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 void rhruiz_send_make_args(bool should_flash, bool parallel) {
-    SEND_STRING("make " QMK_KEYBOARD ":" QMK_KEYMAP);
+    SEND_STRING("qmk ");
+
     if (should_flash) {
-        SEND_STRING(":flash");
+        SEND_STRING("flash");
+    } else {
+        SEND_STRING("compile");
     }
+
+    SEND_STRING(" -kb " QMK_KEYBOARD " -km " QMK_KEYMAP);
+
     if (parallel) {
         SEND_STRING(" -j8");
     }
 #ifndef OLED_DRIVER_ENABLE
-    SEND_STRING(" OLED_DRIVER_ENABLE=no");
+    SEND_STRING(" -e OLED_DRIVER_ENABLE=no");
 #else
 #    ifdef OLED_ROTATE
-    SEND_STRING(" OLED_ROTATE=yes");
+    SEND_STRING(" -e OLED_ROTATE=yes");
 #    endif
 #endif
 }
