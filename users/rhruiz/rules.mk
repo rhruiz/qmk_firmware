@@ -1,5 +1,8 @@
 SRC += rhruiz.c
 
+GRAVE_ESC_ENABLE=no
+PACE_CADET_ENABLE=no
+
 ifeq ($(strip $(RAW_ENABLE)), yes)
     SRC += raw_hid/raw_hid.c
 endif
