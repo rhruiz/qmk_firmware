@@ -24,4 +24,5 @@ BOOTLOADER = qmk-dfu
 SLEEP_LED_ENABLE = no    # Breathing sleep LED during USB suspend
 
 OPT_DEFS += -DPRO_MICRO
-SPLIT_TRANSPORT = mirror
+SPLIT_TRANSPORT = custom
+QUANTUM_LIB_SRC += rhruiz_transport.c serial.c
