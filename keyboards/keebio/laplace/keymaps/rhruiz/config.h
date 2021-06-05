@@ -4,7 +4,6 @@
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
 #define IGNORE_MOD_TAP_INTERRUPT
-#define HOME_ROW_MODS
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
