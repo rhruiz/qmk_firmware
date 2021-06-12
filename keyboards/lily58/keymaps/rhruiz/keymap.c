@@ -2,8 +2,6 @@
 #include "rhruiz.h"
 #include "layouts/kc_keys.h"
 
-#define KC__GFN1 MO(_GAMEFN1)
-#define KC_ESPC LSFT_T(KC_SPACE)
 #define KC__NBK LT(_NUM, KC__BCK)
 
 // clang-format off
