@@ -18,76 +18,9 @@
     KC_##L20, KC_##L21, KC_##L22, KC_##L23, KC_##L24, KC_##L25,                     KC_##R20, KC_##R21, KC_##R22, KC_##R23, KC_##R24, KC_##R25, \
                                             KC_##L30, KC_##L31, KC_##L32, KC_##R30, KC_##R31, KC_##R32 \
   )
-// clang-format on
-
-#ifdef COMBO_ENABLE
-const uint16_t PROGMEM _combo_0[]  = {KC_A, KC_S, COMBO_END};
-const uint16_t PROGMEM _combo_1[]  = {KC_A, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_2[]  = {KC_A, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_3[]  = {KC_A, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_4[]  = {KC_A, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_5[]  = {KC_A, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_6[]  = {KC_A, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_7[]  = {KC_S, KC_E, COMBO_END};
-const uint16_t PROGMEM _combo_8[]  = {KC_S, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_9[]  = {KC_S, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_10[] = {KC_S, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_11[] = {KC_S, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_12[] = {KC_S, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_13[] = {KC_E, KC_T, COMBO_END};
-const uint16_t PROGMEM _combo_14[] = {KC_E, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_15[] = {KC_E, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_16[] = {KC_E, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_17[] = {KC_E, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_18[] = {KC_T, KC_N, COMBO_END};
-const uint16_t PROGMEM _combo_19[] = {KC_T, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_20[] = {KC_T, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_21[] = {KC_T, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_22[] = {KC_N, KC_I, COMBO_END};
-const uint16_t PROGMEM _combo_23[] = {KC_N, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_24[] = {KC_N, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_25[] = {KC_I, KC_O, COMBO_END};
-const uint16_t PROGMEM _combo_26[] = {KC_I, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_27[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM _combo_28[] = {KC_P, KC_S, COMBO_END};
-
-// clang-format off
-
-combo_t key_combos[COMBO_COUNT] = {
-    COMBO(_combo_0, KC_W),
-    COMBO(_combo_1, KC_X),
-    COMBO(_combo_2, KC_F),
-    COMBO(_combo_3, KC_Q),
-    COMBO(_combo_4, KC_Z),
-    COMBO(_combo_5, KC_LPRN),
-    COMBO(_combo_6, KC_SLASH),
-    COMBO(_combo_7, KC_D),
-    COMBO(_combo_8, KC_C),
-    COMBO(_combo_9, KC_J),
-    COMBO(_combo_10, KC_K),
-    COMBO(_combo_11, KC_DOT),
-    COMBO(_combo_12, KC_RPRN),
-    COMBO(_combo_13, KC_R),
-    COMBO(_combo_14, KC_Y),
-    COMBO(_combo_15, KC_COMMA),
-    COMBO(_combo_16, KC_MINUS),
-    COMBO(_combo_17, KC_QUOTE),
-    COMBO(_combo_18, KC_B),
-    COMBO(_combo_19, KC_V),
-    COMBO(_combo_20, KC_G),
-    COMBO(_combo_21, KC_BSPACE),
-    COMBO(_combo_22, KC_H),
-    COMBO(_combo_23, KC_U),
-    COMBO(_combo_24, KC_M),
-    COMBO(_combo_25, KC_L),
-    COMBO(_combo_26, KC_EXLM),
-    COMBO(_combo_27, KC_SCOLON),
-    COMBO(_combo_28, KC_LPRN),
-};
-// clang-format on
-#endif
 
 #define KC_ZALT LALT_T(KC_Z)
+#define KC_GBSP LCMD_T(KC_BSPC)
 
 #ifndef HOME_ROW_MODS
 #    undef ________L_BL_R4________
@@ -112,11 +45,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_GAME] = LAYOUT_kc(
   //,-----------------------------------.                    ,-----------------------------------.
-          ,  A  ,  S  ,  E  ,  T  ,     ,                          ,  N  ,   I ,  O  ,  P  ,     ,
+      TAB ,   ________L_BL_R2________   ,                        ________R_BL_R2________   , BSPC,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     , _TGM,
+      ESC ,  A  ,  S  ,  D  ,  F  ,  G  ,                       H  ,  J  ,  K  ,  L  , SCLN, ENT ,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-          ,     ,     ,     ,     ,     ,                          ,     ,     ,     ,     ,     ,
+      LSFT,   ________L_BL_R4________   ,                        ________R_BL_R4________   ,TDSNU,
+  //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
+                              GBSP,     ,     ,        ,     ,
+                          //`-----------------'  `-----------------'
+    ),
+
+  [_GAMEFN1] = LAYOUT_kc(
+  //,-----------------------------------.                    ,-----------------------------------.
+      TAB ,   _____NUMBERS_LEFT_____    ,                        ________R_BL_R2________   , BSPC,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+      ESC ,   _____NUMBERS_RGHT_____    ,                       H  ,  J  ,  K  ,  L  , SCLN, ENT ,
+  //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
+      LSFT,   ________L_BL_R4________   ,                        ________R_BL_R4________   ,TDSNU,
   //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
                                   ,     ,     ,        ,     ,
                           //`-----------------'  `-----------------'
@@ -137,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_FN1] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
-          ,   ________L_LWR_2________   ,                        ________R_LWR_2________   ,     ,
+          ,   ________L_LWR_2________   ,          V              ________R_LWR_2________   ,     ,
   //|-----+-----------------------------|                    |-----------------------------+-----|
           ,   ________L_LWR_3________   ,                        ________R_LWR_3________   ,     ,
   //|-----+-----------------------------|                    |-----------------------------+-----|
