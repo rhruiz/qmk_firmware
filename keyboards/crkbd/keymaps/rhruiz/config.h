@@ -41,8 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USE_SERIAL_PD2
 #define SPLIT_TRANSPORT_MIRROR
 
-#define ONESHOT_TAP_TOGGLE 5
-#define ONESHOT_TIMEOUT 1000
+#define NO_ACTION_ONESHOT
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
