@@ -1,8 +1,8 @@
 # MCU name
-MCU = atmega32u4
+MCU = STM32F103
 
 # Bootloader selection
-BOOTLOADER = caterina
+BOOTLOADER = stm32duino
 
 # Build Options
 #   change yes to no to disable
@@ -17,18 +17,8 @@ SLEEP_LED_ENABLE = no       # Breathing sleep LED during USB suspend
 # if this doesn't work, see here: https://github.com/tmk/tmk_keyboard/wiki/FAQ#nkro-doesnt-work
 NKRO_ENABLE = yes           # USB Nkey Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
-RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
+RGBLIGHT_ENABLE = yes       # Enable keyboard RGB underglow
 BLUETOOTH_ENABLE = no       # Enable Bluetooth
 AUDIO_ENABLE = no           # Audio output
-RGB_MATRIX_ENABLE = no
-RGB_MATRIX_DRIVER = WS2812
-
-# if firmware size over limit, try this option
-# LTO_ENABLE = yes
-
-DEFAULT_FOLDER = crkbd/rev1
-
-RGBLIGHT_SUPPORTED = yes
-RGB_MATRIX_SUPPORTED = yes
-
-LAYOUTS = split_3x5_3 split_3x6_3
+WS2812_DRIVER = pwm
+ENCODER_ENABLE = yes
