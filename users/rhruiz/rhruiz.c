@@ -13,6 +13,8 @@ __attribute__((weak)) bool rhruiz_process_record(uint16_t keycode, keyrecord_t *
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
+__attribute__((weak)) void matrix_scan_keymap(void) {}
+
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
 __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
@@ -83,8 +85,24 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
     rhruiz_send_make_args(should_flash, parallel);
 }
 
+bool is_alt_tab_active = false;
+uint16_t alt_tab_timer = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case KC_CTAB:
+            if (record->event.pressed) {
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                    register_code(KC_LCMD);
+                }
+                alt_tab_timer = timer_read();
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            break;
+
         case KC_EPIP:
             if (!record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
@@ -232,4 +250,15 @@ void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
     ws2812_setleds(ledp, RGBLED_NUM);
 #    endif
 #endif
+}
+
+void matrix_scan_user(void) {
+    if (is_alt_tab_active) {
+        if (timer_elapsed(alt_tab_timer) > 600) {
+            unregister_code(KC_LCMD);
+            is_alt_tab_active = false;
+        }
+    }
+
+    matrix_scan_keymap();
 }
