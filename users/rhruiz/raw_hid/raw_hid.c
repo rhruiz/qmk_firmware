@@ -32,6 +32,25 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
             break;
         }
 
+        case id_oled_clear: {
+#ifdef OLED_DRIVER_ENABLE
+            oled_clear();
+            raw_hid_send(data, length);
+#endif
+            break;
+        }
+
+        case id_oled_write: {
+#ifdef OLED_DRIVER_ENABLE
+            for (uint8_t i = 0; i < length - 1; i++) {
+                oled_write_char(command_data[i], false);
+            }
+
+            raw_hid_send(data, length);
+#endif
+            break;
+        }
+
         case id_rgblight_color: {
 #ifdef RGBLIGHT_ENABLE
             uint16_t hue = ((uint16_t)command_data[0] << 8) | command_data[1];

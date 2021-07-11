@@ -7,6 +7,8 @@ enum rhruiz_command_id {
     id_rgblight_toggle,
     id_rgblight_reset,
     id_rgblight_color,
+    id_oled_clear,
+    id_oled_write,
     id_unhandled = 0xFF,
 };
 
