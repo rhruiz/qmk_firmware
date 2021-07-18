@@ -86,17 +86,25 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
 }
 
 bool is_alt_tab_active = false;
-uint16_t alt_tab_timer = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case MO(_FN2):
+            if (!record->event.pressed) {
+                if (is_alt_tab_active) {
+                    unregister_code(KC_LCMD);
+                    is_alt_tab_active = false;
+                }
+            }
+
+            break;
+
         case KC_CTAB:
             if (record->event.pressed) {
                 if (!is_alt_tab_active) {
                     is_alt_tab_active = true;
                     register_code(KC_LCMD);
                 }
-                alt_tab_timer = timer_read();
                 register_code(KC_TAB);
             } else {
                 unregister_code(KC_TAB);
@@ -253,12 +261,5 @@ void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
 }
 
 void matrix_scan_user(void) {
-    if (is_alt_tab_active) {
-        if (timer_elapsed(alt_tab_timer) > 600) {
-            unregister_code(KC_LCMD);
-            is_alt_tab_active = false;
-        }
-    }
-
     matrix_scan_keymap();
 }
