@@ -1,4 +1,4 @@
-/* Copyright 2019 Branden Byers
+/* Copyright 2020 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,17 +16,8 @@
 
 #pragma once
 
-#include "quantum.h"
+#define CH_CFG_ST_FREQUENCY 10000
+#define CH_CFG_ST_TIMEDELTA 0
+#define CH_CFG_USE_WAITEXIT TRUE
 
-#define LAYOUT_ortho_4x4( \
-    k00, k01, k02, k03, \
-    k10, k11, k12, k13, \
-    k20, k21, k22, k23, \
-    k30, k31, k32, k33 \
-) \
-{ \
-    { k00, k01, k02, k03 }, \
-    { k10, k11, k12, k13 }, \
-    { k20, k21, k22, k23 }, \
-    { k30, k31, k32, k33 } \
-}
+#include_next <chconf.h>
