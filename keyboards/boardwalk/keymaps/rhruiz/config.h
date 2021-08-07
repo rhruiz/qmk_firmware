@@ -14,3 +14,7 @@
  */
 
 #pragma once
+
+#define RGBLIGHT_LAYERS
+#define HOME_ROW_MODS
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF

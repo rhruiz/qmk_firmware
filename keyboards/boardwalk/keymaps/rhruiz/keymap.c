@@ -25,7 +25,7 @@ const rgblight_segment_t PROGMEM cfg_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 8
 
 const rgblight_segment_t PROGMEM num_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 45, 255, 255});
 
-const rgblight_segment_t PROGMEM game_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 250, 255, 255});
+const rgblight_segment_t PROGMEM game_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 148, 255, 255});
 
 const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1_colors, fn2_colors, cfg_colors, num_colors, game_colors);
 #else
