@@ -41,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  //|----+-----------------------------+-----|  |-----+-----------------------------+-----+
     LSFT,   ________L_BL_R4________   , PGDN,    EPIP,   ________R_BL_R4________   , RSFT,
  //|----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+
-    FNUM, _FN1, LCTL, LALT, LGUI, SFN1, SFN1,    EFN2, EFN2, ALBS, GRAL, DOWN, UP  , RNUM
+    FNUM, LCTL, LALT, LGUI, _FN1,_CSP, _CSP,     ENTS, ENTS, _FN2, ALBS, RGUI, UP  , FNUM
  //`----+-----+-----+-----+-----+-----+-----'  `-----+-----+-----+-----+-----+-----+-----'
   ),
 
