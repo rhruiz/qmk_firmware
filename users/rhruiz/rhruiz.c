@@ -183,6 +183,7 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
 
     if (state != last_state) {
         state = update_tri_layer_state(state, _FN1, _FN2, _CFG);
+        state = update_tri_layer_state(state, _ALT_FN1, _ALT_FN2, _ALT_CFG);
 
         switch (biton32(state)) {
             case _BL:
@@ -195,6 +196,8 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
 
             case _FN1:
             case _FN2:
+            case _ALT_FN1:
+            case _ALT_FN2:
                 state = state | (1UL << _KEY_OVERRIDE);
                 break;
 

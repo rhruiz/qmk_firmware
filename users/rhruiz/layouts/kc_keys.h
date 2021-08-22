@@ -6,13 +6,19 @@
 #define KC_CESC CTRLESC
 #define KC__CSP LCTL_T(KC_SPACE)
 
+#define KC__DLO DF(_BL)
+#define KC__ALO DF(_ALT_BL)
+
 #define KC_OFN1 OSL(_FN1)
 #define KC_OFN2 OSL(_FN2)
 #define KC__FN1 MO(_FN1)
 #define KC__FN2 MO(_FN2)
+#define KC_AFN1 MO(_ALT_FN1)
+#define KC_AFN2 MO(_ALT_FN2)
 #define KC__CFG MO(_CFG)
 #define KC_FNUM MO(_NUM)
 #define KC__TGN TG(_NUM)
+#define KC_TGAN TG(_ALT_NUM)
 #define KC__TGM TG(_GAME)
 #define KC_SFN1 SPCFN1
 #define KC_BFN2 BKSFN2
