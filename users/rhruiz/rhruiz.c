@@ -63,8 +63,8 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
     if (parallel) {
         SEND_STRING(" -j8");
     }
-#ifndef OLED_DRIVER_ENABLE
-    SEND_STRING(" -e OLED_DRIVER_ENABLE=no");
+#ifndef OLED_ENABLE
+    SEND_STRING(" -e OLED_ENABLE=no");
 #else
 #    ifdef OLED_ROTATE
     SEND_STRING(" -e OLED_ROTATE=yes");
@@ -148,7 +148,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
     }
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 
     rhruiz_oled_activity();
 #endif

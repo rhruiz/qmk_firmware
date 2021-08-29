@@ -152,7 +152,7 @@ void rhruiz_update_layer_colors(layer_state_t state) {
         combo_disable();
     }
 #endif
-#ifndef OLED_DRIVER_ENABLE
+#ifndef OLED_ENABLE
     writePinHigh(D5);
     writePinHigh(B0);
 
@@ -164,7 +164,7 @@ void rhruiz_update_layer_colors(layer_state_t state) {
 }
 
 void keyboard_post_init_keymap() {
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
     oled_set_brightness(0x0);
     setPinOutput(B0);
     setPinOutput(D5);
@@ -176,7 +176,7 @@ void keyboard_post_init_keymap() {
 #endif
 }
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
     switch(keycode) {
         case KC_EJCT:

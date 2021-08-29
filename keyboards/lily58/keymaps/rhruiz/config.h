@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 // OLED
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #undef OLED_FONT_H
 #define OLED_FONT_H RHRUIZ_OLED_FONT_H
 #define OLED_SCROLL_TIMEOUT 8000

@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EE_HANDS
 
 // OLED
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #    undef SSD1306OLED
 #    undef OLED_FONT_H
 #    define OLED_FONT_H RHRUIZ_OLED_FONT_H

@@ -33,7 +33,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         }
 
         case id_oled_clear: {
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
             oled_clear();
             raw_hid_send(data, length);
 #endif
@@ -41,7 +41,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         }
 
         case id_oled_write: {
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
             for (uint8_t i = 0; i < length - 1; i++) {
                 oled_write_char(command_data[i], false);
             }

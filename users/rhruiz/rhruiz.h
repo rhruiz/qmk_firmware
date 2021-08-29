@@ -6,7 +6,7 @@
 #    include "audio/songs.h"
 #endif
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #    include "oled/oled.h"
 #endif
 

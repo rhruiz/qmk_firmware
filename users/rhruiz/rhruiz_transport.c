@@ -42,7 +42,7 @@ static uint16_t device_cpi    = 0;
 static int8_t   split_mouse_x = 0, split_mouse_y = 0;
 #endif
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 #    include "oled_driver.h"
 #endif
 
@@ -224,7 +224,7 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
         }
     }
 
-#    ifdef OLED_DRIVER_ENABLE
+#    ifdef OLED_ENABLE
     bool is_oled_on = is_oled_on();
     if (is_oled_on != i2c_buffer->oled_on) {
         if (i2c_writeReg(SLAVE_I2C_ADDRESS, I2C_LAYER_STATE_START, (void *)&is_oled_on, sizeof(is_oled_on), TIMEOUT) >= 0) {
@@ -313,7 +313,7 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
         default_layer_state = i2c_buffer->t_default_layer_state;
     }
 
-#    ifdef OLED_DRIVER_ENABLE
+#    ifdef OLED_ENABLE
     if (i2c_buffer->oled_on) {
         oled_on();
     } else {
@@ -511,7 +511,7 @@ bool transport_master(matrix_row_t master_matrix[], matrix_row_t slave_matrix[])
 
     serial_m2s_buffer.t_layer_state           = layer_state;
     serial_m2s_buffer.t_default_layer_state   = default_layer_state;
-#    ifdef OLED_DRIVER_ENABLE
+#    ifdef OLED_ENABLE
     serial_m2s_buffer.oled_on                 = is_oled_on();
 #    endif
 
@@ -582,7 +582,7 @@ void transport_slave(matrix_row_t master_matrix[], matrix_row_t slave_matrix[]) 
     if (default_layer_state != serial_m2s_buffer.t_default_layer_state) {
         default_layer_state = serial_m2s_buffer.t_default_layer_state;
     }
-#    ifdef OLED_DRIVER_ENABLE
+#    ifdef OLED_ENABLE
     if (serial_m2s_buffer.oled_on) {
         oled_on();
     } else {
