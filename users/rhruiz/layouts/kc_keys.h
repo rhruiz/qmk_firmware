@@ -26,7 +26,7 @@
 #define KC_TFN2 LT(_FN2, KC_TAB)
 #define KC_ALBS RALT_T(KC_BSPC)
 #define KC_ALDE LALT_T(KC_DEL)
-#define KC__GFN1 MO(_GAMEFN1)
+#define KC__GFN1 OSL(_GAMEFN1)
 #define KC_ESPC LSFT_T(KC_SPACE)
 
 #define KC__RST RESET

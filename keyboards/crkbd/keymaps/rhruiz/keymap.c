@@ -5,6 +5,11 @@
 #    include "thumbstick.h"
 #endif
 
+#define KC_ZALT LALT_T(KC_Z)
+#define KC_GBSP LCMD_T(KC_BSPC)
+#define KC_ALT0 LALT_T(KC_0)
+#define KC_SCTL LSFT(KC_LCTL)
+
 // clang-format off
 #define LAYOUT_kc( \
   L00, L01, L02, L03, L04, L05,           R00, R01, R02, R03, R04, R05, \
@@ -19,15 +24,11 @@
                                             KC_##L30, KC_##L31, KC_##L32, KC_##R30, KC_##R31, KC_##R32 \
   )
 
-#define KC_ZALT LALT_T(KC_Z)
-#define KC_GBSP LCMD_T(KC_BSPC)
-
 #ifndef HOME_ROW_MODS
 #    undef ________L_BL_R4________
 #    define ________L_BL_R4________ ZALT, X, C, V, B
 #endif
 
-#define KC_ALT0 LALT_T(KC_0)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -59,11 +60,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------.                    ,-----------------------------------.
       TAB ,   _____NUMBERS_LEFT_____    ,                        ________R_BL_R2________   , BSPC,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-      ESC ,   _____NUMBERS_RGHT_____    ,                       H  ,  J  ,  K  ,  L  , SCLN, ENT ,
+      SCTL,   _____NUMBERS_RGHT_____    ,                       H  ,  J  ,  K  ,  L  , SCLN, ENT ,
   //|-----+-----+-----+-----+-----+-----|                    |-----+-----+-----+-----+-----+-----|
-      LSFT,   ________L_BL_R4________   ,                        ________R_BL_R4________   ,TDSNU,
+      LCTL,   ________L_BL_R4________   ,                        ________R_BL_R4________   ,TDSNU,
   //|-----+-----+-----+-----+-----+-----+-----|  |-----+-----+-----+-----+-----+-----+-----+-----|
-                                  ,     ,     ,        ,     ,
+                                  ,     , LSFT,        ,     ,
                           //`-----------------'  `-----------------'
     ),
 
