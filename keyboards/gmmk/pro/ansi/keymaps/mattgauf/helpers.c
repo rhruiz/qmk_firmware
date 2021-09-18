@@ -1,4 +1,4 @@
-/* Copyright 2021 John Ezra
+/* Copyright 2021 Matt Gauf
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,27 +14,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "rgb_matrix.h"
 
-#ifdef OLED_DRIVER_ENABLE
-  #define OLED_DISPLAY_128X64
-#endif
-
-#ifdef RGBLIGHT_ENABLE
-  #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-  #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-  #define RGBLIGHT_EFFECT_STATIC_GRADIENT
-  #define RGBLIGHT_EFFECT_TWINKLE
-
-  #define RGBLIGHT_HUE_STEP 8
-  #define RGBLIGHT_SAT_STEP 8
-  #define RGBLIGHT_VAL_STEP 8
-  #define RGBLIGHT_LIMIT_VAL 150
-#endif
-
-#undef DEBOUNCE
-#define DEBOUNCE 1
-
-#define TAPPING_TERM 125
-
-#define SPLIT_WPM_ENABLE
+void rgb_matrix_set_color_flags(uint8_t red, uint8_t green, uint8_t blue, uint8_t flags) {
+    for (uint8_t ii = 0; ii < DRIVER_LED_TOTAL; ii++) {
+        if (g_led_config.flags[ii] & flags) {
+            rgb_matrix_set_color(ii, red, green, blue);
+        }
+    }
+}
