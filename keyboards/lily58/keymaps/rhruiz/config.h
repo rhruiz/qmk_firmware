@@ -27,6 +27,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EE_HANDS
 
 #define USE_SERIAL_PD2
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_MODS_ENABLE
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 150
