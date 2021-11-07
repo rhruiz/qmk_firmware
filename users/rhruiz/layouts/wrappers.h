@@ -18,8 +18,8 @@
 #    define KC__LSFT_T(k) LSFT_T(k)
 #    define KC__LCTL_T(k) LCTL_T(k)
 #    define KC__LGUI_T(k) LGUI_T(k)
-#    define HRL(k1, k2, k3, k4, k5) _LALT_T(KC_##k1), _LSFT_T(KC_##k2), _LCTL_T(KC_##k3), _LGUI_T(KC_##k4), k5
-#    define HRR(k1, k2, k3, k4, k5) k1, _LGUI_T(KC_##k2), _LCTL_T(KC_##k3), _LSFT_T(KC_##k4), _LALT_T(KC_##k5)
+#    define HRL(k1, k2, k3, k4, k5) _LCTL_T(KC_##k1), _LSFT_T(KC_##k2), _LALT_T(KC_##k3), _LGUI_T(KC_##k4), k5
+#    define HRR(k1, k2, k3, k4, k5) k1, _LGUI_T(KC_##k2), _LALT_T(KC_##k3), _LSFT_T(KC_##k4), _LCTL_T(KC_##k5)
 #else
 #    define HRL(k1, k2, k3, k4, k5) k1, k2, k3, k4, k5
 #    define HRR(k1, k2, k3, k4, k5) k1, k2, k3, k4, k5

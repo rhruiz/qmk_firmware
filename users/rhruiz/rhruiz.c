@@ -36,8 +36,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 #ifdef HOME_ROW_MODS
         case SFT_T(KC_S):
         case SFT_T(KC_L):
-        case ALT_T(KC_A):
-        case ALT_T(KC_SCLN):
+        case CTL_T(KC_A):
+        case CTL_T(KC_SCLN):
             return TAPPING_TERM + 50;
 #endif
 #ifdef TAP_DANCE_ENABLE
