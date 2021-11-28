@@ -87,7 +87,7 @@ void oled_demux_cond_write_P(bool left, bool right, const char *when_none, const
     oled_write_P(outs[(left << 1) + right], false);
 }
 
-void rhruiz_render_oled(void) {
+bool rhruiz_render_oled(void) {
     layer_state_t layer = biton32(layer_state);
 
     switch (layer) {
@@ -183,6 +183,8 @@ void rhruiz_render_oled(void) {
     oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\xa4\xa5"), PSTR("\x20\x20"));
     oled_demux_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\x20"), PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"));
     oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\xa2\xa3"), PSTR("\x20\x20"));
+
+    return false;
 }
 #else
 void rhruiz_render_oled(void) {
@@ -246,17 +248,17 @@ void rhruiz_render_oled(void) {
 
 void rhruiz_oled_activity(void) { oled_timer = timer_read32(); }
 
-__attribute__((weak)) void oled_task_user(void) {
+__attribute__((weak)) bool oled_task_user(void) {
     if (is_keyboard_master()) {
         if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
             oled_off();
-            return;
+            return false;
         } else {
             oled_on();
         }
     }
 
-    rhruiz_render_oled();
+    return rhruiz_render_oled();
 }
 
 void suspend_power_down_user(void) { oled_off(); }
