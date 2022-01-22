@@ -28,6 +28,7 @@
 #define KC_ALDE LALT_T(KC_DEL)
 #define KC__GFN1 OSL(_GAMEFN1)
 #define KC_ESPC LSFT_T(KC_SPACE)
+#define KC_STAB LSFT(KC_TAB)
 
 #define KC__RST RESET
 #define KC_MISS MISCTRL
