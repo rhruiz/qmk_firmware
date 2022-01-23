@@ -187,7 +187,7 @@ bool rhruiz_render_oled(void) {
     return false;
 }
 #else
-void rhruiz_render_oled(void) {
+bool rhruiz_render_oled(void) {
     layer_state_t layer = biton32(layer_state);
 
     switch (layer) {
@@ -243,6 +243,8 @@ void rhruiz_render_oled(void) {
 
             break;
     }
+
+    return false;
 }
 #endif
 
