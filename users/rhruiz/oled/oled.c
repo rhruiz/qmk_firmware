@@ -15,6 +15,14 @@ static const char _raise_layer_logo[3] PROGMEM = {"\x90\x91"};
 
 static const char _lower_layer_logo[3] PROGMEM = {"\x91\x90"};
 
+const char _layer_names[][6] PROGMEM = {
+    [_BL] = "QWERT",
+    [_ALT_BL] = "ALTQW",
+    [_COLEMAK] = "COLEM",
+    [_ISRT] = "ISRT ",
+    [_NORMAN] = "NORMA"
+};
+
 void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
     for (uint8_t i = 0; is_keyboard_left() && i < size; i++) {
         oled_write_P(PSTR("\x20"), false);
@@ -88,7 +96,7 @@ void oled_demux_cond_write_P(bool left, bool right, const char *when_none, const
 }
 
 bool rhruiz_render_oled(void) {
-    layer_state_t layer = biton32(layer_state);
+    layer_state_t layer = get_highest_layer(layer_state);
 
     switch (layer) {
         case _NUM:
@@ -126,7 +134,7 @@ bool rhruiz_render_oled(void) {
             oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 2);
             oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 2);
             oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 2);
-            oled_clear_half_except(3);
+            oled_clear_half_except(2);
 
             char buf[4] = {0x20, 0x20, 0x0a, 0x0};
 
@@ -136,6 +144,8 @@ bool rhruiz_render_oled(void) {
             }
 
             oled_write(buf, false);
+
+            oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
 
             break;
 
@@ -163,6 +173,7 @@ bool rhruiz_render_oled(void) {
         default:
             oled_clear_half_except(0);
             oled_clear_half_except(0);
+
             break;
     }
 
@@ -188,7 +199,7 @@ bool rhruiz_render_oled(void) {
 }
 #else
 bool rhruiz_render_oled(void) {
-    layer_state_t layer = biton32(layer_state);
+    layer_state_t layer = get_highest_layer(layer_state);
 
     switch (layer) {
         case _FN1:

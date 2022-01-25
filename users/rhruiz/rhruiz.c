@@ -17,6 +17,8 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
+__attribute__((weak)) void rhruiz_next_default_layer(void) {}
+
 __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
 #ifdef RGBLIGHT_ENABLE
     return index == 0 || index == RGBLED_NUM / 2 - 1;
@@ -110,6 +112,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_TAB);
             }
             break;
+
+        case KC_LAYO:
+            if (!record->event.pressed) {
+                rhruiz_next_default_layer();
+            }
+
+            return true;
 
         case KC_EPIP:
             if (!record->event.pressed) {

@@ -10,9 +10,9 @@
 #    include "oled/oled.h"
 #endif
 
-enum rhruiz_layers { _BL, _ALT_BL, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG };
+typedef enum rhruiz_layers{ _BL, _ALT_BL, _COLEMAK, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
 
-enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, KC_CTAB, NEW_SAFE_RANGE };
+enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, KC_CTAB, KC_LAYO, NEW_SAFE_RANGE };
 
 /* mission control */
 #define MISCTRL LCTL(KC_UP)
@@ -41,6 +41,7 @@ void          rhruiz_disable_promicro_leds(void);
 bool          rhruiz_process_record(uint16_t keycode, keyrecord_t *record);
 void          keyboard_post_init_keymap(void);
 void          matrix_init_keymap(void);
+void          rhruiz_next_default_layer(void);
 
 #ifdef TAP_DANCE_ENABLE
 // tap dances
