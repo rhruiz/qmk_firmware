@@ -165,7 +165,7 @@
 //                                 |----+----+----+----+----|
 #define ________L_CFG_2________     RTOG,RMOD,RSAI,RVAI,RHUI
 //                                 |----+----+----+----+----|
-#define ________L_CFG_3________     _WN ,_BCK,_FWD,STAB,
+#define ________L_CFG_3________     _WN ,_BCK,_FWD,STAB,_TGM
 //                                 |----+----+----+----+----|
 #define ________L_CFG_4________     _VUP,_VDN,MUTE,EJCT,
 //                                 `----+----+----+----+----'
@@ -175,8 +175,8 @@
 //                                 |----+----+----+----+----|
 #define ________R_CFG_2________     LAYO,_BOL,_SBT,_STP,_EOL
 //                                 |----+----+----+----+----|
-#define ________R_CFG_3________         , _WL,PGDN,PGUP, _WR
+#define ________R_CFG_3________     _TGN, _WL,PGDN,PGUP, _WR
 //                                 |----+----+----+----+----|
-#define ________R_CFG_4________         ,    ,MRWD,MFFD,MPLY
+#define ________R_CFG_4________         ,MAKE,MRWD,MFFD,MPLY
 //                                 `----+----+----+----+----'
 // clang-format on
