@@ -19,6 +19,7 @@ const char _layer_names[][6] PROGMEM = {
     [_BL] = "QWERT",
     [_ALT_BL] = "ALTQW",
     [_COLEMAK] = "COLEM",
+    [_COLDH] = "COLDH",
     [_ISRT] = "ISRT ",
     [_NORMAN] = "NORMA"
 };

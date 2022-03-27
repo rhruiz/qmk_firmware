@@ -10,7 +10,7 @@
 #    include "oled/oled.h"
 #endif
 
-typedef enum rhruiz_layers{ _BL, _ALT_BL, _COLEMAK, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
+typedef enum rhruiz_layers{ _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
 
 enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, KC_CTAB, KC_LAYO, NEW_SAFE_RANGE };
 

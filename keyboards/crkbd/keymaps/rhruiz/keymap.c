@@ -56,6 +56,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           //`-----------------'  `-----------------'
   ),
 
+  [_CODH] = LAYOUT_kc_wrapper(
+  //,-----------------------------------.                    ,-----------------------------------.
+      TAB ,   _______L_CODH_R2_______   ,                        _______R_CODH_R2_______   , BSPC,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+      CESC,   _______L_CODH_R3_______   ,                        _______R_CODH_R3_______   , QUOT,
+  //|-----+-----------------------------|                    |-----------------------------+-----|
+      LSFT,   _______L_CODH_R4_______   ,                        _______R_CODH_R4_______   ,TDSNU,
+  //|-----+-----------------+-----+-----+-----|  |-----+-----+-----+-----------------------+-----|
+                              LGUI, _FN1, _CSP,    ENTS, _FN2, ALBS
+                          //`-----------------'  `-----------------'
+  ),
+
   [_NORMAN] = LAYOUT_kc_wrapper(
   //,-----------------------------------.                    ,-----------------------------------.
       TAB ,   _______L_NORM_R2_______   ,                        _______R_NORM_R2_______   , BSPC,
@@ -181,7 +193,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-const rhruiz_layers _base_layers[] PROGMEM = { _BL, _COLEMAK, _NORMAN, _ISRT };
+const rhruiz_layers _base_layers[] PROGMEM = { _BL, _COLEMAK, _CODH, _NORMAN, _ISRT };
 size_t _current_base_layer = 0;
 
 void rhruiz_next_default_layer() {
