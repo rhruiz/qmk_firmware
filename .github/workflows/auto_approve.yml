@@ -7,7 +7,6 @@ on:
 jobs:
   automatic_approve:
     runs-on: ubuntu-latest
-    if: github.repository == 'qmk/qmk_firmware'
 
     if: github.repository == 'qmk/qmk_firmware'
 
