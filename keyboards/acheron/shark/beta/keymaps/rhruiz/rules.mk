@@ -1,0 +1,12 @@
+CONSOLE_ENABLE = no         # Console for debug
+COMMAND_ENABLE = no         # Commands for debug and configuration
+BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
+MIDI_ENABLE = no            # MIDI controls
+AUDIO_ENABLE = no           # Audio output on port C6
+UNICODE_ENABLE = no         # Unicode
+RGBLIGHT_ENABLE = yes       # Enable WS2812 RGB underlight.
+RAW_ENABLE = yes
+OLED_ENABLE = no
+TAP_DANCE_ENABLE = yes
+COMBO_ENABLE=no
+ENCODER_ENABLE=yes
