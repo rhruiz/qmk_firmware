@@ -30,7 +30,7 @@
 #define KC_ESPC LSFT_T(KC_SPACE)
 #define KC_STAB LSFT(KC_TAB)
 
-#define KC__RST RESET
+#define KC__RST QK_BOOT
 #define KC_MISS MISCTRL
 #define KC__VUP KC__VOLUP
 #define KC__VDN KC__VOLDOWN
