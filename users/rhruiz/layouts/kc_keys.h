@@ -28,7 +28,7 @@
 #define KC__TAP LCMD(KC_LCBR)
 #define KC__NXW LCMD(KC_TAB)
 
-
+#define KC_ KC_TRNS
 #define KC_XXX KC_NO
 #define KC__DLO DF(_BL)
 #define KC__ALO DF(_ALT_BL)
