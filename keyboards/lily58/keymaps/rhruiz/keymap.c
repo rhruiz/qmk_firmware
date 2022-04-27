@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 #include "rhruiz.h"
-#include "layouts/kc_keys.h"
 
 #define LAYOUT_base_wrapper(...) LAYOUT_base(__VA_ARGS__)
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)

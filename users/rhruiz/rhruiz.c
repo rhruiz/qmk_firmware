@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "quantum.h"
 #include "rhruiz.h"
-#include "layouts/kc_keys.h"
 
 #define _rhI(x) __rhI(x)
 #define __rhI(x) #x
@@ -92,8 +91,9 @@ bool is_alt_tab_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case KC_EFN2:
-        case MO(_FN2):
+        case LT_RSE_ENT:
+        case MO_RSE:
+        case MO_ARSE:
             if (!record->event.pressed) {
                 if (is_alt_tab_active) {
                     unregister_code(KC_LCMD);

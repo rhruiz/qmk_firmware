@@ -1,5 +1,6 @@
 #pragma once
 #include "quantum.h"
+#include "layouts/keys.h"
 #include "layouts/wrappers.h"
 
 #ifdef AUDIO_ENABLE
@@ -13,26 +14,6 @@
 typedef enum rhruiz_layers{ _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
 
 enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, KC_CTAB, KC_LAYO, NEW_SAFE_RANGE };
-
-/* mission control */
-#define MISCTRL LCTL(KC_UP)
-
-/* tap to esc, hold to ctrl */
-#define CTRLESC LCTL_T(KC_ESC)
-
-/* space or fn */
-#define SPCFN1 LT(_FN1, KC_SPC)
-#define SPCFN2 LT(_FN2, KC_SPC)
-
-/* backspace or fn */
-#define BKSFN1 LT(_FN1, KC_BSPC)
-#define BKSFN2 LT(_FN2, KC_BSPC)
-
-/* arrow cluster */
-#define CLLEFT MT(MOD_RGUI, KC_LEFT)
-#define CLDOWN MT(MOD_RCTL, KC_DOWN)
-#define CLUP MT(MOD_RSFT, KC_UP)
-#define CLRIGHT LT(_FN1, KC_RIGHT)
 
 void          rhruiz_update_layer_colors(layer_state_t state);
 layer_state_t rhruiz_layer_state_set_user(layer_state_t state);
@@ -49,9 +30,9 @@ enum {
     TD_RSHIFT_NUM,
 };
 
-#    define KC_TDSNU TD(TD_RSHIFT_NUM)
+#    define TD_SNU TD(TD_RSHIFT_NUM)
 #else
-#    define KC_TDSNU KC_RSFT
+#    define TD_SNU KC_RSFT
 #endif
 
 /* underglow control */
