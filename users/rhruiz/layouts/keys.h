@@ -55,6 +55,7 @@
 #define NV_FWD LCMD(KC_RBRC)
 #define NV_TAN LCMD(KC_RCBR)
 #define NV_TAP LCMD(KC_LCBR)
+#define NV_MICT LCTL(KC_UP)
 
 // mac media
 #define KC__VUP KC__VOLUP
