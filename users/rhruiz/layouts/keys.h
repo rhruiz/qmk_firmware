@@ -43,20 +43,6 @@
 #define S_TAB LSFT(KC_TAB)
 #define S_LCTL LSFT(KC_LCTL)
 
-// navigation
-#define NV_NWIN LCMD(KC_GRV)
-#define NV_SCTP LCMD(KC_UP)
-#define NV_SCBT LCMD(KC_DOWN)
-#define NV_EOL LCMD(KC_RIGHT)
-#define NV_BOL LCMD(KC_LEFT)
-#define NV_WLFT LALT(KC_LEFT)
-#define NV_WRGH LALT(KC_RIGHT)
-#define NV_BCK LCMD(KC_LBRC)
-#define NV_FWD LCMD(KC_RBRC)
-#define NV_TAN LCMD(KC_RCBR)
-#define NV_TAP LCMD(KC_LCBR)
-#define NV_MICT LCTL(KC_UP)
-
 // mac media
 #define KC__VUP KC__VOLUP
 #define KC__VDN KC__VOLDOWN

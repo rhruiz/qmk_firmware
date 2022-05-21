@@ -11,9 +11,28 @@
 #    include "oled/oled.h"
 #endif
 
-typedef enum rhruiz_layers{ _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
+typedef enum rhruiz_layers { _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
 
-enum custom_keycodes { KC_MAKE = SAFE_RANGE, KC_EPIP, KC_CTAB, KC_LAYO, NEW_SAFE_RANGE };
+enum custom_keycodes {
+    KC_MAKE = SAFE_RANGE,
+    KC_EPIP,
+    KC_CTAB,
+    KC_LAYO,
+    KC_NOS,
+    NV_NWIN,
+    NV_SCTP,
+    NV_SCBT,
+    NV_EOL,
+    NV_BOL,
+    NV_WLFT,
+    NV_WRGH,
+    NV_BCK,
+    NV_FWD,
+    NV_TAN,
+    NV_TAP,
+    NV_MICT,
+    NEW_SAFE_RANGE
+} rhruiz_keycodes;
 
 void          rhruiz_update_layer_colors(layer_state_t state);
 layer_state_t rhruiz_layer_state_set_user(layer_state_t state);

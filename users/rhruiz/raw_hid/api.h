@@ -1,3 +1,5 @@
+#pragma once
+
 enum rhruiz_command_id {
     id_get_protocol_version = 0x01,  // always 0x01
     id_get_keyboard_value,

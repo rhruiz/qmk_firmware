@@ -182,7 +182,7 @@
 //                                 |--------+--------+--------+--------+--------|
 #define ________R_CFG_2________      KC_LAYO, NV_BOL , NV_SCBT, NV_SCTP, NV_EOL
 //                                 |--------+--------+--------+--------+--------|
-#define ________R_CFG_3________      _______, NV_WLFT, KC_PGDN, KC_PGUP, NV_WRGH
+#define ________R_CFG_3________      KC_NOS , NV_WLFT, KC_PGDN, KC_PGUP, NV_WRGH
 //                                 |--------+--------+--------+--------+--------|
 #define ________R_CFG_4________      TG_NUM , KC_MAKE, KC_MRWD, KC_MFFD, KC_MPLY
 //                                 `--------+--------+--------+--------+--------'

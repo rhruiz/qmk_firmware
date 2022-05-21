@@ -5,6 +5,31 @@
 #define _rhI(x) __rhI(x)
 #define __rhI(x) #x
 
+bool is_alt_tab_active = false;
+size_t nav_keys_index = 0;
+uint16_t nav_keycode;
+
+const uint16_t rhruiz_nav_keys[][2] PROGMEM = {
+    [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
+    [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), KC_HOME},
+    [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), KC_END},
+    [NV_EOL  - NV_NWIN] =  {LCMD(KC_RIGHT), KC_END},
+    [NV_BOL  - NV_NWIN] =  {LCMD(KC_LEFT), KC_HOME},
+    [NV_WLFT - NV_NWIN] =  {LALT(KC_LEFT), LCTL(KC_LEFT)},
+    [NV_WRGH - NV_NWIN] =  {LALT(KC_RIGHT), LCTL(KC_RGHT)},
+    [NV_BCK  - NV_NWIN] =  {LCMD(KC_LBRC), LALT(KC_LEFT)},
+    [NV_FWD  - NV_NWIN] =  {LCMD(KC_RBRC), LALT(KC_RGHT)},
+    [NV_TAN  - NV_NWIN] =  {LCMD(KC_RCBR), LCTL(KC_TAB)},
+    [NV_TAP  - NV_NWIN] =  {LCMD(KC_LCBR), LCTL(LSFT(KC_TAB))},
+    [NV_MICT - NV_NWIN] =  {LCTL(KC_UP), LGUI(KC_TAB)}
+};
+
+#ifdef TAP_DANCE_ENABLE
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_RSHIFT_NUM] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _NUM),
+};
+
+#endif
 __attribute__((weak)) void rhruiz_update_layer_colors(layer_state_t state) {}
 
 __attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) { return rhruiz_layer_state_set_user(state); }
@@ -27,12 +52,6 @@ __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
 #endif
 }
 
-#ifdef TAP_DANCE_ENABLE
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_RSHIFT_NUM] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _NUM),
-};
-
-#endif
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
 #ifdef HOME_ROW_MODS
@@ -87,8 +106,6 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
     rhruiz_send_make_args(should_flash, parallel);
 }
 
-bool is_alt_tab_active = false;
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT_RSE_ENT:
@@ -96,24 +113,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MO_ARSE:
             if (!record->event.pressed) {
                 if (is_alt_tab_active) {
-                    unregister_code(KC_LCMD);
+                    unregister_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
                     is_alt_tab_active = false;
                 }
             }
 
             break;
 
+        case NV_NWIN:
+        case NV_SCTP:
+        case NV_SCBT:
+        case NV_EOL:
+        case NV_BOL:
+        case NV_WLFT:
+        case NV_WRGH:
+        case NV_BCK:
+        case NV_FWD:
+        case NV_TAN:
+        case NV_TAP:
+        case NV_MICT:
+            nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][nav_keys_index]));
+
+            if (record->event.pressed) {
+                register_code16(nav_keycode);
+            } else {
+                unregister_code16(nav_keycode);
+            }
+            break;
+
         case KC_CTAB:
             if (record->event.pressed) {
                 if (!is_alt_tab_active) {
                     is_alt_tab_active = true;
-                    register_code(KC_LCMD);
+                    register_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
                 }
                 register_code(KC_TAB);
             } else {
                 unregister_code(KC_TAB);
             }
             break;
+
+        case KC_NOS:
+            if (!record->event.pressed) {
+                nav_keys_index = (nav_keys_index + 1) % 2;
+            }
+            return true;
 
         case KC_LAYO:
             if (!record->event.pressed) {
