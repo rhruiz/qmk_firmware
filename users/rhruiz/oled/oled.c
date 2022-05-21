@@ -2,6 +2,7 @@
 #include "rhruiz.h"
 
 static uint32_t oled_timer = 0;
+extern size_t nav_keys_index;
 
 // clang-format off
 
@@ -43,13 +44,13 @@ static const char lc[][4][3] PROGMEM = {
     [_BL]      = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
     [_ALT_BL]  = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
     [_FN1]     = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
-    [_ALT_FN1]     = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
+    [_ALT_FN1] = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
     [_FN2]     = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
-    [_ALT_FN2]     = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
+    [_ALT_FN2] = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
     [_CFG]     = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
-    [_ALT_CFG]     = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
+    [_ALT_CFG] = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
     [_NUM]     = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
-    [_ALT_NUM]     = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
+    [_ALT_NUM] = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
     [_GAME]    = {"\x20\x20", "\x82\x83", "\xa2\xa3", "\xc2\xc3"},
     [_GAMEFN1] = {"\x20\x20", "\xb0\xb1", "\xd0\xd1", "\x11\x11"},
 };
@@ -131,13 +132,14 @@ bool rhruiz_render_oled(void) {
 
         case _CFG:
         case _ALT_CFG:
-            oled_clear_half_except(4);
+            oled_clear_half_except(6);
             oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 2);
             oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 2);
             oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 2);
-            oled_clear_half_except(5);
+            oled_clear_half_except(6);
 
             oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
+            oled_write_P(nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
             oled_write("\n", false);
 
             break;
