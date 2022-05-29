@@ -170,7 +170,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case KC_NOS:
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
                 nav_keys_index = (nav_keys_index + 1) % 2;
 #ifdef SPLIT_KEYBOARD
                 if (is_keyboard_master()) {
@@ -185,14 +185,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return true;
 
         case KC_LAYO:
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
                 rhruiz_next_default_layer();
             }
 
             return true;
 
         case KC_EPIP:
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
                     SEND_STRING(" { || }");
                     tap_code(KC_LEFT);
@@ -208,7 +208,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case KC_MAKE:
-            if (!record->event.pressed) {
+            if (record->event.pressed) {
                 uint8_t temp_mod = mod_config(get_mods());
                 clear_mods();
 #ifndef NO_ACTION_ONESHOT
