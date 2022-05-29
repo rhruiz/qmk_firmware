@@ -3,6 +3,10 @@
 #include "layouts/keys.h"
 #include "layouts/wrappers.h"
 
+#ifdef SPLIT_KEYBOARD
+#    include "transactions.h"
+#endif
+
 #ifdef AUDIO_ENABLE
 #    include "audio/songs.h"
 #endif

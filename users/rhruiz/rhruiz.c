@@ -9,6 +9,15 @@ bool is_alt_tab_active = false;
 size_t nav_keys_index = 0;
 uint16_t nav_keycode;
 
+#ifdef SPLIT_KEYBOARD
+typedef struct _rhruiz_master_to_slave_t {
+    size_t nav_keys_index;
+} rhruiz_master_to_slave_t;
+
+typedef struct _rhruiz_slave_to_master_t {
+} rhruiz_slave_to_master_t;
+#endif
+
 const uint16_t rhruiz_nav_keys[][2] PROGMEM = {
     [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
     [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), KC_HOME},
@@ -51,6 +60,13 @@ __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
     return false;
 #endif
 }
+
+#ifdef SPLIT_KEYBOARD
+void rhruiz_sync_nav_keys_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+    const rhruiz_master_to_slave_t *mstate = (const rhruiz_master_to_slave_t*)in_data;
+    nav_keys_index = mstate->nav_keys_index;
+}
+#endif
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -156,6 +172,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_NOS:
             if (!record->event.pressed) {
                 nav_keys_index = (nav_keys_index + 1) % 2;
+#ifdef SPLIT_KEYBOARD
+                if (is_keyboard_master()) {
+                    rhruiz_master_to_slave_t m2s = { nav_keys_index };
+
+                    if (!transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
+                        dprintf("sync tx failed");
+                    }
+                }
+#endif
             }
             return true;
 
@@ -229,6 +254,9 @@ void keyboard_post_init_user() {
 
     setPinOutput(D5);
     writePinHigh(D5);
+#endif
+#ifdef SPLIT_KEYBOARD
+    transaction_register_rpc(USER_SYNC_NAV_KEYS, rhruiz_sync_nav_keys_handler);
 #endif
     keyboard_post_init_keymap();
 }
