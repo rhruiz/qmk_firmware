@@ -13,12 +13,11 @@ uint16_t nav_keycode;
 typedef struct _rhruiz_master_to_slave_t {
     size_t nav_keys_index;
 } rhruiz_master_to_slave_t;
-
-typedef struct _rhruiz_slave_to_master_t {
-} rhruiz_slave_to_master_t;
 #endif
 
-const uint16_t rhruiz_nav_keys[][2] PROGMEM = {
+#define NUM_NAV_KEYS_OSES 2
+
+const uint16_t rhruiz_nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
     [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), KC_HOME},
     [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), KC_END},
@@ -58,6 +57,19 @@ __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
     return index == 0 || index == RGBLED_NUM / 2 - 1;
 #else
     return false;
+#endif
+}
+
+void rhruiz_next_nav_keys(void) {
+    nav_keys_index = (nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
+#ifdef SPLIT_KEYBOARD
+    if (is_keyboard_master()) {
+        rhruiz_master_to_slave_t m2s = { nav_keys_index };
+
+        if (!transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
+            dprintf("sync tx failed");
+        }
+    }
 #endif
 }
 
@@ -171,16 +183,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_NOS:
             if (record->event.pressed) {
-                nav_keys_index = (nav_keys_index + 1) % 2;
-#ifdef SPLIT_KEYBOARD
-                if (is_keyboard_master()) {
-                    rhruiz_master_to_slave_t m2s = { nav_keys_index };
-
-                    if (!transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
-                        dprintf("sync tx failed");
-                    }
-                }
-#endif
+                rhruiz_next_nav_keys();
             }
             return true;
 
@@ -188,7 +191,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 rhruiz_next_default_layer();
             }
-
             return true;
 
         case KC_EPIP:
@@ -204,7 +206,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
                 return true;
             }
-
             break;
 
         case KC_MAKE:
