@@ -71,3 +71,11 @@ typedef struct {
 #    endif
 
 #endif
+
+typedef struct _rhruiz_runtime_state {
+    size_t nav_keys_index;
+    bool is_alt_tab_active;
+#ifdef SPLIT_KEYBOARD
+    bool needs_nav_keys_sync;
+#endif
+} rhruiz_runtime_state;

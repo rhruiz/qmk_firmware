@@ -5,12 +5,15 @@
 #define _rhI(x) __rhI(x)
 #define __rhI(x) #x
 
-bool is_alt_tab_active = false;
-size_t nav_keys_index = 0;
+rhruiz_runtime_state runtime_state = {
+    .nav_keys_index = 0,
+    .is_alt_tab_active = false,
+#ifdef SPLIT_KEYBOARD
+    .needs_nav_keys_sync = false,
+#endif
+};
 
 #ifdef SPLIT_KEYBOARD
-bool needs_nav_keys_sync = false;
-
 typedef struct _rhruiz_master_to_slave_t {
     size_t nav_keys_index;
 } rhruiz_master_to_slave_t;
@@ -64,26 +67,26 @@ __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
 }
 
 void rhruiz_next_nav_keys(void) {
-    nav_keys_index = (nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
+    runtime_state.nav_keys_index = (runtime_state.nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
-        needs_nav_keys_sync = true;
+        runtime_state.needs_nav_keys_sync = true;
     }
 #endif
 }
 
 void rhruiz_stop_window_nav(void) {
-    if (is_alt_tab_active) {
-        unregister_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
-        is_alt_tab_active = false;
+    if (runtime_state.is_alt_tab_active) {
+        unregister_code(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
+        runtime_state.is_alt_tab_active = false;
     }
 }
 
 void rhruiz_start_window_nav(bool pressed) {
     if (pressed) {
-        if (!is_alt_tab_active) {
-            is_alt_tab_active = true;
-            register_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
+        if (!runtime_state.is_alt_tab_active) {
+            runtime_state.is_alt_tab_active = true;
+            register_code(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
         }
         register_code(KC_TAB);
     } else {
@@ -92,7 +95,7 @@ void rhruiz_start_window_nav(bool pressed) {
 }
 
 void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
-    uint16_t nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][nav_keys_index]));
+    uint16_t nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
 
     if (pressed) {
         register_code16(nav_keycode);
@@ -104,7 +107,7 @@ void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
 #ifdef SPLIT_KEYBOARD
 void rhruiz_sync_nav_keys_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
     const rhruiz_master_to_slave_t *mstate = (const rhruiz_master_to_slave_t*)in_data;
-    nav_keys_index = mstate->nav_keys_index;
+    runtime_state.nav_keys_index = mstate->nav_keys_index;
 }
 #endif
 
@@ -352,10 +355,10 @@ void matrix_scan_user(void) {
 
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
-    if (needs_nav_keys_sync) {
-        rhruiz_master_to_slave_t m2s = { nav_keys_index };
+    if (runtime_state.needs_nav_keys_sync) {
+        rhruiz_master_to_slave_t m2s = { runtime_state.nav_keys_index };
         if (transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
-            needs_nav_keys_sync = false;
+            runtime_state.needs_nav_keys_sync = false;
         } else {
             dprintf("sync tx failed");
         }
