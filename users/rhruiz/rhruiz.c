@@ -7,9 +7,10 @@
 
 bool is_alt_tab_active = false;
 size_t nav_keys_index = 0;
-uint16_t nav_keycode;
 
 #ifdef SPLIT_KEYBOARD
+bool needs_nav_keys_sync = false;
+
 typedef struct _rhruiz_master_to_slave_t {
     size_t nav_keys_index;
 } rhruiz_master_to_slave_t;
@@ -46,6 +47,8 @@ __attribute__((weak)) bool rhruiz_process_record(uint16_t keycode, keyrecord_t *
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
+__attribute__((weak)) void housekeeping_task_keymap(void) {}
+
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
@@ -64,13 +67,38 @@ void rhruiz_next_nav_keys(void) {
     nav_keys_index = (nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
-        rhruiz_master_to_slave_t m2s = { nav_keys_index };
-
-        if (!transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
-            dprintf("sync tx failed");
-        }
+        needs_nav_keys_sync = true;
     }
 #endif
+}
+
+void rhruiz_stop_window_nav(void) {
+    if (is_alt_tab_active) {
+        unregister_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
+        is_alt_tab_active = false;
+    }
+}
+
+void rhruiz_start_window_nav(bool pressed) {
+    if (pressed) {
+        if (!is_alt_tab_active) {
+            is_alt_tab_active = true;
+            register_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
+        }
+        register_code(KC_TAB);
+    } else {
+        unregister_code(KC_TAB);
+    }
+}
+
+void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
+    uint16_t nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][nav_keys_index]));
+
+    if (pressed) {
+        register_code16(nav_keycode);
+    } else {
+        unregister_code16(nav_keycode);
+    }
 }
 
 #ifdef SPLIT_KEYBOARD
@@ -140,58 +168,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case MO_RSE:
         case MO_ARSE:
             if (!record->event.pressed) {
-                if (is_alt_tab_active) {
-                    unregister_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
-                    is_alt_tab_active = false;
-                }
-            }
-
-            break;
-
-        case NV_NWIN:
-        case NV_SCTP:
-        case NV_SCBT:
-        case NV_EOL:
-        case NV_BOL:
-        case NV_WLFT:
-        case NV_WRGH:
-        case NV_BCK:
-        case NV_FWD:
-        case NV_TAN:
-        case NV_TAP:
-        case NV_MICT:
-            nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][nav_keys_index]));
-
-            if (record->event.pressed) {
-                register_code16(nav_keycode);
-            } else {
-                unregister_code16(nav_keycode);
+                rhruiz_stop_window_nav();
             }
             break;
 
         case KC_CTAB:
-            if (record->event.pressed) {
-                if (!is_alt_tab_active) {
-                    is_alt_tab_active = true;
-                    register_code(nav_keys_index == 0 ? KC_LCMD : KC_LALT);
-                }
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-            }
+            rhruiz_start_window_nav(record->event.pressed);
+            break;
+
+        case NV_NWIN ... NV_MICT:
+            rhruiz_perform_nav_key(keycode, record->event.pressed);
             break;
 
         case KC_NOS:
             if (record->event.pressed) {
                 rhruiz_next_nav_keys();
             }
-            return true;
+            break;
 
         case KC_LAYO:
             if (record->event.pressed) {
                 rhruiz_next_default_layer();
             }
-            return true;
+            break;
 
         case KC_EPIP:
             if (record->event.pressed) {
@@ -349,4 +348,19 @@ void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
 
 void matrix_scan_user(void) {
     matrix_scan_keymap();
+}
+
+void housekeeping_task_user(void) {
+#ifdef SPLIT_KEYBOARD
+    if (needs_nav_keys_sync) {
+        rhruiz_master_to_slave_t m2s = { nav_keys_index };
+        if (transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
+            needs_nav_keys_sync = false;
+        } else {
+            dprintf("sync tx failed");
+        }
+    }
+#endif
+
+    housekeeping_task_keymap();
 }
