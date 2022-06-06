@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#define BASE_LAYERS _BL, _COLEMAK, _CODH, _NORMAN, _ISRT
+
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */

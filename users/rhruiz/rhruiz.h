@@ -15,6 +15,10 @@
 #    include "oled/oled.h"
 #endif
 
+#ifndef BASE_LAYERS
+#    define BASE_LAYERS _BL
+#endif
+
 typedef enum rhruiz_layers { _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
 
 enum custom_keycodes {
@@ -75,6 +79,8 @@ typedef struct {
 typedef struct _rhruiz_runtime_state {
     size_t nav_keys_index;
     bool is_alt_tab_active;
+    size_t base_layer;
+    uint16_t copy_paste_timer;
 #ifdef SPLIT_KEYBOARD
     bool needs_nav_keys_sync;
 #endif

@@ -181,17 +181,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-const rhruiz_layers _base_layers[] PROGMEM = { _BL, _COLEMAK, _CODH, _NORMAN, _ISRT };
-size_t _current_base_layer = 0;
-
-void rhruiz_next_default_layer() {
-    size_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
-
-    _current_base_layer = (_current_base_layer + 1) % count;
-    rhruiz_layers layer = pgm_read_byte(_base_layers + _current_base_layer);
-    default_layer_set(1 << layer);
-}
-
 void rhruiz_update_layer_colors(layer_state_t state) {
 #ifdef COMBO_ENABLE
     if (layer_state_cmp(state, _GAME)) {

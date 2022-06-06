@@ -8,6 +8,7 @@
 rhruiz_runtime_state runtime_state = {
     .nav_keys_index = 0,
     .is_alt_tab_active = false,
+    .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
     .needs_nav_keys_sync = false,
 #endif
@@ -56,14 +57,22 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
-__attribute__((weak)) void rhruiz_next_default_layer(void) {}
-
 __attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
 #ifdef RGBLIGHT_ENABLE
     return index == 0 || index == RGBLED_NUM / 2 - 1;
 #else
     return false;
 #endif
+}
+
+const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
+
+void rhruiz_next_default_layer() {
+    size_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+
+    runtime_state.base_layer = (runtime_state.base_layer + 1) % count;
+    rhruiz_layers layer = pgm_read_byte(_base_layers + runtime_state.base_layer);
+    default_layer_set(1 << layer);
 }
 
 void rhruiz_next_nav_keys(void) {

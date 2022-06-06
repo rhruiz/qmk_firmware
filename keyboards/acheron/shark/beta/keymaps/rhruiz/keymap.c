@@ -158,8 +158,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   */
 };
 
-const rhruiz_layers _base_layers[] PROGMEM = { _BL, _COLEMAK };
-size_t _current_base_layer = 0;
+
+extern rhruiz_runtime_state runtime_state;
 
 #ifdef ENCODER_ENABLE
 typedef enum {
@@ -184,18 +184,6 @@ void (*rhruiz_encoder_handlers[][2]) (void) = {
     [ENC_RGB_SAT] = {&rgblight_decrease_sat, &rgblight_increase_sat},
 };
 #endif
-
-void rhruiz_next_default_layer() {
-    size_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
-
-    _current_base_layer = (_current_base_layer + 1) % count;
-    rhruiz_layers layer = pgm_read_byte(_base_layers + _current_base_layer);
-    default_layer_set(1 << layer);
-#ifdef RGBLIGHT_LAYERS
-
-    rgblight_blink_layer_repeat(_current_base_layer + 4, 200, 2);
-#endif
-}
 
 #ifdef RGBLIGHT_LAYERS
 const rgblight_segment_t PROGMEM fn1_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 137, 255, 255});
