@@ -39,6 +39,9 @@ enum custom_keycodes {
     NV_TAN,
     NV_TAP,
     NV_MICT,
+    NV_COPY,
+    NV_PSTE,
+    KC_CCCP,
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 

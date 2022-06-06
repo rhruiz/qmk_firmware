@@ -34,7 +34,9 @@ const uint16_t rhruiz_nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_FWD  - NV_NWIN] =  {LCMD(KC_RBRC), LALT(KC_RGHT)},
     [NV_TAN  - NV_NWIN] =  {LCMD(KC_RCBR), LCTL(KC_TAB)},
     [NV_TAP  - NV_NWIN] =  {LCMD(KC_LCBR), LCTL(LSFT(KC_TAB))},
-    [NV_MICT - NV_NWIN] =  {LCTL(KC_UP), LGUI(KC_TAB)}
+    [NV_MICT - NV_NWIN] =  {LCTL(KC_UP), LGUI(KC_TAB)},
+    [NV_COPY - NV_NWIN] =  {LGUI(KC_C), LCTL(KC_C)},
+    [NV_PSTE - NV_NWIN] =  {LGUI(KC_V), LCTL(KC_V)},
 };
 
 #ifdef TAP_DANCE_ENABLE
@@ -103,8 +105,12 @@ void rhruiz_start_window_nav(bool pressed) {
     }
 }
 
+uint16_t get_nav_code(uint16_t keycode) {
+    return pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
+}
+
 void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
-    uint16_t nav_keycode = pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
+    uint16_t nav_keycode = get_nav_code(keycode);
 
     if (pressed) {
         register_code16(nav_keycode);
@@ -190,6 +196,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case NV_NWIN ... NV_MICT:
             rhruiz_perform_nav_key(keycode, record->event.pressed);
+            break;
+
+        case KC_CCCP:
+            if (record->event.pressed) {
+                runtime_state.copy_paste_timer = timer_read();
+            } else {
+                if (timer_elapsed(runtime_state.copy_paste_timer) > TAPPING_TERM) {
+                    tap_code16(get_nav_code(NV_COPY));
+                } else {
+                    tap_code16(get_nav_code(NV_PSTE));
+                }
+            }
             break;
 
         case KC_NOS:
