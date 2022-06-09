@@ -51,9 +51,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_CODH] = LAYOUT_base_wrapper(
-      _______L_CODH_R2_______, _______R_CODH_R2_______,
-      _______L_CODH_R3_______, _______R_CODH_R3_______,
-      _______L_CODH_R4_______, _______R_CODH_R4_______
+      _______L_CODH_R2_______, _______R_COLE_R2_______,
+      _______L_CODH_R3_______, _______R_COLE_R3_______,
+      _______L_CODH_R4_______, _______R_COLE_R4_______
   ),
 
   [_NORMAN] = LAYOUT_base_wrapper(
