@@ -46,6 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM_PER_KEY
 #define IGNORE_MOD_TAP_INTERRUPT
 #define HOME_ROW_MODS
+#define PERMISSIVE_HOLD
 
 #ifdef RGBLIGHT_ENABLE
 #    undef RGBLED_NUM
