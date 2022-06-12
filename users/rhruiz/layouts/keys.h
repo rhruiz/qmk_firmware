@@ -23,6 +23,7 @@
 // layer tap
 #define LT_LWR_SPC LT(_FN1, KC_SPC)
 #define LT_RSE_ENT LT(_FN2, KC_ENTER)
+#define LT_RSE_0 LT(_FN2, KC_0)
 
 // layer toggle
 #define TG_NUM TG(_NUM)
