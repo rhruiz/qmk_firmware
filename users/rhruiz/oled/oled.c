@@ -79,7 +79,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return oled_init_keym
 #ifdef OLED_ROTATE
 void oled_clear_half_except(uint8_t lines) {
     for (uint8_t j = 0; j < (oled_max_lines() - 4 - lines) / 2; j++) {
-        oled_write("\n", false);
+        oled_write_P(PSTR("\n"), false);
     }
 }
 
@@ -140,7 +140,7 @@ bool rhruiz_render_oled(void) {
 
             oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
             oled_write_P(nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
-            oled_write("\n", false);
+            oled_write_P(PSTR("\n"), false);
 
             break;
 
@@ -206,7 +206,7 @@ bool rhruiz_render_oled(void) {
                     oled_write_P(lc[layer][i], false);
                 }
 
-                oled_write("\n", false);
+                oled_write_P(PSTR("\n"), false);
             }
 
             break;
@@ -217,7 +217,7 @@ bool rhruiz_render_oled(void) {
                     oled_write_P(lc[layer][i], false);
                 }
 
-                oled_write("\n", false);
+                oled_write_P(PSTR("\n"), false);
             }
             break;
 
@@ -225,19 +225,19 @@ bool rhruiz_render_oled(void) {
             for (uint8_t i = 0; i < 4; i++) {
                 oled_write_P(_spacer, false);
                 oled_write_P(_game_layer_logo[i], false);
-                oled_write("\n", false);
+                oled_write_P(PSTR("\n"), false);
             }
             break;
 
         case _GAMEFN1:
             oled_write_P(_spacer, false);
             oled_write_P(lc[layer][3], false);
-            oled_write("\n", false);
+            oled_write_P(PSTR("\n"), false);
 
             for (uint8_t i = 1; i < 4; i++) {
                 oled_write_P(_spacer, false);
                 oled_write_P(_game_layer_logo[i], false);
-                oled_write("\n", false);
+                oled_write_P(PSTR("\n"), false);
             }
             break;
 
