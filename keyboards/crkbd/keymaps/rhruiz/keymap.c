@@ -212,16 +212,3 @@ void keyboard_post_init_keymap() {
     combo_disable();
 #endif
 }
-
-#ifdef OLED_ENABLE
-bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) {
-    switch(keycode) {
-        case KC_EJCT:
-            if (record->event.pressed) {
-                oled_set_brightness(oled_get_brightness() + ((get_mods() & MOD_MASK_SHIFT) ? -0x08 : 0x08));
-            }
-            return false;
-    }
-    return true;
-}
-#endif
