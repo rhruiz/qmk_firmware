@@ -28,29 +28,18 @@ const rgblight_segment_t PROGMEM num_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 4
 const rgblight_segment_t PROGMEM game_colors[] = RGBLIGHT_LAYER_SEGMENTS({7, 7, 148, 255, 255});
 
 const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1_colors, fn2_colors, cfg_colors, num_colors, game_colors);
-#else
-const hue_sat_pair hue_sat_pairs[] = {[_FN1] = {2, 255}, [_FN2] = {200, 255}, [_CFG] = {80, 255}, [_NUM] = {45, 255}};
-
-bool rhruiz_is_layer_indicator_led(uint8_t index) { return index >= RGBLED_NUM / 2; }
 #endif
 
-void rhruiz_update_layer_colors(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
 #ifdef RGBLIGHT_LAYERS
     rgblight_set_layer_state(0, layer_state_cmp(state, _FN1));
     rgblight_set_layer_state(1, layer_state_cmp(state, _FN2));
     rgblight_set_layer_state(2, layer_state_cmp(state, _CFG));
     rgblight_set_layer_state(3, layer_state_cmp(state, _NUM));
     rgblight_set_layer_state(4, layer_state_cmp(state, _GAME));
-#else
-    if (biton32(state) < _FN1) {
-        rhruiz_rgblight_reset();
-        return;
-    }
-
-    const hue_sat_pair hs = hue_sat_pairs[biton32(state)];
-
-    rhruiz_change_leds_to(hs.hue, hs.sat);
 #endif
+
+    return state;
 }
 
 #ifdef RGBLIGHT_LAYERS

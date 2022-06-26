@@ -181,7 +181,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-void rhruiz_update_layer_colors(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
 #ifdef COMBO_ENABLE
     if (layer_state_cmp(state, _GAME)) {
         combo_enable();
@@ -198,6 +198,8 @@ void rhruiz_update_layer_colors(layer_state_t state) {
         writePinLow(B0);
     }
 #endif
+
+    return state;
 }
 
 void keyboard_post_init_keymap() {

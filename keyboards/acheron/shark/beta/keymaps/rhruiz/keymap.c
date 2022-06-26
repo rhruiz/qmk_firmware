@@ -203,7 +203,7 @@ const rgblight_segment_t PROGMEM win_colors[] = RGBLIGHT_LAYER_SEGMENTS({0, 24, 
 
 const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1_colors, fn2_colors, cfg_colors, num_colors, qwerty_colors, colemak_colors, mac_colors, win_colors);
 
-void rhruiz_update_layer_colors(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _FN1));
     rgblight_set_layer_state(0, layer_state_cmp(state, _GAMEFN1));
     rgblight_set_layer_state(0, layer_state_cmp(state, _FN1));
@@ -211,10 +211,7 @@ void rhruiz_update_layer_colors(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _CFG));
     rgblight_set_layer_state(3, layer_state_cmp(state, _NUM));
 
-    if (biton32(state) < _FN1) {
-        rhruiz_rgblight_reset();
-        return;
-    }
+    return state;
 }
 #endif
 

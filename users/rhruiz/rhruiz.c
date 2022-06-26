@@ -45,9 +45,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 #endif
-__attribute__((weak)) void rhruiz_update_layer_colors(layer_state_t state) {}
-
-__attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) { return rhruiz_layer_state_set_user(state); }
+__attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) { return state; }
 
 __attribute__((weak)) bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) { return true; }
 
@@ -58,14 +56,6 @@ __attribute__((weak)) void housekeeping_task_keymap(void) {}
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
-
-__attribute__((weak)) bool rhruiz_is_layer_indicator_led(uint8_t index) {
-#ifdef RGBLIGHT_ENABLE
-    return index == 0 || index == RGBLED_NUM / 2 - 1;
-#else
-    return false;
-#endif
-}
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
@@ -291,7 +281,7 @@ void keyboard_post_init_user() {
     keyboard_post_init_keymap();
 }
 
-layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
+__attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
     static layer_state_t last_state = 0;
 
     if (state != last_state) {
@@ -318,7 +308,7 @@ layer_state_t rhruiz_layer_state_set_user(layer_state_t state) {
                 break;
         }
 
-        rhruiz_update_layer_colors(state);
+        state = layer_state_set_keymap(state);
 
         last_state = state;
     }
@@ -356,16 +346,8 @@ void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
     ledp = led;
 #    endif
 
-    bool rgbmode = rgblight_get_mode();
-
     for (uint8_t i = RGBLED_NUM; i-- > 0;) {
-        if (rhruiz_is_layer_indicator_led(i)) {
-            sethsv(hue, sat, eeprom_config.val, (LED_TYPE *)&ledp[i]);
-        } else {
-            if (rgbmode == false) {
-                sethsv(0, 0, 0, (LED_TYPE *)&ledp[i]);
-            }
-        }
+        sethsv(hue, sat, eeprom_config.val, (LED_TYPE *)&ledp[i]);
     }
 
 #    ifdef RGBW

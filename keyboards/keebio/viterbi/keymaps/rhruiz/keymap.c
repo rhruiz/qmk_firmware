@@ -22,7 +22,7 @@ const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-void rhruiz_update_layer_colors(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
     if (state & (1 << _NUM)) {
         writePinLow(D5);
 #ifndef CONVERT_TO_PROTON_C
@@ -34,4 +34,6 @@ void rhruiz_update_layer_colors(layer_state_t state) {
         writePinHigh(B0);
 #endif
     }
+
+    return state;
 }

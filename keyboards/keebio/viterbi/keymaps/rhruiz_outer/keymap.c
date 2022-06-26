@@ -112,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-void rhruiz_update_layer_colors(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
     if (state & (1 << _NUM)) {
         writePinLow(D5);
         writePinLow(B0);
@@ -120,4 +120,6 @@ void rhruiz_update_layer_colors(layer_state_t state) {
         writePinHigh(D5);
         writePinHigh(B0);
     }
+
+    return state;
 }
