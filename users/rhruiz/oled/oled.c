@@ -23,7 +23,9 @@ const char _layer_names[][6] PROGMEM = {
     [_COLEMAK] = "COLEM",
     [_CODH] = "CO-DH",
     [_ISRT] = "ISRT ",
-    [_NORMAN] = "NORMA"
+    [_NORMAN] = "NORMA",
+    [_APTV3] = "APTv3",
+    [_SEMI] = "SEMI "
 };
 
 void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {

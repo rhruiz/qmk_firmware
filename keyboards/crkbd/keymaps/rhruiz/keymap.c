@@ -68,6 +68,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______L_ISRT_R4_______, _______R_ISRT_R4_______
   ),
 
+  [_APTV3] = LAYOUT_base_wrapper(
+      _______L_APT3_R2_______, _______R_APT3_R2_______,
+      _______L_APT3_R3_______, _______R_APT3_R3_______,
+      _______L_APT3_R4_______, _______R_APT3_R4_______
+  ),
+
+  [_SEMI] = LAYOUT_base_wrapper(
+      _______L_SEMI_R2_______, _______R_SEMI_R2_______,
+      _______L_SEMI_R3_______, _______R_SEMI_R3_______,
+      _______L_SEMI_R4_______, _______R_SEMI_R4_______
+  ),
+
   [_GAME] = LAYOUT_split_3x6_3_wrapper(
 //,-----------------------------------.  ,-----------------------------------.
     KC_TAB ,  ________L_BL_R2________ ,     ________R_BL_R2________ , KC_BSPC,

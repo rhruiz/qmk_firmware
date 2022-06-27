@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define BASE_LAYERS _BL, _COLEMAK, _CODH, _NORMAN, _ISRT
+#define BASE_LAYERS _BL, _COLEMAK, _CODH, _NORMAN, _ISRT, _APTV3, _SEMI
 
 //#define USE_MATRIX_I2C
 
