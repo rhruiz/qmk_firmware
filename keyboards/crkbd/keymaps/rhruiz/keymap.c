@@ -190,13 +190,8 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
     }
 #endif
 #ifndef OLED_ENABLE
-    writePinHigh(D5);
-    writePinHigh(B0);
-
-    if (layer_state_cmp(state, _NUM)) {
-        writePinLow(D5);
-        writePinLow(B0);
-    }
+    writePin(B0, !layer_state_cmp(state, _NUM));
+    writePin(D5, !layer_state_cmp(state, _NUM));
 #endif
 
     return state;
