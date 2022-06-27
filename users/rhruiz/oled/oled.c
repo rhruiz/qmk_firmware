@@ -9,6 +9,7 @@ extern size_t nav_keys_index;
 #ifdef OLED_ROTATE
 
 bool is_keyboard_left(void);
+extern rhruiz_runtime_state runtime_state;
 
 static const char _game_layer_logo[][5] PROGMEM = {"\xa8\xa9\xaa\xab", "\xc8\xc9\xca\xcb"};
 
@@ -139,7 +140,7 @@ bool rhruiz_render_oled(void) {
             oled_clear_half_except(6);
 
             oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
-            oled_write_P(nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
+            oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
             oled_write_P(PSTR("\n"), false);
 
             break;
