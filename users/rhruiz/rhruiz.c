@@ -146,7 +146,7 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
     SEND_STRING(" -kb " QMK_KEYBOARD " -km " QMK_KEYMAP);
 
     if (parallel) {
-        SEND_STRING(" -j8");
+        SEND_STRING(" -j 8");
     }
 #ifdef OLED_ENABLE
 
