@@ -10,6 +10,7 @@
 // layers: osl
 #define OSL_GLWR OSL(_GAMEFN1)
 #define OSL_RSE OSL(_FN2)
+#define OSL_FUN OSL(_FUNC)
 
 // layers: default
 #define DF_BL DF(_BL)

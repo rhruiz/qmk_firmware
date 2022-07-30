@@ -24,7 +24,8 @@ const char _layer_names[][6] PROGMEM = {
     [_ISRT] = "ISRT ",
     [_NORMAN] = "NORMA",
     [_APTV3] = "APTv3",
-    [_SEMI] = "SEMI "
+    [_SEMI] = "SEMI ",
+    [_FUNC] = "FUNC ",
 };
 
 void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
