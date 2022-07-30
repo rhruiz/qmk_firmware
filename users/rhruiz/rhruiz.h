@@ -19,7 +19,7 @@
 #    define BASE_LAYERS _BL
 #endif
 
-typedef enum rhruiz_layers { _BL, _ALT_BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _APTV3, _SEMI, _GAME, _NUM, _ALT_NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _ALT_FN1, _ALT_FN2, _CFG, _ALT_CFG } rhruiz_layers;
+typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _APTV3, _SEMI, _GAME, _NUM, _KEY_OVERRIDE, _FN1, _FN2, _GAMEFN1, _CFG, _FUNC } rhruiz_layers;
 
 enum custom_keycodes {
     KC_MAKE = SAFE_RANGE,

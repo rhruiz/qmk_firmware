@@ -6,8 +6,6 @@
 #define MO_RSE MO(_FN2)
 #define MO_NUM MO(_NUM)
 #define MO_CFG MO(_CFG)
-#define MO_ALWR MO(_ALT_FN1)
-#define MO_ARSE MO(_ALT_FN2)
 
 // layers: osl
 #define OSL_GLWR OSL(_GAMEFN1)
@@ -15,7 +13,6 @@
 
 // layers: default
 #define DF_BL DF(_BL)
-#define DF_ALT DF(_ALT_BL)
 
 // layers + mods
 #define LM_GLWR LM(_GAMEFN1, MOD_LSFT)
@@ -28,7 +25,6 @@
 // layer toggle
 #define TG_NUM TG(_NUM)
 #define TG_GAME TG(_GAME)
-#define TG_ANUM TG(_ALT_NUM)
 
 // mod taps
 #define ST_SPC LSFT_T(KC_SPACE)

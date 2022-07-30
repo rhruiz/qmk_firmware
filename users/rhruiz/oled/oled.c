@@ -19,7 +19,6 @@ static const char _lower_layer_logo[3] PROGMEM = {"\x91\x90"};
 
 const char _layer_names[][6] PROGMEM = {
     [_BL] = "QWERT",
-    [_ALT_BL] = "ALTQW",
     [_COLEMAK] = "COLEM",
     [_CODH] = "CO-DH",
     [_ISRT] = "ISRT ",
@@ -45,15 +44,10 @@ const char _spacer[] PROGMEM = "          ";
 
 static const char lc[][4][3] PROGMEM = {
     [_BL]      = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
-    [_ALT_BL]  = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
     [_FN1]     = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
-    [_ALT_FN1] = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
     [_FN2]     = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
-    [_ALT_FN2] = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
     [_CFG]     = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
-    [_ALT_CFG] = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
     [_NUM]     = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
-    [_ALT_NUM] = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
     [_GAME]    = {"\x20\x20", "\x82\x83", "\xa2\xa3", "\xc2\xc3"},
     [_GAMEFN1] = {"\x20\x20", "\xb0\xb1", "\xd0\xd1", "\x11\x11"},
 };
@@ -105,14 +99,12 @@ bool rhruiz_render_oled(void) {
 
     switch (layer) {
         case _NUM:
-        case _ALT_NUM:
             oled_clear_half_except(1);
             oled_write_padded_P(PSTR("\x88\x89\x8a"), false, 2);
             oled_clear_half_except(1);
             break;
 
         case _FN1:
-        case _ALT_FN1:
             oled_clear_half_except(6);
             for (uint8_t i = 0; i < 3; i++) {
                 oled_write_padded_P(_lower_layer_logo, false, 3);
@@ -123,7 +115,6 @@ bool rhruiz_render_oled(void) {
             break;
 
         case _FN2:
-        case _ALT_FN2:
             oled_clear_half_except(6);
             for (uint8_t i = 0; i < 3; i++) {
                 oled_write_padded_P(_raise_layer_logo, false, 3);
@@ -134,7 +125,6 @@ bool rhruiz_render_oled(void) {
             break;
 
         case _CFG:
-        case _ALT_CFG:
             oled_clear_half_except(6);
             oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 2);
             oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 2);
