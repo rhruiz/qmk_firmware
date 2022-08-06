@@ -7,7 +7,7 @@
 
 rhruiz_runtime_state runtime_state = {
     .nav_keys_index = 0,
-    .is_alt_tab_active = false,
+    .is_window_switcher_active = false,
     .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
     .needs_nav_keys_sync = false,
@@ -76,23 +76,22 @@ void rhruiz_next_nav_keys(void) {
 #endif
 }
 
-void rhruiz_stop_window_nav(void) {
-    if (runtime_state.is_alt_tab_active) {
+void rhruiz_stop_window_switcher(void) {
+    if (runtime_state.is_window_switcher_active) {
         unregister_code(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
-        runtime_state.is_alt_tab_active = false;
+        runtime_state.is_window_switcher_active = false;
     }
 }
 
-void rhruiz_start_window_nav(bool pressed) {
+void rhruiz_start_window_switcher(bool pressed) {
+    void (*handler)(uint16_t) = pressed ? register_code16 : unregister_code16;
+
     if (pressed) {
-        if (!runtime_state.is_alt_tab_active) {
-            runtime_state.is_alt_tab_active = true;
-            register_code(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
-        }
-        register_code(KC_TAB);
-    } else {
-        unregister_code(KC_TAB);
+        runtime_state.is_window_switcher_active = true;
+        handler(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
     }
+
+    handler(KC_TAB);
 }
 
 uint16_t get_nav_code(uint16_t keycode) {
@@ -102,11 +101,8 @@ uint16_t get_nav_code(uint16_t keycode) {
 void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
     uint16_t nav_keycode = get_nav_code(keycode);
 
-    if (pressed) {
-        register_code16(nav_keycode);
-    } else {
-        unregister_code16(nav_keycode);
-    }
+    void (*handler)(uint16_t) = pressed ? register_code16 : unregister_code16;
+    handler(nav_keycode);
 }
 
 #ifdef SPLIT_KEYBOARD
@@ -175,12 +171,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LT_RSE_ENT:
         case MO_RSE:
             if (!record->event.pressed) {
-                rhruiz_stop_window_nav();
+                rhruiz_stop_window_switcher();
             }
             break;
 
         case KC_CTAB:
-            rhruiz_start_window_nav(record->event.pressed);
+            rhruiz_start_window_switcher(record->event.pressed);
             break;
 
         case NV_NWIN ... NV_MICT:
