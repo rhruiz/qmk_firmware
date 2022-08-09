@@ -1,4 +1,4 @@
-/* Copyright 2020 QMK
+/* Copyright 2022 Yiancar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,7 @@
 
 #pragma once
 
-#define HAL_USE_I2C TRUE
+#include_next <mcuconf.h>
 
-#define HAL_USE_SPI TRUE
-
-#include_next <halconf.h>
-
+#undef STM32_PWM_USE_TIM3
+#define STM32_PWM_USE_TIM3 TRUE
