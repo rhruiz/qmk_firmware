@@ -282,7 +282,7 @@ __attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
     if (state != last_state) {
         state = update_tri_layer_state(state, _FN1, _FN2, _CFG);
 
-        switch (biton32(state)) {
+        switch (get_highest_layer(state)) {
             case _BL:
             case _KEY_OVERRIDE:
                 state = state & ~(1UL << _KEY_OVERRIDE);
