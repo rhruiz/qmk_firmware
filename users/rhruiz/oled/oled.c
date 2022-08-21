@@ -169,7 +169,13 @@ bool rhruiz_render_oled(void) {
     uint8_t mods = get_mods();
 
 #ifdef CAPS_WORD_ENABLE
-    if (is_caps_word_on()) {
+    if (
+#   ifdef SPLIT_KEYBOARD
+    runtime_state.caps_word_enabled
+#   else
+    is_caps_word_on()
+#   endif
+    ) {
         oled_write_P(PSTR("\x20\xc4\x86\x87\x20"), false);
         oled_write_P(PSTR("\x20\xc5\xa6\xa7\x20"), false);
     } else {

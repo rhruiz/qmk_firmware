@@ -10,13 +10,19 @@ rhruiz_runtime_state runtime_state = {
     .is_window_switcher_active = false,
     .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
-    .needs_nav_keys_sync = false,
+    .needs_runtime_state_sync = false,
+#   ifdef CAPS_WORD_ENABLE
+    .caps_word_enabled = false,
+#   endif
 #endif
 };
 
 #ifdef SPLIT_KEYBOARD
 typedef struct _rhruiz_master_to_slave_t {
     size_t nav_keys_index;
+#   ifdef CAPS_WORD_ENABLE
+    bool caps_word_enabled;
+#   endif
 } rhruiz_master_to_slave_t;
 #endif
 
@@ -71,7 +77,7 @@ void rhruiz_next_nav_keys(void) {
     runtime_state.nav_keys_index = (runtime_state.nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
-        runtime_state.needs_nav_keys_sync = true;
+        runtime_state.needs_runtime_state_sync = true;
     }
 #endif
 }
@@ -106,9 +112,12 @@ void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
 }
 
 #ifdef SPLIT_KEYBOARD
-void rhruiz_sync_nav_keys_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+void rhruiz_sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
     const rhruiz_master_to_slave_t *mstate = (const rhruiz_master_to_slave_t*)in_data;
     runtime_state.nav_keys_index = mstate->nav_keys_index;
+#   ifdef CAPS_WORD_ENABLE
+    runtime_state.caps_word_enabled = mstate->caps_word_enabled;
+#   endif
 }
 #endif
 
@@ -271,7 +280,7 @@ void keyboard_post_init_user() {
     writePinHigh(D5);
 #endif
 #ifdef SPLIT_KEYBOARD
-    transaction_register_rpc(USER_SYNC_NAV_KEYS, rhruiz_sync_nav_keys_handler);
+    transaction_register_rpc(USER_SYNC_RUNTIME_STATE, rhruiz_sync_runtime_state_handler);
 #endif
     keyboard_post_init_keymap();
 }
@@ -336,10 +345,16 @@ void matrix_scan_user(void) {
 
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
-    if (runtime_state.needs_nav_keys_sync) {
-        rhruiz_master_to_slave_t m2s = { runtime_state.nav_keys_index };
-        if (transaction_rpc_send(USER_SYNC_NAV_KEYS, sizeof(m2s), &m2s)) {
-            runtime_state.needs_nav_keys_sync = false;
+    if (runtime_state.needs_runtime_state_sync) {
+        rhruiz_master_to_slave_t m2s = {
+            runtime_state.nav_keys_index,
+#    ifdef CAPS_WORD_ENABLE
+            runtime_state.caps_word_enabled
+#    endif
+        };
+
+        if (transaction_rpc_send(USER_SYNC_RUNTIME_STATE, sizeof(m2s), &m2s)) {
+            runtime_state.needs_runtime_state_sync = false;
         } else {
             dprintf("sync tx failed");
         }
@@ -348,3 +363,10 @@ void housekeeping_task_user(void) {
 
     housekeeping_task_keymap();
 }
+
+#if defined(SPLIT_KEYBOARD) && defined(CAPS_WORD_ENABLE)
+void caps_word_set_user(bool active) {
+    runtime_state.caps_word_enabled = active;
+    runtime_state.needs_runtime_state_sync = true;
+}
+#endif

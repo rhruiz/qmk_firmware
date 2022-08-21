@@ -82,6 +82,9 @@ typedef struct _rhruiz_runtime_state {
     size_t base_layer;
     uint16_t copy_paste_timer;
 #ifdef SPLIT_KEYBOARD
-    bool needs_nav_keys_sync;
+    bool needs_runtime_state_sync;
+#   ifdef CAPS_WORD_ENABLE
+    bool caps_word_enabled;
+#   endif
 #endif
 } rhruiz_runtime_state;
