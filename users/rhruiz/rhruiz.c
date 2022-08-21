@@ -277,33 +277,13 @@ void keyboard_post_init_user() {
 }
 
 __attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
-    static layer_state_t last_state = 0;
-
-    if (state != last_state) {
+    if (layer_state_is(_GAME)) {
+        state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
+    } else {
         state = update_tri_layer_state(state, _FN1, _FN2, _CFG);
-
-        switch (get_highest_layer(state)) {
-            case _BL:
-            case _KEY_OVERRIDE:
-                state = state & ~(1UL << _KEY_OVERRIDE);
-                break;
-
-            case _GAMEFN1:
-                state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
-
-            case _FN1:
-            case _FN2:
-                state = state | (1UL << _KEY_OVERRIDE);
-                break;
-
-            default:
-                break;
-        }
-
-        state = layer_state_set_keymap(state);
-
-        last_state = state;
     }
+
+    state = layer_state_set_keymap(state);
 
     return state;
 }
