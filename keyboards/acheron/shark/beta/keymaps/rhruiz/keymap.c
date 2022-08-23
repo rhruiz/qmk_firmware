@@ -209,6 +209,13 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
     rgblight_set_layer_state(2, layer_state_cmp(state, _CFG));
     rgblight_set_layer_state(3, layer_state_cmp(state, _NUM));
 
+
+    if (layer_state_is(_GAME)) {
+        rgblight_enable_noeeprom();
+    } else {
+        rgblight_reload_from_eeprom();
+    }
+
     return state;
 }
 #endif
