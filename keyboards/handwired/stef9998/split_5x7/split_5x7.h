@@ -1,4 +1,4 @@
-/* Copyright 2022 bbrfkr
+/* Copyright 2017 REPLACE_WITH_YOUR_NAME
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dynamis.h"
+#pragma once
 
-#ifdef ENCODER_ENABLE
-bool encoder_update_kb(uint8_t index, bool clockwise) {
-    if (!encoder_update_user(index, clockwise)) { return false; }
-    if (clockwise) {
-        tap_code(layer_state == 0 ? KC_WH_D : KC_VOLD);
-    } else {
-        tap_code(layer_state == 0 ? KC_WH_U : KC_VOLU);
-    }
-    return true;
-}
+#if defined(KEYBOARD_handwired_stef9998_split_5x7_rev1)
+#     include "rev1.h"
 #endif
+
+#include "quantum.h"
