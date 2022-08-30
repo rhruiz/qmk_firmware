@@ -1,4 +1,4 @@
-/* Copyright 2022 Harrison Chan (Xelus)
+/* Copyright 2022 Yiancar
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,6 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "kangaroo.h"
+#pragma once
 
-void matrix_io_delay(void) { __asm__ volatile("nop\nnop\nnop\n"); }
+#include_next <mcuconf.h>
+
+#undef STM32_PWM_USE_TIM3
+#define STM32_PWM_USE_TIM3 TRUE

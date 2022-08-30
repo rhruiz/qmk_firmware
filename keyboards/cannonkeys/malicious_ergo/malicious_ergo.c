@@ -1,4 +1,4 @@
-/* Copyright 2022 Harrison Chan (Xelus)
+/* Copyright 2022 Andrew Kannan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,7 +13,4 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#include "kangaroo.h"
-
-void matrix_io_delay(void) { __asm__ volatile("nop\nnop\nnop\n"); }
+#include "malicious_ergo.h"
