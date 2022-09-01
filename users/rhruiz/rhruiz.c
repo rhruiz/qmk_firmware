@@ -89,7 +89,7 @@ void rhruiz_stop_window_switcher(void) {
     }
 }
 
-void rhruiz_start_window_switcher(bool pressed) {
+void rhruiz_window_switcher(bool pressed) {
     void (*handler)(uint16_t) = pressed ? register_code16 : unregister_code16;
 
     if (pressed) {
@@ -185,7 +185,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
 
         case KC_CTAB:
-            rhruiz_start_window_switcher(record->event.pressed);
+            rhruiz_window_switcher(record->event.pressed);
             break;
 
         case NV_NWIN ... NV_MICT:
@@ -261,18 +261,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 void matrix_init_user(void) {
-#ifdef PRO_MICRO
-    setPinOutput(B0);
-    setPinOutput(D5);
-    writePinHigh(D5);
-    writePinHigh(B0);
-#endif
     matrix_init_keymap();
 }
 
 void keyboard_post_init_user() {
-    /* TODO: revisit this check if flashed promicros with dfu */
-#ifdef BOOTLOADER_CATERINA
+#if defined(BOOTLOADER_CATERINA) || defined(PRO_MICRO)
     setPinOutput(B0);
     writePinHigh(B0);
 
