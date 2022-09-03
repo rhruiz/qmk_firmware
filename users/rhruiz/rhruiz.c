@@ -18,17 +18,17 @@ rhruiz_runtime_state runtime_state = {
 };
 
 #ifdef SPLIT_KEYBOARD
-typedef struct _rhruiz_master_to_slave_t {
+typedef struct _master_to_slave_t {
     size_t nav_keys_index;
 #   ifdef CAPS_WORD_ENABLE
     bool caps_word_enabled;
 #   endif
-} rhruiz_master_to_slave_t;
+} master_to_slave_t;
 #endif
 
 #define NUM_NAV_KEYS_OSES 2
 
-const uint16_t rhruiz_nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
+const uint16_t nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
     [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), LGUI(KC_HOME)},
     [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), LGUI(KC_END)},
@@ -65,7 +65,7 @@ __attribute__((weak)) void matrix_init_keymap(void) {}
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
-void rhruiz_next_default_layer() {
+void next_default_layer(void) {
     size_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
 
     runtime_state.base_layer = (runtime_state.base_layer + 1) % count;
@@ -73,7 +73,7 @@ void rhruiz_next_default_layer() {
     default_layer_set(1 << layer);
 }
 
-void rhruiz_next_nav_keys(void) {
+void next_nav_keys(void) {
     runtime_state.nav_keys_index = (runtime_state.nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
@@ -82,14 +82,14 @@ void rhruiz_next_nav_keys(void) {
 #endif
 }
 
-void rhruiz_stop_window_switcher(void) {
+void stop_window_switcher(void) {
     if (runtime_state.is_window_switcher_active) {
         unregister_code(runtime_state.nav_keys_index == 0 ? KC_LCMD : KC_LALT);
         runtime_state.is_window_switcher_active = false;
     }
 }
 
-void rhruiz_window_switcher(bool pressed) {
+void window_switcher(bool pressed) {
     void (*handler)(uint16_t) = pressed ? register_code16 : unregister_code16;
 
     if (pressed) {
@@ -101,10 +101,10 @@ void rhruiz_window_switcher(bool pressed) {
 }
 
 uint16_t get_nav_code(uint16_t keycode) {
-    return pgm_read_word(&(rhruiz_nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
+    return pgm_read_word(&(nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
 }
 
-void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
+void perform_nav_key(uint16_t keycode, bool pressed) {
     uint16_t nav_keycode = get_nav_code(keycode);
 
     void (*handler)(uint16_t) = pressed ? register_code16 : unregister_code16;
@@ -112,8 +112,8 @@ void rhruiz_perform_nav_key(uint16_t keycode, bool pressed) {
 }
 
 #ifdef SPLIT_KEYBOARD
-void rhruiz_sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    const rhruiz_master_to_slave_t *mstate = (const rhruiz_master_to_slave_t*)in_data;
+void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+    const master_to_slave_t *mstate = (const master_to_slave_t*)in_data;
     runtime_state.nav_keys_index = mstate->nav_keys_index;
 #   ifdef CAPS_WORD_ENABLE
     runtime_state.caps_word_enabled = mstate->caps_word_enabled;
@@ -139,7 +139,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-void rhruiz_send_make_args(bool should_flash, bool parallel) {
+void send_make_args(bool should_flash, bool parallel) {
     SEND_STRING("qmk ");
 
     if (should_flash) {
@@ -162,17 +162,17 @@ void rhruiz_send_make_args(bool should_flash, bool parallel) {
 #endif
 }
 
-void rhruiz_send_make(bool should_flash, bool parallel) {
+void send_make(bool should_flash, bool parallel) {
 #ifndef BOOTLOADER_CATERINA
 #    ifdef RAW_ENABLE
     if (should_flash) {
-        rhruiz_send_make_args(false, parallel);
+        send_make_args(false, parallel);
         SEND_STRING(" && VID=" _rhI(VENDOR_ID) " PID=" _rhI(PRODUCT_ID));
         SEND_STRING(" ~/dev/keyboard/hid_send/hid_send bootloader && ");
     }
 #    endif
 #endif
-    rhruiz_send_make_args(should_flash, parallel);
+    send_make_args(should_flash, parallel);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -180,16 +180,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case LT_RSE_ENT:
         case MO_RSE:
             if (!record->event.pressed) {
-                rhruiz_stop_window_switcher();
+                stop_window_switcher();
             }
             break;
 
         case KC_CTAB:
-            rhruiz_window_switcher(record->event.pressed);
+            window_switcher(record->event.pressed);
             break;
 
         case NV_NWIN ... NV_MICT:
-            rhruiz_perform_nav_key(keycode, record->event.pressed);
+            perform_nav_key(keycode, record->event.pressed);
             break;
 
         case KC_CCCP:
@@ -206,13 +206,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_NOS:
             if (record->event.pressed) {
-                rhruiz_next_nav_keys();
+                next_nav_keys();
             }
             break;
 
         case KC_LAYO:
             if (record->event.pressed) {
-                rhruiz_next_default_layer();
+                next_default_layer();
             }
             break;
 
@@ -245,7 +245,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 bool should_flash = ((temp_mod | temp_osm) & MOD_MASK_SHIFT);
                 bool parallel     = (temp_mod | temp_osm) & MOD_MASK_CTRL;
 
-                rhruiz_send_make(should_flash, parallel);
+                send_make(should_flash, parallel);
 
                 SEND_STRING(SS_TAP(X_ENTER));
                 set_mods(temp_mod);
@@ -273,12 +273,12 @@ void keyboard_post_init_user() {
     writePinHigh(D5);
 #endif
 #ifdef SPLIT_KEYBOARD
-    transaction_register_rpc(USER_SYNC_RUNTIME_STATE, rhruiz_sync_runtime_state_handler);
+    transaction_register_rpc(USER_SYNC_RUNTIME_STATE, sync_runtime_state_handler);
 #endif
     keyboard_post_init_keymap();
 }
 
-__attribute__((weak)) layer_state_t layer_state_set_user(layer_state_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
     if (layer_state_is(_GAME)) {
         state = update_tri_layer_state(state, _GAMEFN1, _FN2, _CFG);
     } else {
@@ -331,7 +331,7 @@ void matrix_scan_user(void) {
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
     if (runtime_state.needs_runtime_state_sync) {
-        rhruiz_master_to_slave_t m2s = {
+        master_to_slave_t m2s = {
             runtime_state.nav_keys_index,
 #    ifdef CAPS_WORD_ENABLE
             runtime_state.caps_word_enabled

@@ -49,7 +49,6 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
 void          keyboard_post_init_keymap(void);
 void          matrix_init_keymap(void);
-void          rhruiz_next_default_layer(void);
 
 #ifdef TAP_DANCE_ENABLE
 // tap dances
