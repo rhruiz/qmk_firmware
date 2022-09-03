@@ -53,7 +53,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #endif
 __attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) { return state; }
 
-__attribute__((weak)) bool rhruiz_process_record(uint16_t keycode, keyrecord_t *record) { return true; }
+__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
@@ -175,7 +175,7 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
     rhruiz_send_make_args(should_flash, parallel);
 }
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool record_user_keymap(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT_RSE_ENT:
         case MO_RSE:
@@ -257,7 +257,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     rhruiz_oled_activity();
 #endif
 
-    return rhruiz_process_record(keycode, record);
+    return process_record_keymap(keycode, record);
 }
 
 void matrix_init_user(void) {
