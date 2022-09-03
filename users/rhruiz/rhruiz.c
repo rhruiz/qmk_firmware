@@ -175,7 +175,7 @@ void rhruiz_send_make(bool should_flash, bool parallel) {
     rhruiz_send_make_args(should_flash, parallel);
 }
 
-bool record_user_keymap(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT_RSE_ENT:
         case MO_RSE:
