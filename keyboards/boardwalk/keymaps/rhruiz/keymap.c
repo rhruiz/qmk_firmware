@@ -47,3 +47,5 @@ void keyboard_post_init_keymap(void) {
     rgblight_layers = _rgb_layers;
 }
 #endif
+
+#include "users/rhruiz/layouts/ortho_5x14.c"

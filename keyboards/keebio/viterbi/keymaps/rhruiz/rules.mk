@@ -6,6 +6,5 @@ EXTRAKEY_ENABLE = yes
 RAW_ENABLE = yes
 LTO_ENABLE = yes
 BOOTLOADER = qmk-dfu
-SRC += users/rhruiz/layouts/ortho_5x14.c
 
 OPT_DEFS += -DPRO_MICRO
