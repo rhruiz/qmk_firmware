@@ -30,8 +30,8 @@ typedef struct _rhruiz_master_to_slave_t {
 
 const uint16_t rhruiz_nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
-    [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), KC_HOME},
-    [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), KC_END},
+    [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), LGUI(KC_HOME)},
+    [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), LGUI(KC_END)},
     [NV_EOL  - NV_NWIN] =  {LCMD(KC_RIGHT), KC_END},
     [NV_BOL  - NV_NWIN] =  {LCMD(KC_LEFT), KC_HOME},
     [NV_WLFT - NV_NWIN] =  {LALT(KC_LEFT), LCTL(KC_LEFT)},
