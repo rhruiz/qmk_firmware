@@ -191,22 +191,25 @@ void (*rhruiz_encoder_handlers[][2]) (void) = {
 #endif
 
 #ifdef RGBLIGHT_LAYERS
-const rgblight_segment_t PROGMEM fn1_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 137, 255, 255});
-const rgblight_segment_t PROGMEM fn2_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 200, 255, 255});
-const rgblight_segment_t PROGMEM cfg_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 80, 255, 255});
+const rgblight_segment_t PROGMEM fn1_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 127, 255, 255});
+const rgblight_segment_t PROGMEM fn2_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 201, 255, 255});
+const rgblight_segment_t PROGMEM cfg_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 85, 255, 255});
 const rgblight_segment_t PROGMEM num_colors[] = RGBLIGHT_LAYER_SEGMENTS({14, 8, 0, 255, 255});
+const rgblight_segment_t PROGMEM fun_colors[] = RGBLIGHT_LAYER_SEGMENTS({2, 8, 180, 255, 255});
+
 const rgblight_segment_t PROGMEM qwerty_colors[] = RGBLIGHT_LAYER_SEGMENTS({0, 24, 21, 255, 255});
 const rgblight_segment_t PROGMEM colemak_colors[] = RGBLIGHT_LAYER_SEGMENTS({0, 24, 180, 255, 255});
 const rgblight_segment_t PROGMEM mac_colors[] = RGBLIGHT_LAYER_SEGMENTS({0, 24, 0, 0, 255});
 const rgblight_segment_t PROGMEM win_colors[] = RGBLIGHT_LAYER_SEGMENTS({0, 24, 148, 255, 255});
 
-const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1_colors, fn2_colors, cfg_colors, num_colors, qwerty_colors, colemak_colors, mac_colors, win_colors);
+const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1_colors, fn2_colors, cfg_colors, num_colors, fun_colors, qwerty_colors, colemak_colors, mac_colors, win_colors);
 
 layer_state_t layer_state_set_keymap(layer_state_t state) {
     rgblight_set_layer_state(0, layer_state_cmp(state, _FN1) || layer_state_cmp(state, _GAMEFN1));
     rgblight_set_layer_state(1, layer_state_cmp(state, _FN2));
     rgblight_set_layer_state(2, layer_state_cmp(state, _CFG));
     rgblight_set_layer_state(3, layer_state_cmp(state, _NUM));
+    rgblight_set_layer_state(4, layer_state_cmp(state, _FUNC));
 
 
     if (layer_state_is(_GAME)) {
@@ -224,11 +227,11 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         switch(keycode) {
 #ifdef RGBLIGHT_LAYERS
             case KC_LAYO:
-                rgblight_blink_layer_repeat(runtime_state.base_layer + 4, 200, 2);
+                rgblight_blink_layer_repeat(runtime_state.base_layer + 5, 200, 2);
                 break;
 
             case KC_NOS:
-                rgblight_blink_layer_repeat(runtime_state.nav_keys_index + 6, 200, 2);
+                rgblight_blink_layer_repeat(runtime_state.nav_keys_index + 7, 200, 2);
                 break;
 #endif
 
