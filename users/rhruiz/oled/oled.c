@@ -159,6 +159,13 @@ bool rhruiz_render_oled(void) {
             oled_clear_half_except(2);
             break;
 
+        case _FUNC:
+            oled_clear_half_except(2);
+            oled_write_P(PSTR("FUNC\n"), false);
+            oled_write_P(PSTR(" OSL\n"), false);
+            oled_clear_half_except(2);
+            break;
+
         default:
             oled_clear_half_except(0);
             oled_clear_half_except(0);
