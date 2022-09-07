@@ -63,6 +63,10 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
+bool shifted(void) {
+    return get_mods() & MOD_MASK_SHIFT;
+}
+
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
 void next_default_layer(void) {
@@ -216,9 +220,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+        case KC_ARRW:
+            if (record->event.pressed) {
+                if (shifted()) {
+                    SEND_STRING("<- ");
+                } else {
+                    SEND_STRING("-> ");
+                }
+
+                return true;
+            }
+            break;
+
+        case KC_FARW:
+            if (record->event.pressed) {
+                if (shifted()) {
+                    SEND_STRING("<> ");
+                } else {
+                    SEND_STRING("=> ");
+                }
+
+                return true;
+            }
+            break;
+
+
         case KC_EPIP:
             if (record->event.pressed) {
-                if (get_mods() & MOD_MASK_SHIFT) {
+                if (shifted()) {
                     SEND_STRING(" { || }");
                     tap_code(KC_LEFT);
                     tap_code(KC_LEFT);

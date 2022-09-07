@@ -42,6 +42,8 @@ enum custom_keycodes {
     NV_COPY,
     NV_PSTE,
     KC_CCCP,
+    KC_FARW,
+    KC_ARRW,
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 
