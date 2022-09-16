@@ -44,6 +44,7 @@ enum custom_keycodes {
     KC_CCCP,
     KC_FARW,
     KC_ARRW,
+    KC_PDIR,
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 

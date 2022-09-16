@@ -260,6 +260,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+        case KC_PDIR:
+            if (record->event.pressed) {
+                SEND_STRING("../");
+                return true;
+            }
+
+            break;
+
         case KC_MAKE:
             if (record->event.pressed) {
                 uint8_t temp_mod = mod_config(get_mods());
