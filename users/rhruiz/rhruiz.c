@@ -63,8 +63,8 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
-bool shifted(void) {
-    return get_mods() & MOD_MASK_SHIFT;
+bool shifted(uint8_t mods) {
+    return mods & MOD_MASK_SHIFT;
 }
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
@@ -84,6 +84,19 @@ void next_nav_keys(void) {
         runtime_state.needs_runtime_state_sync = true;
     }
 #endif
+}
+
+uint8_t get_and_clear_mods(void) {
+    uint8_t temp_mod = mod_config(get_mods());
+    clear_mods();
+#ifndef NO_ACTION_ONESHOT
+    uint8_t temp_osm = mod_config(get_oneshot_mods());
+    clear_oneshot_mods();
+#else
+    uint8_t temp_osm = 0U;
+#endif
+
+    return temp_mod | temp_osm;
 }
 
 void stop_window_switcher(void) {
@@ -222,24 +235,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_ARRW:
             if (record->event.pressed) {
-                if (shifted()) {
+                uint8_t mods = get_and_clear_mods();
+
+                if (shifted(mods)) {
                     SEND_STRING("<- ");
                 } else {
                     SEND_STRING("->");
                 }
 
+                set_mods(mods);
                 return true;
             }
             break;
 
         case KC_FARW:
             if (record->event.pressed) {
-                if (shifted()) {
+                uint8_t mods = get_and_clear_mods();
+
+                if (shifted(mods)) {
                     SEND_STRING("<> ");
                 } else {
                     SEND_STRING("=> ");
                 }
 
+                set_mods(mods);
                 return true;
             }
             break;
@@ -247,22 +266,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_EPIP:
             if (record->event.pressed) {
-                if (shifted()) {
-                    SEND_STRING(" { || }");
-                    tap_code(KC_LEFT);
-                    tap_code(KC_LEFT);
-                    tap_code(KC_LEFT);
+                uint8_t mods = get_and_clear_mods();
+
+                if (shifted(mods)) {
+                    SEND_STRING(" { || }" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
                 } else {
                     SEND_STRING("|> ");
                 }
 
+                set_mods(mods);
                 return true;
             }
             break;
 
         case KC_PDIR:
             if (record->event.pressed) {
+                uint8_t mods = get_and_clear_mods();
                 SEND_STRING("../");
+                set_mods(mods);
                 return true;
             }
 
@@ -270,22 +291,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MAKE:
             if (record->event.pressed) {
-                uint8_t temp_mod = mod_config(get_mods());
-                clear_mods();
-#ifndef NO_ACTION_ONESHOT
-                uint8_t temp_osm = mod_config(get_oneshot_mods());
-                clear_oneshot_mods();
-#else
-                uint8_t temp_osm = 0U;
-#endif
+                uint8_t mods = get_and_clear_mods();
 
-                bool should_flash = ((temp_mod | temp_osm) & MOD_MASK_SHIFT);
-                bool parallel     = (temp_mod | temp_osm) & MOD_MASK_CTRL;
+                bool should_flash = shifted(mods);
+                bool parallel = mods & MOD_MASK_CTRL;
 
                 send_make(should_flash, parallel);
 
                 SEND_STRING(SS_TAP(X_ENTER));
-                set_mods(temp_mod);
+                set_mods(mods);
             }
             break;
     }
