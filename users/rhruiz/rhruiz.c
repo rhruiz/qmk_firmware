@@ -225,7 +225,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (shifted()) {
                     SEND_STRING("<- ");
                 } else {
-                    SEND_STRING("-> ");
+                    SEND_STRING("->");
                 }
 
                 return true;
