@@ -4,6 +4,11 @@
 
 #define _rhI(x) __rhI(x)
 #define __rhI(x) #x
+#define lambda(return_type, function_body) \
+({ \
+      return_type __fn__ function_body \
+          __fn__; \
+})
 
 rhruiz_runtime_state runtime_state = {
     .nav_keys_index = 0,
@@ -86,17 +91,15 @@ void next_nav_keys(void) {
 #endif
 }
 
-uint8_t get_and_clear_mods(void) {
-    uint8_t temp_mod = mod_config(get_mods());
+void without_mods(void block(uint8_t)) {
+    uint8_t mods = mod_config(get_mods());
     clear_mods();
 #ifndef NO_ACTION_ONESHOT
-    uint8_t temp_osm = mod_config(get_oneshot_mods());
+    mods |= mod_config(get_oneshot_mods());
     clear_oneshot_mods();
-#else
-    uint8_t temp_osm = 0U;
 #endif
-
-    return temp_mod | temp_osm;
+    block(mods);
+    set_mods(mods);
 }
 
 void stop_window_switcher(void) {
@@ -235,30 +238,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_ARRW:
             if (record->event.pressed) {
-                uint8_t mods = get_and_clear_mods();
+                without_mods(lambda (void, (uint8_t mods) {
+                   if (shifted(mods)) {
+                       SEND_STRING("<- ");
+                   } else {
+                       SEND_STRING("->");
+                   }
+                }));
 
-                if (shifted(mods)) {
-                    SEND_STRING("<- ");
-                } else {
-                    SEND_STRING("->");
-                }
-
-                set_mods(mods);
                 return true;
             }
             break;
 
         case KC_FARW:
             if (record->event.pressed) {
-                uint8_t mods = get_and_clear_mods();
+                without_mods(lambda (void, (uint8_t mods) {
+                    if (shifted(mods)) {
+                        SEND_STRING("<> ");
+                    } else {
+                        SEND_STRING("=> ");
+                    }
+                }));
 
-                if (shifted(mods)) {
-                    SEND_STRING("<> ");
-                } else {
-                    SEND_STRING("=> ");
-                }
-
-                set_mods(mods);
                 return true;
             }
             break;
@@ -266,24 +267,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_EPIP:
             if (record->event.pressed) {
-                uint8_t mods = get_and_clear_mods();
+                without_mods(lambda (void, (uint8_t mods) {
+                    if (shifted(mods)) {
+                        SEND_STRING(" { || }" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
+                    } else {
+                        SEND_STRING("|> ");
+                    }
+                }));
 
-                if (shifted(mods)) {
-                    SEND_STRING(" { || }" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
-                } else {
-                    SEND_STRING("|> ");
-                }
-
-                set_mods(mods);
                 return true;
             }
             break;
 
         case KC_PDIR:
             if (record->event.pressed) {
-                uint8_t mods = get_and_clear_mods();
-                SEND_STRING("../");
-                set_mods(mods);
+                without_mods(lambda (void, (uint8_t _mods) {
+                    SEND_STRING("../");
+                }));
                 return true;
             }
 
@@ -291,15 +291,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_MAKE:
             if (record->event.pressed) {
-                uint8_t mods = get_and_clear_mods();
+                without_mods(lambda (void, (uint8_t mods) {
+                    bool should_flash = shifted(mods);
+                    bool parallel = mods & MOD_MASK_CTRL;
 
-                bool should_flash = shifted(mods);
-                bool parallel = mods & MOD_MASK_CTRL;
+                    send_make(should_flash, parallel);
 
-                send_make(should_flash, parallel);
-
-                SEND_STRING(SS_TAP(X_ENTER));
-                set_mods(mods);
+                    SEND_STRING(SS_TAP(X_ENTER));
+                }));
             }
             break;
     }
