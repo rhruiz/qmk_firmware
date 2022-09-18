@@ -170,9 +170,9 @@
 //                                 .--------------------------------------------.
 #define ________L_LWR_1________                ____FUNCTIONS_LEFT____
 //                                 |--------+--------+--------+--------+--------|
-#define ________L_LWR_2________      KC_HASH, KC_LCBR, KC_RCBR, KC_DLR , KC_PERC
+#define ________L_LWR_2________      KC_EXLM, KC_LCBR, KC_RCBR, KC_DLR , KC_PERC
 //                                 |--------+--------+--------+--------+--------|
-#define ________L_LWR_3________      KC_EXLM, KC_LBRC, KC_RBRC, KC_MINS, KC_UNDS
+#define ________L_LWR_3________      KC_HASH, KC_LBRC, KC_RBRC, KC_MINS, KC_UNDS
 //                                 |--------+--------+--------+--------+--------|
 #define ________L_LWR_4________       KC_AT , KC_LPRN, KC_RPRN, KC_EQL , KC_PLUS
 //                                 `--------+--------+--------+--------+--------'
