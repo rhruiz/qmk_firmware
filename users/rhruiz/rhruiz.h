@@ -22,12 +22,21 @@
 typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _ISRT, _NORMAN, _APTV3, _SEMI, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _CFG, _FUNC } rhruiz_layers;
 
 enum custom_keycodes {
+    // macro keys
     KC_MAKE = SAFE_RANGE,
     KC_EPIP,
-    KC_CTAB,
+    KC_FARW,
+    KC_ARRW,
+    KC_PDIR,
+    KC_CCCP,
+    // config keys
     KC_LAYO,
     KC_NOS,
-    NV_NWIN,
+    // window switcher
+    KC_CTAB,
+    // os independent nav keys
+    NV_START,
+    NV_NWIN = NV_START,
     NV_SCTP,
     NV_SCBT,
     NV_EOL,
@@ -41,10 +50,7 @@ enum custom_keycodes {
     NV_MICT,
     NV_COPY,
     NV_PSTE,
-    KC_CCCP,
-    KC_FARW,
-    KC_ARRW,
-    KC_PDIR,
+    NV_END = NV_PSTE,
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 

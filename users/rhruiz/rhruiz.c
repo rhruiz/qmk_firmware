@@ -34,20 +34,20 @@ typedef struct _master_to_slave_t {
 #define NUM_NAV_KEYS_OSES 2
 
 const uint16_t nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
-    [NV_NWIN - NV_NWIN] =  {LCMD(KC_GRV), LALT(KC_TAB)},
-    [NV_SCTP - NV_NWIN] =  {LCMD(KC_UP), LGUI(KC_HOME)},
-    [NV_SCBT - NV_NWIN] =  {LCMD(KC_DOWN), LGUI(KC_END)},
-    [NV_EOL  - NV_NWIN] =  {LCMD(KC_RIGHT), KC_END},
-    [NV_BOL  - NV_NWIN] =  {LCMD(KC_LEFT), KC_HOME},
-    [NV_WLFT - NV_NWIN] =  {LALT(KC_LEFT), LCTL(KC_LEFT)},
-    [NV_WRGH - NV_NWIN] =  {LALT(KC_RIGHT), LCTL(KC_RGHT)},
-    [NV_BCK  - NV_NWIN] =  {LCMD(KC_LBRC), LALT(KC_LEFT)},
-    [NV_FWD  - NV_NWIN] =  {LCMD(KC_RBRC), LALT(KC_RGHT)},
-    [NV_TAN  - NV_NWIN] =  {LCMD(KC_RCBR), LCTL(KC_TAB)},
-    [NV_TAP  - NV_NWIN] =  {LCMD(KC_LCBR), LCTL(LSFT(KC_TAB))},
-    [NV_MICT - NV_NWIN] =  {LCTL(KC_UP), LGUI(KC_TAB)},
-    [NV_COPY - NV_NWIN] =  {LGUI(KC_C), LCTL(KC_C)},
-    [NV_PSTE - NV_NWIN] =  {LGUI(KC_V), LCTL(KC_V)},
+    [NV_NWIN - NV_START] =  {LCMD(KC_GRV), LALT(KC_TAB)},
+    [NV_SCTP - NV_START] =  {LCMD(KC_UP), LGUI(KC_HOME)},
+    [NV_SCBT - NV_START] =  {LCMD(KC_DOWN), LGUI(KC_END)},
+    [NV_EOL  - NV_START] =  {LCMD(KC_RIGHT), KC_END},
+    [NV_BOL  - NV_START] =  {LCMD(KC_LEFT), KC_HOME},
+    [NV_WLFT - NV_START] =  {LALT(KC_LEFT), LCTL(KC_LEFT)},
+    [NV_WRGH - NV_START] =  {LALT(KC_RIGHT), LCTL(KC_RGHT)},
+    [NV_BCK  - NV_START] =  {LCMD(KC_LBRC), LALT(KC_LEFT)},
+    [NV_FWD  - NV_START] =  {LCMD(KC_RBRC), LALT(KC_RGHT)},
+    [NV_TAN  - NV_START] =  {LCMD(KC_RCBR), LCTL(KC_TAB)},
+    [NV_TAP  - NV_START] =  {LCMD(KC_LCBR), LCTL(LSFT(KC_TAB))},
+    [NV_MICT - NV_START] =  {LCTL(KC_UP), LGUI(KC_TAB)},
+    [NV_COPY - NV_START] =  {LGUI(KC_C), LCTL(KC_C)},
+    [NV_PSTE - NV_START] =  {LGUI(KC_V), LCTL(KC_V)},
 };
 
 #ifdef TAP_DANCE_ENABLE
@@ -121,7 +121,7 @@ void window_switcher(bool pressed) {
 }
 
 uint16_t get_nav_code(uint16_t keycode) {
-    return pgm_read_word(&(nav_keys[keycode - NV_NWIN][runtime_state.nav_keys_index]));
+    return pgm_read_word(&(nav_keys[keycode - NV_START][runtime_state.nav_keys_index]));
 }
 
 void perform_nav_key(uint16_t keycode, bool pressed) {
@@ -208,7 +208,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             window_switcher(record->event.pressed);
             break;
 
-        case NV_NWIN ... NV_MICT:
+        case NV_START ... NV_END:
             perform_nav_key(keycode, record->event.pressed);
             break;
 
