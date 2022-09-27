@@ -56,30 +56,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______L_CODH_R4_______, _______R_COLE_R4_______
   ),
 
-  [_NORMAN] = LAYOUT_base_wrapper(
-      _______L_NORM_R2_______, _______R_NORM_R2_______,
-      _______L_NORM_R3_______, _______R_NORM_R3_______,
-      _______L_NORM_R4_______, _______R_NORM_R4_______
-  ),
-
-  [_ISRT] = LAYOUT_base_wrapper(
-      _______L_ISRT_R2_______, _______R_ISRT_R2_______,
-      _______L_ISRT_R3_______, _______R_ISRT_R3_______,
-      _______L_ISRT_R4_______, _______R_ISRT_R4_______
-  ),
-
-  [_APTV3] = LAYOUT_base_wrapper(
-      _______L_APT3_R2_______, _______R_APT3_R2_______,
-      _______L_APT3_R3_______, _______R_APT3_R3_______,
-      _______L_APT3_R4_______, _______R_APT3_R4_______
-  ),
-
-  [_SEMI] = LAYOUT_base_wrapper(
-      _______L_SEMI_R2_______, _______R_SEMI_R2_______,
-      _______L_SEMI_R3_______, _______R_SEMI_R3_______,
-      _______L_SEMI_R4_______, _______R_SEMI_R4_______
-  ),
-
   [_GAME] = LAYOUT_split_3x6_3_wrapper(
 //,-----------------------------------.  ,-----------------------------------.
     KC_TAB ,  ________L_BL_R2________ ,     ________R_BL_R2________ , KC_BSPC,
@@ -215,6 +191,9 @@ void keyboard_post_init_keymap() {
     setPinOutput(D5);
     writePinHigh(B0);
     writePinHigh(D5);
+#endif
+#ifdef CONVERT_TO_PROMICRO_RP2040
+    rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD);
 #endif
 #ifdef COMBO_ENABLE
     combo_disable();

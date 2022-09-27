@@ -20,7 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define BASE_LAYERS _BL, _COLEMAK, _CODH, _NORMAN, _ISRT, _APTV3, _SEMI
+#define BASE_LAYERS _BL, _COLEMAK, _CODH
+
+#if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
+#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
+#    undef RGB_DI_PIN
+#    undef RGBLED_NUM
+#    undef RGBLED_SPLIT
+#    define RGB_DI_PIN 25U
+#    define RGBLED_NUM 1
+#endif
 
 //#define USE_MATRIX_I2C
 
@@ -46,16 +55,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define IGNORE_MOD_TAP_INTERRUPT
 #define HOME_ROW_MODS
 #define PERMISSIVE_HOLD
-
-#ifdef RGBLIGHT_ENABLE
-#    undef RGBLED_NUM
-#    define RGBLIGHT_ANIMATIONS
-#    define RGBLED_NUM 27
-#    define RGBLIGHT_LIMIT_VAL 120
-#    define RGBLIGHT_HUE_STEP 10
-#    define RGBLIGHT_SAT_STEP 17
-#    define RGBLIGHT_VAL_STEP 17
-#endif
 
 // Mouse key speed and acceleration.
 #undef MOUSEKEY_DELAY
