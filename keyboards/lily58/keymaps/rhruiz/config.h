@@ -27,14 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define EE_HANDS
 
 #define USE_SERIAL_PD2
-#define SPLIT_LAYER_STATE_ENABLE
-#define SPLIT_MODS_ENABLE
-
-#undef TAPPING_TERM
-#define TAPPING_TERM 150
-#define TAPPING_TERM_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
-#define HOME_ROW_MODS
 
 // space saving
 #define NO_ACTION_ONESHOT
@@ -58,30 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SLEEP
 */
 #endif
-
-// OLED
-#ifdef OLED_ENABLE
-#undef OLED_FONT_H
-#define OLED_FONT_H RHRUIZ_OLED_FONT_H
-#define OLED_SCROLL_TIMEOUT 8000
-#define OLED_UPDATE_INTERVAL 50
-
-#ifdef OLED_ROTATE
-#    define OLED_SCROLL_TIMEOUT_RIGHT
-#endif
-#endif
-
-// Mouse key speed and acceleration.
-#undef MOUSEKEY_DELAY
-#define MOUSEKEY_DELAY          0
-#undef MOUSEKEY_INTERVAL
-#define MOUSEKEY_INTERVAL       16
-#undef MOUSEKEY_WHEEL_DELAY
-#define MOUSEKEY_WHEEL_DELAY    0
-#undef MOUSEKEY_MAX_SPEED
-#define MOUSEKEY_MAX_SPEED      6
-#undef MOUSEKEY_TIME_TO_MAX
-#define MOUSEKEY_TIME_TO_MAX    64
 
 // bootmagic
 
