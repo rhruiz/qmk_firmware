@@ -99,11 +99,11 @@
 //                                 .--------------------------------------------.
 #define ________R_LWR_1________                 ____FUNCTIONS_RGHT____
 //                                 |--------+--------+--------+--------+--------|
-#define ________R_LWR_2________      KC_PDIR, KC_EPIP, KC_ASTR, KC_CIRC, _______
+#define ________R_LWR_2________      KC_PDIR, KC_EPIP, KC_ASTR, KC_BSLS, _______
 //                                 |--------+--------+--------+--------+--------|
-#define ________R_LWR_3________      KC_GRV , KC_COLN, KC_AMPR, KC_PIPE, KC_QUOT
+#define ________R_LWR_3________      KC_GRV , KC_COLN, KC_PIPE, KC_CIRC, KC_QUOT
 //                                 |--------+--------+--------+--------+--------|
-#define ________R_LWR_4________      KC_TILD, KC_SCLN, KC_FARW, KC_ARRW, KC_BSLS
+#define ________R_LWR_4________      KC_TILD, KC_AMPR, KC_FARW, KC_ARRW, KC_SCLN
 //                                 `--------+--------+--------+--------+--------'
 
 //                                 .--------------------------------------------.
