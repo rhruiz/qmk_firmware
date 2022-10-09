@@ -141,24 +141,6 @@ void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t 
 }
 #endif
 
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-#ifdef HOME_ROW_MODS
-        case SFT_T(KC_S):
-        case SFT_T(KC_L):
-        case CTL_T(KC_A):
-        case CTL_T(KC_SCLN):
-            return TAPPING_TERM + 50;
-#endif
-#ifdef TAP_DANCE_ENABLE
-        case TD(TD_RSHIFT_NUM):
-            return TAPPING_TERM + 50;
-#endif
-        default:
-            return TAPPING_TERM;
-    }
-}
-
 void send_make_args(bool should_flash, bool parallel) {
     SEND_STRING("qmk ");
 

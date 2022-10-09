@@ -6,6 +6,7 @@ include $(QUANTUM_PATH)/encoder/tests/testlist.mk
 include $(QUANTUM_PATH)/sequencer/tests/testlist.mk
 include $(QUANTUM_PATH)/wear_leveling/tests/testlist.mk
 include $(PLATFORM_PATH)/test/testlist.mk
+include $(ROOT_DIR)users/rhruiz/tests/testlist.mk
 
 define VALIDATE_TEST_LIST
     ifneq ($1,)

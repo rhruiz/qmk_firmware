@@ -1,4 +1,4 @@
-SRC += rhruiz.c
+SRC += rhruiz.c get_tapping_term.c
 
 GRAVE_ESC_ENABLE=no
 SPACE_CADET_ENABLE=no
