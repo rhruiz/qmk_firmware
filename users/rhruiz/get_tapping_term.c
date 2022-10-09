@@ -1,4 +1,5 @@
 #include "quantum.h"
+#include "rhruiz.h"
 
 #define IS_MODT(mod, kc) (kc & MT(mod & 0x0F, KC_NO) & ~QK_MOD_TAP) >> 8 > 0
 
