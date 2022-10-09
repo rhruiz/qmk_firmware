@@ -50,7 +50,8 @@ enum custom_keycodes {
     NV_MICT,
     NV_COPY,
     NV_PSTE,
-    NV_END = NV_PSTE,
+    NV_WSWT,
+    NV_END = NV_WSWT,
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 
@@ -96,3 +97,10 @@ typedef struct _rhruiz_runtime_state {
 #   endif
 #endif
 } rhruiz_runtime_state;
+
+/* nav keys */
+void next_nav_keys(rhruiz_runtime_state *state);
+void perform_nav_key(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *state);
+void perform_copy_paste(keyrecord_t *record, rhruiz_runtime_state *state);
+void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state);
+void stop_window_switcher(keyrecord_t *record, rhruiz_runtime_state *state);
