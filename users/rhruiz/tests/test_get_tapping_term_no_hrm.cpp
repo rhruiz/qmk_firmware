@@ -21,53 +21,53 @@ extern "C" {
 #include "quantum.h"
 }
 
-class GetTappingTermTest  : public ::testing::Test {};
+class GetTappingTermNoHRMTest  : public ::testing::Test {};
 
-TEST_F(GetTappingTermTest, TestTappingTermOnRingPinkieKey) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnRingPinkieKey) {
     uint16_t left_keycode = LCTL_T(KC_A);
     uint16_t right_keycode = RCTL_T(KC_O);
 
     keyrecord_t left_record = make_record(1, 1);
     keyrecord_t right_record = make_record(1, 10);
 
-    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM + 50);
-    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM + 50);
+    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM);
+    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnRingPinkieKeyOnQwerty) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnRingPinkieKeyOnQwerty) {
     uint16_t left_keycode = LCTL_T(KC_A);
     uint16_t right_keycode = RCTL_T(KC_SCLN);
 
     keyrecord_t left_record = make_record(1, 1);
     keyrecord_t right_record = make_record(1, 10);
 
-    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM + 50);
-    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM + 50);
+    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM);
+    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnRingFingerKey) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnRingFingerKey) {
     uint16_t left_keycode = LSFT_T(KC_R);
     uint16_t right_keycode = RSFT_T(KC_I);
 
     keyrecord_t left_record = make_record(1, 1);
     keyrecord_t right_record = make_record(1, 10);
 
-    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM + 50);
-    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM + 50);
+    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM);
+    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnRingFingerKeyOnQwerty) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnRingFingerKeyOnQwerty) {
     uint16_t left_keycode = LSFT_T(KC_S);
     uint16_t right_keycode = RSFT_T(KC_L);
 
     keyrecord_t left_record = make_record(1, 1);
     keyrecord_t right_record = make_record(1, 10);
 
-    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM + 50);
-    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM + 50);
+    EXPECT_EQ(get_tapping_term(left_keycode, &left_record), TAPPING_TERM);
+    EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnIndexFingerKey) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnIndexFingerKey) {
     uint16_t left_keycode = LGUI_T(KC_T);
     uint16_t right_keycode = LGUI_T(KC_N);
 
@@ -78,7 +78,7 @@ TEST_F(GetTappingTermTest, TestTappingTermOnIndexFingerKey) {
     EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnIndexFingerKeyOnQwerty) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnIndexFingerKeyOnQwerty) {
     uint16_t left_keycode = LGUI_T(KC_F);
     uint16_t right_keycode = LGUI_T(KC_J);
 
@@ -89,7 +89,7 @@ TEST_F(GetTappingTermTest, TestTappingTermOnIndexFingerKeyOnQwerty) {
     EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnMiddleFingerKey) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnMiddleFingerKey) {
     uint16_t left_keycode = LGUI_T(KC_S);
     uint16_t right_keycode = LGUI_T(KC_E);
 
@@ -100,7 +100,7 @@ TEST_F(GetTappingTermTest, TestTappingTermOnMiddleFingerKey) {
     EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnMiddleFingerKeyOnQwerty) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnMiddleFingerKeyOnQwerty) {
     uint16_t left_keycode = LGUI_T(KC_D);
     uint16_t right_keycode = LGUI_T(KC_K);
 
@@ -111,7 +111,7 @@ TEST_F(GetTappingTermTest, TestTappingTermOnMiddleFingerKeyOnQwerty) {
     EXPECT_EQ(get_tapping_term(right_keycode, &right_record), TAPPING_TERM);
 }
 
-TEST_F(GetTappingTermTest, TestTappingTermOnThumbKey) {
+TEST_F(GetTappingTermNoHRMTest, TestTappingTermOnThumbKey) {
     uint16_t left_keycode = LCTL_T(KC_SPACE);
     uint16_t right_keycode = LSFT_T(KC_ENTER);
     uint16_t alt_right_keycode = LALT_T(KC_BACKSPACE);
