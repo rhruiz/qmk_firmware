@@ -18,7 +18,6 @@
 
 extern "C" {
 #include "quantum.h"
-#include <stdio.h>
 }
 
 class GetTappingTermTest  : public ::testing::Test {};
