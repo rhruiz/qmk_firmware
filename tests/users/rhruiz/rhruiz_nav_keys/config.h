@@ -17,3 +17,5 @@
 #pragma once
 
 #include "test_common.h"
+#define QMK_KEYBOARD "test"
+#define QMK_KEYMAP "rhruiz"

@@ -2,14 +2,6 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-#define _rhI(x) __rhI(x)
-#define __rhI(x) #x
-#define lambda(return_type, function_body) \
-({ \
-      return_type __fn__ function_body \
-          __fn__; \
-})
-
 rhruiz_runtime_state runtime_state = {
     .nav_keys_index = 0,
     .is_window_switcher_active = false,
@@ -49,10 +41,6 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
 
-bool shifted(uint8_t mods) {
-    return mods & MOD_MASK_SHIFT;
-}
-
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
 void next_default_layer(rhruiz_runtime_state *state) {
@@ -61,17 +49,6 @@ void next_default_layer(rhruiz_runtime_state *state) {
     state->base_layer = (state->base_layer + 1) % count;
     rhruiz_layers layer = pgm_read_byte(_base_layers + state->base_layer);
     default_layer_set(1 << layer);
-}
-
-void without_mods(void block(uint8_t)) {
-    uint8_t mods = mod_config(get_mods());
-    clear_mods();
-#ifndef NO_ACTION_ONESHOT
-    mods |= mod_config(get_oneshot_mods());
-    clear_oneshot_mods();
-#endif
-    block(mods);
-    set_mods(mods);
 }
 
 #ifdef SPLIT_KEYBOARD
@@ -84,145 +61,27 @@ void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t 
 }
 #endif
 
-void send_make_args(bool should_flash, bool parallel) {
-    SEND_STRING("qmk ");
-
-    if (should_flash) {
-        SEND_STRING("flash");
-    } else {
-        SEND_STRING("compile");
-    }
-
-    SEND_STRING(" -kb " QMK_KEYBOARD " -km " QMK_KEYMAP);
-
-    if (parallel) {
-        SEND_STRING(" -j 8");
-    }
-#ifdef OLED_ENABLE
-
-    SEND_STRING(" -e OLED_ENABLE=yes");
-#    ifdef OLED_ROTATE
-    SEND_STRING(" -e OLED_ROTATE=yes");
-#    endif
-#endif
-}
-
-void send_make(bool should_flash, bool parallel) {
-#ifndef BOOTLOADER_CATERINA
-#    ifdef RAW_ENABLE
-    if (should_flash) {
-        send_make_args(false, parallel);
-        SEND_STRING(" && VID=" _rhI(VENDOR_ID) " PID=" _rhI(PRODUCT_ID));
-        SEND_STRING(" ~/dev/keyboard/hid_send/hid_send bootloader && ");
-    }
-#    endif
-#endif
-    send_make_args(should_flash, parallel);
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!(process_record_keymap(keycode, record)
+        && process_record_nav(keycode, record, &runtime_state)
+        && process_record_macros(keycode, record))) {
+        return false;
+    }
+
     switch (keycode) {
-        case LT_RSE_ENT:
-        case MO_RSE:
-            stop_window_switcher(record, &runtime_state);
-            break;
-
-        case KC_CTAB:
-            window_switcher(record, &runtime_state);
-            break;
-
-        case NV_START ... NV_END:
-            perform_nav_key(keycode, record, &runtime_state);
-            break;
-
-        case KC_CCCP:
-            perform_copy_paste(record, &runtime_state);
-            break;
-
-        case KC_NOS:
-            if (record->event.pressed) {
-                next_nav_keys(&runtime_state);
-            }
-            break;
-
         case KC_LAYO:
             if (record->event.pressed) {
                 next_default_layer(&runtime_state);
             }
-            break;
+            return false;
 
-        case KC_ARRW:
-            if (record->event.pressed) {
-                without_mods(lambda (void, (uint8_t mods) {
-                   if (shifted(mods)) {
-                       SEND_STRING("<- ");
-                   } else {
-                       SEND_STRING("->");
-                   }
-                }));
-
-                return true;
-            }
-            break;
-
-        case KC_FARW:
-            if (record->event.pressed) {
-                without_mods(lambda (void, (uint8_t mods) {
-                    if (shifted(mods)) {
-                        SEND_STRING("<> ");
-                    } else {
-                        SEND_STRING("=> ");
-                    }
-                }));
-
-                return true;
-            }
-            break;
-
-
-        case KC_EPIP:
-            if (record->event.pressed) {
-                without_mods(lambda (void, (uint8_t mods) {
-                    if (shifted(mods)) {
-                        SEND_STRING(" { || }" SS_TAP(X_LEFT) SS_TAP(X_LEFT) SS_TAP(X_LEFT));
-                    } else {
-                        SEND_STRING("|> ");
-                    }
-                }));
-
-                return true;
-            }
-            break;
-
-        case KC_PDIR:
-            if (record->event.pressed) {
-                without_mods(lambda (void, (uint8_t _mods) {
-                    SEND_STRING("../");
-                }));
-                return true;
-            }
-
-            break;
-
-        case KC_MAKE:
-            if (record->event.pressed) {
-                without_mods(lambda (void, (uint8_t mods) {
-                    bool should_flash = shifted(mods);
-                    bool parallel = mods & MOD_MASK_CTRL;
-
-                    send_make(should_flash, parallel);
-
-                    SEND_STRING(SS_TAP(X_ENTER));
-                }));
-            }
-            break;
     }
 #ifdef OLED_ENABLE
 
     rhruiz_oled_activity();
 #endif
 
-    return process_record_keymap(keycode, record);
+    return true;
 }
 
 void matrix_init_user(void) {

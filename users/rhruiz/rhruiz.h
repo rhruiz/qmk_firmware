@@ -21,7 +21,7 @@
 
 typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _CFG, _FUNC } rhruiz_layers;
 
-enum custom_keycodes {
+typedef enum custom_keycodes {
     // macro keys
     KC_MAKE = SAFE_RANGE,
     KC_EPIP,
@@ -55,8 +55,23 @@ enum custom_keycodes {
     NEW_SAFE_RANGE
 } rhruiz_keycodes;
 
+typedef struct _rhruiz_runtime_state {
+    size_t nav_keys_index;
+    bool is_window_switcher_active;
+    size_t base_layer;
+    uint16_t copy_paste_timer;
+#ifdef SPLIT_KEYBOARD
+    bool needs_runtime_state_sync;
+#   ifdef CAPS_WORD_ENABLE
+    bool caps_word_enabled;
+#   endif
+#endif
+} rhruiz_runtime_state;
+
 layer_state_t layer_state_set_keymap(layer_state_t state);
 bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
+bool          process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state);
+bool          process_record_macros(uint16_t keycode, keyrecord_t *record);
 void          keyboard_post_init_keymap(void);
 void          matrix_init_keymap(void);
 
@@ -84,23 +99,3 @@ typedef struct {
 #    endif
 
 #endif
-
-typedef struct _rhruiz_runtime_state {
-    size_t nav_keys_index;
-    bool is_window_switcher_active;
-    size_t base_layer;
-    uint16_t copy_paste_timer;
-#ifdef SPLIT_KEYBOARD
-    bool needs_runtime_state_sync;
-#   ifdef CAPS_WORD_ENABLE
-    bool caps_word_enabled;
-#   endif
-#endif
-} rhruiz_runtime_state;
-
-/* nav keys */
-void next_nav_keys(rhruiz_runtime_state *state);
-void perform_nav_key(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *state);
-void perform_copy_paste(keyrecord_t *record, rhruiz_runtime_state *state);
-void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state);
-void stop_window_switcher(keyrecord_t *record, rhruiz_runtime_state *state);

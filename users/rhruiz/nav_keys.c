@@ -70,3 +70,35 @@ void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
 
     handler(KC_TAB);
 }
+
+bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state) {
+    switch (keycode) {
+        case LT_RSE_ENT:
+        case MO_RSE:
+            stop_window_switcher(record, runtime_state);
+            return true;
+
+        case KC_CTAB:
+            window_switcher(record, runtime_state);
+            break;
+
+        case NV_START ... NV_END:
+            perform_nav_key(keycode, record, runtime_state);
+            break;
+
+        case KC_CCCP:
+            perform_copy_paste(record, runtime_state);
+            break;
+
+        case KC_NOS:
+            if (record->event.pressed) {
+                next_nav_keys(runtime_state);
+            }
+            break;
+
+        default:
+            return true;
+    }
+
+    return false;
+}

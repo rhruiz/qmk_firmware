@@ -14,19 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "gtest/gtest.h"
-#include "rhruiz_test_common.hpp"
+#pragma once
 
-extern "C" {
-#include "quantum.h"
-#include "rhruiz.h"
-}
-
-class GetTappingTermTapDanceTest  : public ::testing::Test {};
-
-TEST_F(GetTappingTermTapDanceTest, TestTappingTermOnRingPinkieKey) {
-    uint16_t keycode = TD(TD_RSHIFT_NUM);
-    keyrecord_t record = make_record(1, 1);
-
-    EXPECT_EQ(get_tapping_term(keycode, &record), TAPPING_TERM + 50);
-}
+#include "test_common.h"
+#define HOME_ROW_MODS
+#define TAPPING_TERM_PER_KEY
+#define IGNORE_MOD_TAP_INTERRUPT
+#define PERMISSIVE_HOLD

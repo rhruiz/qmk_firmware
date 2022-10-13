@@ -1,4 +1,4 @@
-SRC += rhruiz.c get_tapping_term.c nav_keys.c
+SRC += rhruiz.c get_tapping_term.c nav_keys.c macros.c
 
 GRAVE_ESC_ENABLE=no
 SPACE_CADET_ENABLE=no
