@@ -18,10 +18,10 @@
 #include "keycode.h"
 #include "test_common.hpp"
 #include "test_keymap_key.hpp"
-#include "users/rhruiz/rhruiz.h"
 
 extern "C" {
 #include "quantum.h"
+#include "users/rhruiz/rhruiz.h"
 }
 
 using testing::_;

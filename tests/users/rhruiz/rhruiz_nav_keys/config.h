@@ -19,3 +19,4 @@
 #include "test_common.h"
 #define QMK_KEYBOARD "test"
 #define QMK_KEYMAP "rhruiz"
+#define IS_TEST

@@ -1,8 +1,6 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-#define NUM_NAV_KEYS_OSES 2
-
 const uint16_t nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_NWIN - NV_START] = {LCMD(KC_GRV), LALT(KC_TAB)},
     [NV_SCTP - NV_START] = {LCMD(KC_UP), LGUI(KC_HOME)},

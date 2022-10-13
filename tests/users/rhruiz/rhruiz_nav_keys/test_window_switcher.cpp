@@ -18,16 +18,14 @@
 #include "keycode.h"
 #include "test_common.hpp"
 #include "test_keymap_key.hpp"
-#include "users/rhruiz/rhruiz.h"
 
 extern "C" {
 #include "timer.h"
+#include "users/rhruiz/rhruiz.h"
 }
 
 using testing::_;
 using testing::InSequence;
-
-extern rhruiz_runtime_state runtime_state;
 
 class WindowSwitcher : public TestFixture {};
 
@@ -40,7 +38,7 @@ TEST_F(WindowSwitcher, MacWindowSwitching) {
 
     set_keymap({window_switcher, nav_layer, next_nav_keys, KeymapKey(_FN2, 0, 0, 1, KC_TRNS)});
 
-    runtime_state.nav_keys_index = 0;
+    reset_runtime_state();
 
     /* change to RAISE layer */
     nav_layer.press();
@@ -78,7 +76,8 @@ TEST_F(WindowSwitcher, WinLinuxWindowSwitching) {
 
     set_keymap({window_switcher, nav_layer, next_nav_keys, KeymapKey(_FN2, 0, 0, 1, KC_TRNS)});
 
-    runtime_state.nav_keys_index = 1;
+    reset_runtime_state();
+    tap_key(next_nav_keys);
 
     /* change to RAISE layer */
     nav_layer.press();

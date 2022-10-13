@@ -2,17 +2,21 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-rhruiz_runtime_state runtime_state = {
-    .nav_keys_index = 0,
-    .is_window_switcher_active = false,
-    .base_layer = 0,
+rhruiz_runtime_state runtime_state;
+
+void reset_runtime_state() {
+    runtime_state = (rhruiz_runtime_state) {
+        .nav_keys_index = 0,
+        .is_window_switcher_active = false,
+        .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
-    .needs_runtime_state_sync = false,
+        .needs_runtime_state_sync = false,
 #   ifdef CAPS_WORD_ENABLE
-    .caps_word_enabled = false,
+        .caps_word_enabled = false,
 #   endif
 #endif
-};
+    };
+}
 
 #ifdef SPLIT_KEYBOARD
 typedef struct _master_to_slave_t {
@@ -89,6 +93,8 @@ void matrix_init_user(void) {
 }
 
 void keyboard_post_init_user() {
+    reset_runtime_state();
+
 #if defined(BOOTLOADER_CATERINA) || defined(PRO_MICRO)
     setPinOutput(B0);
     writePinHigh(B0);

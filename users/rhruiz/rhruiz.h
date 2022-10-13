@@ -74,6 +74,9 @@ bool          process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_r
 bool          process_record_macros(uint16_t keycode, keyrecord_t *record);
 void          keyboard_post_init_keymap(void);
 void          matrix_init_keymap(void);
+void          reset_runtime_state(void);
+
+#define NUM_NAV_KEYS_OSES 2
 
 #ifdef TAP_DANCE_ENABLE
 // tap dances

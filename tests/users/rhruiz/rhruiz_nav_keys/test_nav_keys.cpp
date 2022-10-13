@@ -18,10 +18,10 @@
 #include "keycode.h"
 #include "test_common.hpp"
 #include "test_keymap_key.hpp"
-#include "users/rhruiz/rhruiz.h"
 
 extern "C" {
 #include "timer.h"
+#include "users/rhruiz/rhruiz.h"
 }
 
 using testing::_;
@@ -29,7 +29,7 @@ using testing::InSequence;
 
 class NavKeys : public TestFixture {};
 
-TEST_F(NavKeys, TappingNextOsChangesIndex) {
+TEST_F(NavKeys, TappingNextOsChangesKeys) {
     TestDriver driver;
     InSequence s;
     auto       nav_key = KeymapKey(0, 0, 0, NV_EOL);
@@ -37,19 +37,57 @@ TEST_F(NavKeys, TappingNextOsChangesIndex) {
 
     set_keymap({nav_key, next_nav_key});
 
+    reset_runtime_state();
+
     /* press nav with first OS */
     EXPECT_REPORT(driver, (KC_LGUI));
     EXPECT_REPORT(driver, (KC_LGUI, KC_RIGHT));
     EXPECT_REPORT(driver, (KC_LGUI));
     EXPECT_EMPTY_REPORT(driver);
     tap_key(nav_key);
+    testing::Mock::VerifyAndClearExpectations(&driver);
 
     /* press next OS key */
     EXPECT_NO_REPORT(driver);
     tap_key(next_nav_key);
+    testing::Mock::VerifyAndClearExpectations(&driver);
 
     /* press nav key again */
     EXPECT_REPORT(driver, (KC_END));
     EXPECT_EMPTY_REPORT(driver);
     tap_key(nav_key);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+}
+
+TEST_F(NavKeys, TappingNextOsLoops) {
+    TestDriver driver;
+    InSequence s;
+    auto       nav_key = KeymapKey(0, 0, 0, NV_EOL);
+    auto       next_nav_key = KeymapKey(0, 1, 0, KC_NOS);
+
+    set_keymap({nav_key, next_nav_key});
+
+    reset_runtime_state();
+
+    /* press nav with first OS */
+    EXPECT_REPORT(driver, (KC_LGUI));
+    EXPECT_REPORT(driver, (KC_LGUI, KC_RIGHT));
+    EXPECT_REPORT(driver, (KC_LGUI));
+    EXPECT_EMPTY_REPORT(driver);
+    tap_key(nav_key);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    for (int i = 0; i < NUM_NAV_KEYS_OSES; i++) {
+        EXPECT_NO_REPORT(driver);
+        tap_key(next_nav_key);
+    }
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    /* expected to be first OS again */
+    EXPECT_REPORT(driver, (KC_LGUI));
+    EXPECT_REPORT(driver, (KC_LGUI, KC_RIGHT));
+    EXPECT_REPORT(driver, (KC_LGUI));
+    EXPECT_EMPTY_REPORT(driver);
+    tap_key(nav_key);
+    testing::Mock::VerifyAndClearExpectations(&driver);
 }
