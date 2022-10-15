@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "print.h"
 #include "quantum.h"
 #include "rhruiz.h"
 
@@ -52,6 +52,7 @@ void next_default_layer(rhruiz_runtime_state *state) {
 
     state->base_layer = (state->base_layer + 1) % count;
     rhruiz_layers layer = pgm_read_byte(_base_layers + state->base_layer);
+
     default_layer_set(1 << layer);
 }
 
