@@ -184,6 +184,15 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
     return state;
 }
 
+#ifndef OLED_ENABLE
+void housekeeping_task_keymap(void) {
+    if (!is_keyboard_master()) {
+        writePin(B0, !layer_state_cmp(layer_state, _NUM));
+        writePin(D5, !layer_state_cmp(layer_state, _NUM));
+    }
+}
+#endif
+
 void keyboard_post_init_keymap() {
 #ifdef OLED_ENABLE
     oled_set_brightness(0x0);
