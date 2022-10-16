@@ -35,6 +35,8 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 #endif
 __attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) { return state; }
 
+__attribute__((weak)) layer_state_t default_layer_state_set_keymap(layer_state_t state) { return state; }
+
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
@@ -48,12 +50,13 @@ __attribute__((weak)) void matrix_init_keymap(void) {}
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
 void next_default_layer(rhruiz_runtime_state *state) {
-    size_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+    layer_state_t mask = (layer_state_t)~(1 << (MAX_LAYER - 1));
 
     state->base_layer = (state->base_layer + 1) % count;
-    rhruiz_layers layer = pgm_read_byte(_base_layers + state->base_layer);
 
-    default_layer_set(1 << layer);
+    rhruiz_layers layer = pgm_read_byte(_base_layers + state->base_layer);
+    default_layer_set(1 << (layer & mask));
 }
 
 #ifdef SPLIT_KEYBOARD
@@ -95,7 +98,6 @@ void matrix_init_user(void) {
 
 void keyboard_post_init_user() {
     reset_runtime_state();
-
 #if defined(BOOTLOADER_CATERINA) || defined(PRO_MICRO)
     setPinOutput(B0);
     writePinHigh(B0);
@@ -107,6 +109,15 @@ void keyboard_post_init_user() {
     transaction_register_rpc(USER_SYNC_RUNTIME_STATE, sync_runtime_state_handler);
 #endif
     keyboard_post_init_keymap();
+}
+
+layer_state_t default_layer_state_set_user(layer_state_t state) {
+    runtime_state.base_layer = get_highest_layer(state);
+#ifdef SPLIT_KEYBOARD
+    runtime_state.needs_runtime_state_sync = true;
+#endif
+
+    return state;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {

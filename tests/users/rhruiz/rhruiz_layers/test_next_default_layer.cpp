@@ -29,7 +29,7 @@ using testing::InSequence;
 
 class NextDefaultLayout : public TestFixture {};
 
-TEST_F(NextDefaultLayout , TappingChangesBaseLayout) {
+TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
     TestDriver driver;
     InSequence s;
     auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
@@ -60,7 +60,7 @@ TEST_F(NextDefaultLayout , TappingChangesBaseLayout) {
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _COLEMAK), true);
 }
 
-TEST_F(NextDefaultLayout , LayersLoop) {
+TEST_F(NextDefaultLayout, LayersLoop) {
     TestDriver driver;
     InSequence s;
     auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
@@ -80,7 +80,6 @@ TEST_F(NextDefaultLayout , LayersLoop) {
         tap_key(next_layout);
         testing::Mock::VerifyAndClearExpectations(&driver);
     }
-
 
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
 }

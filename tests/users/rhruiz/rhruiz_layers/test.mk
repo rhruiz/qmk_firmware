@@ -13,9 +13,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SRC += users/rhruiz/nav_keys.c \
-	   users/rhruiz/rhruiz.c \
+SRC += users/rhruiz/rhruiz.c \
+	   users/rhruiz/nav_keys.c \
 	   users/rhruiz/macros.c \
 	   platforms/test/timer.c
 
-DEBOUNCE_TYPE = none
+DEBOUNCE_TYPE=none

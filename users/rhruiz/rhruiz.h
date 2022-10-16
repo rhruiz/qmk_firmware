@@ -69,6 +69,7 @@ typedef struct _rhruiz_runtime_state {
 } rhruiz_runtime_state;
 
 layer_state_t layer_state_set_keymap(layer_state_t state);
+layer_state_t default_layer_state_set_keymap(layer_state_t state);
 bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
 bool          process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state);
 bool          process_record_macros(uint16_t keycode, keyrecord_t *record);
