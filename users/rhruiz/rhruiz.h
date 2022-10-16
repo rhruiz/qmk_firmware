@@ -56,9 +56,9 @@ typedef enum custom_keycodes {
 } rhruiz_keycodes;
 
 typedef struct _rhruiz_runtime_state {
-    size_t nav_keys_index;
+    uint8_t nav_keys_index;
     bool is_window_switcher_active;
-    size_t base_layer;
+    uint8_t base_layer;
     uint16_t copy_paste_timer;
 #ifdef SPLIT_KEYBOARD
     bool needs_runtime_state_sync;
