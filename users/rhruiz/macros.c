@@ -44,7 +44,7 @@ void send_make_args(bool should_flash, bool parallel) {
         SEND_STRING("compile");
     }
 
-    SEND_STRING(" -kb " QMK_KEYBOARD  "-km "  QMK_KEYMAP);
+    SEND_STRING(" -kb " QMK_KEYBOARD " -km " QMK_KEYMAP);
 
     if (parallel) {
         SEND_STRING(" -j 8");
