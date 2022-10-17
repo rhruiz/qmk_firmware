@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BASE_LAYERS _BL, _COLEMAK, _CODH
 
 #ifndef OLED_ENABLE
-#define BLINK_PIN B0
+#define BLINK_LED_PIN B0
 #endif
 
 #if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
