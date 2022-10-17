@@ -60,6 +60,11 @@ typedef struct _rhruiz_runtime_state {
     bool is_window_switcher_active;
     uint8_t base_layer;
     uint16_t copy_paste_timer;
+#ifdef BLINK_LED_PIN
+    uint16_t blink_repeat_timer;
+    uint8_t  blink_times_remaining;
+    uint16_t blink_dur;
+#endif
 #ifdef SPLIT_KEYBOARD
     bool needs_runtime_state_sync;
 #   ifdef CAPS_WORD_ENABLE
@@ -76,6 +81,7 @@ bool          process_record_macros(uint16_t keycode, keyrecord_t *record);
 void          keyboard_post_init_keymap(void);
 void          matrix_init_keymap(void);
 void          reset_runtime_state(void);
+void          blink_led(uint16_t duration_ms, uint8_t times);
 
 #define NUM_NAV_KEYS_OSES 2
 

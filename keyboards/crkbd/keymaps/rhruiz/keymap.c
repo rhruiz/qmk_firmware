@@ -168,6 +168,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+#ifdef BLINK_LED_PIN
+extern rhruiz_runtime_state runtime_state;
+
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        switch(keycode) {
+            case KC_NOS:
+                if (runtime_state.nav_keys_index == 0) {
+                    blink_led(100, 6);
+                } else {
+                    blink_led(150, 2);
+                }
+                break;
+
+            case KC_LAYO:
+                blink_led(200/(runtime_state.base_layer+1), runtime_state.base_layer + 1);
+                break;
+        }
+    }
+
+    return true;
+}
+#endif
+
 layer_state_t layer_state_set_keymap(layer_state_t state) {
 #ifdef COMBO_ENABLE
     if (layer_state_cmp(state, _GAME)) {

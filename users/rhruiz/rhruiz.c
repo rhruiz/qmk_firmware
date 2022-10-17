@@ -170,6 +170,37 @@ void matrix_scan_user(void) {
     matrix_scan_keymap();
 }
 
+#ifdef BLINK_LED_PIN
+void blink_led_task(void) {
+    if (runtime_state.blink_times_remaining == 0) {
+        return;
+    }
+
+    if (timer_expired(sync_timer_read(), runtime_state.blink_repeat_timer)) {
+        writePin(BLINK_LED_PIN, runtime_state.blink_times_remaining % 2 == 1);
+
+        if (runtime_state.blink_times_remaining > 0) {
+            runtime_state.blink_times_remaining--;
+            runtime_state.blink_repeat_timer = sync_timer_read() + runtime_state.blink_dur;
+        }
+    }
+}
+#endif
+
+void blink_led(uint16_t duration_ms, uint8_t times) {
+#ifdef BLINK_LED_PIN
+    if (times > UINT8_MAX / 2) {
+        times = UINT8_MAX / 2;
+    }
+
+    runtime_state.blink_times_remaining = times * 2;
+    runtime_state.blink_dur = duration_ms;
+    runtime_state.blink_repeat_timer = sync_timer_read();
+
+    blink_led_task();
+#endif
+}
+
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
     if (runtime_state.needs_runtime_state_sync) {
@@ -186,6 +217,10 @@ void housekeeping_task_user(void) {
             dprintf("sync tx failed");
         }
     }
+#endif
+
+#ifdef BLINK_LED_PIN
+    blink_led_task();
 #endif
 
     housekeeping_task_keymap();
