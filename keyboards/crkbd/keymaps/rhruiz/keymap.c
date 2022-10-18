@@ -225,7 +225,7 @@ void keyboard_post_init_keymap() {
     writePinHigh(B0);
     writePinHigh(D5);
 #endif
-#ifdef CONVERT_TO_PROMICRO_RP2040
+#if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
     rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD);
 #endif
 #ifdef COMBO_ENABLE
