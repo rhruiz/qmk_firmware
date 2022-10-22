@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SRC += users/rhruiz/get_tapping_term.c \
+	   users/rhruiz/keymap_callbacks/keymap_callbacks.c \
 	   platforms/test/timer.c
 
 DEBOUNCE_TYPE = none

@@ -113,6 +113,8 @@ void caps_word_set_user(bool active) {
 #endif
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
+    state = default_layer_state_set_keymap(state);
+
     runtime_state.base_layer = get_highest_layer(state);
 #ifdef SPLIT_KEYBOARD
     runtime_state.needs_runtime_state_sync = true;
