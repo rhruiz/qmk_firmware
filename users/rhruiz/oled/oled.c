@@ -1,15 +1,13 @@
 #include "oled.h"
 #include "rhruiz.h"
 
-static uint32_t oled_timer = 0;
-extern size_t nav_keys_index;
+extern rhruiz_runtime_state runtime_state;
 
 // clang-format off
 
 #ifdef OLED_ROTATE
 
 bool is_keyboard_left(void);
-extern rhruiz_runtime_state runtime_state;
 
 static const char _game_layer_logo[][5] PROGMEM = {"\xa8\xa9\xaa\xab", "\xc8\xc9\xca\xcb"};
 
@@ -123,9 +121,9 @@ bool rhruiz_render_oled(void) {
 
         case _CFG:
             oled_clear_half_except(6);
-            oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 2);
-            oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 2);
-            oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 2);
+            oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 1);
+            oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 1);
+            oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 1);
             oled_clear_half_except(6);
 
             oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
@@ -266,11 +264,11 @@ bool rhruiz_render_oled(void) {
 }
 #endif
 
-void rhruiz_oled_activity(void) { oled_timer = timer_read32(); }
+void rhruiz_oled_activity(void) { runtime_state.oled_timer = timer_read(); }
 
 __attribute__((weak)) bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        if (timer_elapsed32(oled_timer) > OLED_TIMEOUT) {
+        if (timer_elapsed(runtime_state.oled_timer) > OLED_TIMEOUT) {
             oled_off();
             return false;
         } else {

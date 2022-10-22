@@ -15,6 +15,9 @@ void reset_runtime_state() {
         .caps_word_enabled = false,
 #   endif
 #endif
+#ifdef OLED_ENABLE
+        .oled_timer = timer_read(),
+#endif
     };
 }
 
@@ -33,19 +36,6 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 };
 
 #endif
-__attribute__((weak)) layer_state_t layer_state_set_keymap(layer_state_t state) { return state; }
-
-__attribute__((weak)) layer_state_t default_layer_state_set_keymap(layer_state_t state) { return state; }
-
-__attribute__((weak)) bool process_record_keymap(uint16_t keycode, keyrecord_t *record) { return true; }
-
-__attribute__((weak)) void keyboard_post_init_keymap(void) {}
-
-__attribute__((weak)) void housekeeping_task_keymap(void) {}
-
-__attribute__((weak)) void matrix_scan_keymap(void) {}
-
-__attribute__((weak)) void matrix_init_keymap(void) {}
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
@@ -70,6 +60,10 @@ void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t 
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef OLED_ENABLE
+    rhruiz_oled_activity();
+
+#endif
     if (!(process_record_keymap(keycode, record)
         && process_record_nav(keycode, record, &runtime_state)
         && process_record_macros(keycode, record))) {
@@ -84,16 +78,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
 
     }
-#ifdef OLED_ENABLE
-
-    rhruiz_oled_activity();
-#endif
 
     return true;
-}
-
-void matrix_init_user(void) {
-    matrix_init_keymap();
 }
 
 void keyboard_post_init_user() {
@@ -110,6 +96,21 @@ void keyboard_post_init_user() {
 #endif
     keyboard_post_init_keymap();
 }
+
+void matrix_init_user(void) {
+    matrix_init_keymap();
+}
+
+void matrix_scan_user(void) {
+    matrix_scan_keymap();
+}
+
+#if defined(SPLIT_KEYBOARD) && defined(CAPS_WORD_ENABLE)
+void caps_word_set_user(bool active) {
+    runtime_state.caps_word_enabled = active;
+    runtime_state.needs_runtime_state_sync = true;
+}
+#endif
 
 layer_state_t default_layer_state_set_user(layer_state_t state) {
     runtime_state.base_layer = get_highest_layer(state);
@@ -130,75 +131,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     state = layer_state_set_keymap(state);
 
     return state;
-}
-
-void rhruiz_rgblight_reset(void) {
-#if defined(RGBLIGHT_ENABLE) && !defined(RGBLIGHT_LAYERS)
-    rgblight_reload_from_eeprom();
-#endif
-}
-
-void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
-#ifdef RGBLIGHT_ENABLE
-    rgblight_config_t eeprom_config;
-    eeprom_config.raw = eeconfig_read_rgblight();
-    LED_TYPE *ledp;
-
-#    ifdef RGBLIGHT_LED_MAP
-    LED_TYPE led0[RGBLED_NUM];
-    for (uint8_t i = 0; i < RGBLED_NUM; i++) {
-        led0[i] = led[pgm_read_byte(&led_map[i])];
-    }
-    ledp = led0;
-#    else
-    ledp = led;
-#    endif
-
-    for (uint8_t i = RGBLED_NUM; i-- > 0;) {
-        sethsv(hue, sat, eeprom_config.val, (LED_TYPE *)&ledp[i]);
-    }
-
-#    ifdef RGBW
-    ws2812_setleds_rgbw(ledp, RGBLED_NUM);
-#    else
-    ws2812_setleds(ledp, RGBLED_NUM);
-#    endif
-#endif
-}
-
-void matrix_scan_user(void) {
-    matrix_scan_keymap();
-}
-
-#ifdef BLINK_LED_PIN
-void blink_led_task(void) {
-    if (runtime_state.blink_times_remaining == 0) {
-        return;
-    }
-
-    if (timer_expired(sync_timer_read(), runtime_state.blink_repeat_timer)) {
-        writePin(BLINK_LED_PIN, runtime_state.blink_times_remaining % 2 == 1);
-
-        if (runtime_state.blink_times_remaining > 0) {
-            runtime_state.blink_times_remaining--;
-            runtime_state.blink_repeat_timer = sync_timer_read() + runtime_state.blink_dur;
-        }
-    }
-}
-#endif
-
-void blink_led(uint16_t duration_ms, uint8_t times) {
-#ifdef BLINK_LED_PIN
-    if (times > UINT8_MAX / 2) {
-        times = UINT8_MAX / 2;
-    }
-
-    runtime_state.blink_times_remaining = times * 2;
-    runtime_state.blink_dur = duration_ms;
-    runtime_state.blink_repeat_timer = sync_timer_read();
-
-    blink_led_task();
-#endif
 }
 
 void housekeeping_task_user(void) {
@@ -225,10 +157,3 @@ void housekeeping_task_user(void) {
 
     housekeeping_task_keymap();
 }
-
-#if defined(SPLIT_KEYBOARD) && defined(CAPS_WORD_ENABLE)
-void caps_word_set_user(bool active) {
-    runtime_state.caps_word_enabled = active;
-    runtime_state.needs_runtime_state_sync = true;
-}
-#endif

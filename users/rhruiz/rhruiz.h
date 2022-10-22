@@ -1,7 +1,9 @@
 #pragma once
 #include "quantum.h"
+#include "keymap_callbacks/keymap_callbacks.h"
 #include "layouts/keys.h"
 #include "layouts/wrappers.h"
+#include "rgblight/rgblight.h"
 
 #ifdef SPLIT_KEYBOARD
 #    include "transactions.h"
@@ -70,18 +72,19 @@ typedef struct _rhruiz_runtime_state {
 #   ifdef CAPS_WORD_ENABLE
     bool caps_word_enabled;
 #   endif
+#ifdef OLED_ENABLE
+    uint16_t oled_timer;
+#endif
 #endif
 } rhruiz_runtime_state;
 
-layer_state_t layer_state_set_keymap(layer_state_t state);
-layer_state_t default_layer_state_set_keymap(layer_state_t state);
-bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
-bool          process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state);
-bool          process_record_macros(uint16_t keycode, keyrecord_t *record);
-void          keyboard_post_init_keymap(void);
-void          matrix_init_keymap(void);
-void          reset_runtime_state(void);
-void          blink_led(uint16_t duration_ms, uint8_t times);
+bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state);
+bool process_record_macros(uint16_t keycode, keyrecord_t *record);
+void reset_runtime_state(void);
+#ifdef BLINK_LED_PIN
+void blink_led(uint16_t duration_ms, uint8_t times);
+void blink_led_task(void);
+#endif
 
 #define NUM_NAV_KEYS_OSES 2
 
@@ -94,18 +97,4 @@ enum {
 #    define TD_SNU TD(TD_RSHIFT_NUM)
 #else
 #    define TD_SNU KC_RSFT
-#endif
-
-/* underglow control */
-void rhruiz_rgblight_reset(void);
-#ifdef RGBLIGHT_ENABLE
-void rhruiz_change_leds_to(uint16_t, uint8_t);
-
-#    ifndef RGBLIGHT_LAYERS
-typedef struct {
-    uint16_t hue;
-    uint8_t  sat;
-} hue_sat_pair;
-#    endif
-
 #endif
