@@ -9,12 +9,6 @@ extern rhruiz_runtime_state runtime_state;
 
 bool is_keyboard_left(void);
 
-static const char _game_layer_logo[][5] PROGMEM = {"\xa8\xa9\xaa\xab", "\xc8\xc9\xca\xcb"};
-
-static const char _raise_layer_logo[3] PROGMEM = {"\x90\x91"};
-
-static const char _lower_layer_logo[3] PROGMEM = {"\x91\x90"};
-
 const char _layer_names[][6] PROGMEM = {
     [_BL] = "QWERT",
     [_COLEMAK] = "COLEM",
@@ -22,16 +16,18 @@ const char _layer_names[][6] PROGMEM = {
     [_FUNC] = "FUNC ",
 };
 
+void oled_pad_if(uint8_t size, bool cond) {
+    if (cond) {
+        for (uint8_t i = 0; i < size; i++) {
+            oled_write_char(0x20, false);
+        }
+    }
+}
+
 void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
-    for (uint8_t i = 0; is_keyboard_left() && i < size; i++) {
-        oled_write_P(PSTR("\x20"), false);
-    }
-
+    oled_pad_if(size, is_keyboard_left());
     oled_write_P(str, inverse);
-
-    for (uint8_t i = 0; !is_keyboard_left() && i < size; i++) {
-        oled_write_P(PSTR("\x20"), false);
-    }
+    oled_pad_if(size, !is_keyboard_left());
 }
 #else
 
@@ -71,7 +67,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) { return oled_init_keym
 #ifdef OLED_ROTATE
 void oled_clear_half_except(uint8_t lines) {
     for (uint8_t j = 0; j < (oled_max_lines() - 4 - lines) / 2; j++) {
-        oled_write_P(PSTR("\n"), false);
+        oled_write_char('\n', false);
     }
 }
 
@@ -100,63 +96,50 @@ bool rhruiz_render_oled(void) {
             break;
 
         case _FN1:
-            oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 3; i++) {
-                oled_write_padded_P(_lower_layer_logo, false, 3);
-                oled_write_padded_P(_lower_layer_logo, true, 3);
-            }
-
-            oled_clear_half_except(6);
-            break;
-
         case _FN2:
             oled_clear_half_except(6);
-            for (uint8_t i = 0; i < 3; i++) {
-                oled_write_padded_P(_raise_layer_logo, false, 3);
-                oled_write_padded_P(_raise_layer_logo, true, 3);
+            for (uint8_t i = 0; i < 6; i++) {
+                oled_pad_if(3, is_keyboard_left());
+                oled_write_char(0x8C - (layer - _FN1), i % 2 == 1);
+                oled_write_char(0x8B + (layer - _FN1), i % 2 == 1);
+                oled_pad_if(3, !is_keyboard_left());
             }
-
             oled_clear_half_except(6);
             break;
 
         case _CFG:
             oled_clear_half_except(6);
-            oled_write_padded_P(PSTR("\xcc\xcd\xcc"), false, 1);
-            oled_write_padded_P(PSTR("\xcd\xcc\xcc"), false, 1);
-            oled_write_padded_P(PSTR("\xcc\xcc\xcd"), false, 1);
+            oled_write_padded_P(PSTR("\xc6\xc7\xc6"), false, 2);
+            oled_write_padded_P(PSTR("\xc7\xc6\xc6"), false, 2);
+            oled_write_padded_P(PSTR("\xc6\xc6\xc7"), false, 2);
             oled_clear_half_except(6);
 
             oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
             oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
-            oled_write_P(PSTR("\n"), false);
+            oled_write_char('\n', false);
 
             break;
 
+        case _GAME:
         case _GAMEFN1:
             oled_clear_half_except(2);
 
             for (uint8_t i = 0; i < 2; i++) {
-                if (is_keyboard_left()) oled_write("\x1f", false);
+                if (is_keyboard_left()) oled_write_char(0x20 - (layer/_GAMEFN1), false);
 
-                oled_write_P(_game_layer_logo[i], false);
+                for (uint8_t chr = 0; chr < 4; chr++) {
+                  oled_write_char(0xAC + i * 0x20 + chr - (layer - _GAME), false);
+                }
 
-                if (!is_keyboard_left()) oled_write("\x1f", false);
+                if (!is_keyboard_left()) oled_write_char(0x20 - (layer/_GAMEFN1), false);
             }
 
             oled_clear_half_except(2);
             break;
 
-        case _GAME:
-            oled_clear_half_except(2);
-            oled_write_padded_P(_game_layer_logo[0], false, 1);
-            oled_write_padded_P(_game_layer_logo[1], false, 1);
-            oled_clear_half_except(2);
-            break;
-
         case _FUNC:
             oled_clear_half_except(2);
-            oled_write_P(PSTR("FUNC\n"), false);
-            oled_write_P(PSTR(" OSL\n"), false);
+            oled_write_P(PSTR("FUNC\n OSL\n"), false);
             oled_clear_half_except(2);
             break;
 
@@ -216,7 +199,7 @@ bool rhruiz_render_oled(void) {
                     oled_write_P(lc[layer][i], false);
                 }
 
-                oled_write_P(PSTR("\n"), false);
+                oled_write_char('\n', false);
             }
 
             break;
@@ -227,7 +210,7 @@ bool rhruiz_render_oled(void) {
                     oled_write_P(lc[layer][i], false);
                 }
 
-                oled_write_P(PSTR("\n"), false);
+                oled_write_char('\n', false);
             }
             break;
 
@@ -235,26 +218,27 @@ bool rhruiz_render_oled(void) {
             for (uint8_t i = 0; i < 4; i++) {
                 oled_write_P(_spacer, false);
                 oled_write_P(_game_layer_logo[i], false);
-                oled_write_P(PSTR("\n"), false);
+                oled_write_char('\n', false);
             }
             break;
 
         case _GAMEFN1:
             oled_write_P(_spacer, false);
             oled_write_P(lc[layer][3], false);
-            oled_write_P(PSTR("\n"), false);
+            oled_write_char('\n', false);
 
             for (uint8_t i = 1; i < 4; i++) {
                 oled_write_P(_spacer, false);
                 oled_write_P(_game_layer_logo[i], false);
-                oled_write_P(PSTR("\n"), false);
+                oled_write_char('\n', false);
             }
             break;
 
         default:
             for (uint8_t i = 0; i < 4; i++) {
                 oled_write_P(_spacer, false);
-                oled_write_ln_P(lc[layer][i], false);
+                oled_write_P(lc[layer][i], false);
+                oled_write_char('\n', false);
             }
 
             break;
