@@ -1,8 +1,7 @@
 #pragma once
-
+#ifdef RGBLIGHT_ENABLE
 /* underglow control */
 void rhruiz_rgblight_reset(void);
-#ifdef RGBLIGHT_ENABLE
 void rhruiz_change_leds_to(uint16_t, uint8_t);
 #    ifndef RGBLIGHT_LAYERS
 typedef struct {
