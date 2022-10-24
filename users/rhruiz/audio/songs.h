@@ -18,7 +18,7 @@
   QD_NOTE(_F4  ), \
   M__NOTE(_BF4, 128),
 
-#ifdef TO_BOLDLY_GO
+#ifdef CLOSE_ENCOUNTERS_5_NOTE
 #    undef CLOSE_ENCOUNTERS_5_NOTE
 #endif
 
@@ -29,7 +29,7 @@
        Q__NOTE(_C4),                \
        Q__NOTE(_G4),
 
-#ifdef TO_BOLDLY_GO
+#ifdef IMPERIAL_MARCH
 #    undef IMPERIAL_MARCH
 #endif
 
