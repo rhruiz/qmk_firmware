@@ -36,6 +36,10 @@ bool rhruiz_render_oled(void) {
 
             break;
 
+        case _AUG:
+            oled_write_P("AUG\n", false);
+            break;
+
         case _CFG:
             for (uint8_t i = 0; i < 4; i++) {
                 for (uint8_t j = 0; j < 10; j++) {

@@ -64,6 +64,15 @@ bool rhruiz_render_oled(void) {
             oled_clear_half_except(6);
             break;
 
+        case _AUG:
+            oled_clear_half_except(6);
+            for (uint8_t i = 0; i < 3; i++) {
+                oled_write_padded_P(PSTR("\x8B\x8C"), false, 3);
+                oled_write_padded_P(PSTR("\x8C\x8B"), true, 3);
+            }
+            oled_clear_half_except(6);
+            break;
+
         case _CFG:
             oled_clear_half_except(6);
             oled_write_padded_P(PSTR("\xc6\xc7\xc6"), false, 2);

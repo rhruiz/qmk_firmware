@@ -6,6 +6,7 @@
 #define MO_RSE MO(_FN2)
 #define MO_NUM MO(_NUM)
 #define MO_CFG MO(_CFG)
+#define MO_AUG MO(_AUG)
 
 // layers: osl
 #define OSL_GLWR OSL(_GAMEFN1)
@@ -26,6 +27,7 @@
 // layer toggle
 #define TG_NUM TG(_NUM)
 #define TG_GAME TG(_GAME)
+#define TG_CFG TG(_CFG)
 
 // mod taps
 #define ST_SPC LSFT_T(KC_SPACE)

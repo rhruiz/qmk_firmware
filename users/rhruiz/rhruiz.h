@@ -21,7 +21,7 @@
 #    define BASE_LAYERS _BL
 #endif
 
-typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _CFG, _FUNC } rhruiz_layers;
+typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
 
 typedef enum custom_keycodes {
     // macro keys
