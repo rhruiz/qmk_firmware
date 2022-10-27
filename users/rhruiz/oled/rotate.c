@@ -6,6 +6,7 @@ const char _layer_names[][6] PROGMEM = {
     [_COLEMAK] = "COLEM",
     [_CODH] = "CO-DH",
     [_FUNC] = "FUNC ",
+    [_GAME] = "GAME ",
 };
 
 void oled_pad_if(uint8_t size, bool cond) {
@@ -80,7 +81,12 @@ bool rhruiz_render_oled(void) {
             oled_write_padded_P(PSTR("\xc6\xc6\xc7"), false, 2);
             oled_clear_half_except(6);
 
-            oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
+            if (IS_LAYER_ON(_GAME)) {
+                oled_write_P(_layer_names[_GAME], false);
+            } else {
+                oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
+            }
+
             oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
             oled_write_char('\n', false);
 
