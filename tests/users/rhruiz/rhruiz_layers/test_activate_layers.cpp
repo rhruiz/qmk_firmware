@@ -18,6 +18,7 @@
 #include "keycode.h"
 #include "test_common.hpp"
 #include "test_keymap_key.hpp"
+#include "test_activate_layers.hpp"
 
 extern "C" {
 #include "quantum.h"
@@ -26,10 +27,6 @@ extern "C" {
 
 using testing::_;
 using testing::InSequence;
-
-class ActivateLayers : public TestFixture {};
-
-#define add_trns(layer, col, row) add_key(KeymapKey(layer, col, row, KC_TRNS))
 
 TEST_F(ActivateLayers, LowerGonnaLower) {
     TestDriver driver;
@@ -40,11 +37,7 @@ TEST_F(ActivateLayers, LowerGonnaLower) {
 
     add_key(lower);
     add_key(raise);
-
-    add_trns(_FN1, 0, 0);
-    add_trns(_FN1, 0, 1);
-    add_trns(_FN2, 0, 0);
-    add_trns(_FN2, 0, 1);
+    setup_trns((layer_t[2]) { _FN1, _FN2 }, 2, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -70,11 +63,7 @@ TEST_F(ActivateLayers, RaiseGonnaRaise) {
 
     add_key(lower);
     add_key(raise);
-
-    add_trns(_FN1, 0, 0);
-    add_trns(_FN1, 0, 1);
-    add_trns(_FN2, 0, 0);
-    add_trns(_FN2, 0, 1);
+    setup_trns((layer_t[2]) { _FN1, _FN2 }, 2, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -100,13 +89,7 @@ TEST_F(ActivateLayers, RaiseAndLowerActivateAugmented) {
 
     add_key(lower);
     add_key(raise);
-
-    add_trns(_FN1, 0, 0);
-    add_trns(_FN1, 0, 1);
-    add_trns(_FN2, 0, 0);
-    add_trns(_FN2, 0, 1);
-    add_trns(_AUG, 0, 0);
-    add_trns(_AUG, 0, 1);
+    setup_trns((layer_t[3]) { _FN1, _FN2, _AUG }, 3, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -132,13 +115,7 @@ TEST_F(ActivateLayers, GameLowerActivates) {
 
     add_key(lower);
     add_key(raise);
-
-    add_trns(_GAMEFN1, 0, 0);
-    add_trns(_GAMEFN1, 0, 1);
-    add_trns(_FN2, 0, 0);
-    add_trns(_FN2, 0, 1);
-    add_trns(_AUG, 0, 0);
-    add_trns(_AUG, 0, 1);
+    setup_trns((layer_t[3]) { _GAMEFN1, _FN2, _AUG }, 3, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -164,18 +141,7 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     add_key(raise);
     add_key(tg_game);
 
-    add_trns(_GAME, 0, 0);
-    add_trns(_GAME, 0, 1);
-    add_trns(_GAME, 0, 2);
-    add_trns(_GAMEFN1, 0, 0);
-    add_trns(_GAMEFN1, 0, 1);
-    add_trns(_GAMEFN1, 0, 2);
-    add_trns(_FN2, 0, 0);
-    add_trns(_FN2, 0, 1);
-    add_trns(_FN2, 0, 2);
-    add_trns(_AUG, 0, 0);
-    add_trns(_AUG, 0, 1);
-    add_trns(_AUG, 0, 2);
+    setup_trns((layer_t[4]) { _GAME, _GAMEFN1, _FN2, _AUG }, 4, 3);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -200,4 +166,15 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     raise.release();
     run_one_scan_loop();
     testing::Mock::VerifyAndClearExpectations(&driver);
+}
+
+void ActivateLayers::setup_trns(layer_t layers[], uint8_t count, uint8_t rows) {
+    test_logger.trace() << "Got " << +count << " layers" << std::endl;
+
+    for (uint8_t i = 0; i < count; i++) {
+        for(uint8_t j = 0; j < rows; j++) {
+            test_logger.trace() << "Setting layer " << +layers[i] << " (col, row) = (" << 0 << ", " <<  +j << ") to trns" << std::endl;
+            add_key(KeymapKey(layers[i], 0, j, KC_TRNS));
+        }
+    }
 }
