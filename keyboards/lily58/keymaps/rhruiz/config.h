@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#define BASE_LAYERS _BL, _CODH
+
 //#define USE_MATRIX_I2C
 
 /* Select hand configuration */
@@ -29,7 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define USE_SERIAL_PD2
 
 // space saving
-#define NO_ACTION_ONESHOT
 #define NO_ACTION_MACRO
 #define NO_ACTION_FUNCTION
 

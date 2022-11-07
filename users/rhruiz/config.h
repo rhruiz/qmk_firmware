@@ -10,6 +10,9 @@
 #endif
 
 #ifdef OLED_ENABLE
+#    ifdef OLED_FONT_H
+#        undef OLED_FONT_H
+#    endif
 #    define OLED_FONT_H RHRUIZ_OLED_FONT_H
 #    define OLED_SCROLL_TIMEOUT 8000
 #    ifdef OLED_ROTATE
