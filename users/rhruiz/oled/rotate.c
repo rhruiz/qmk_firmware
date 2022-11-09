@@ -87,7 +87,7 @@ bool rhruiz_render_oled(void) {
                 oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
             }
 
-            oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), true);
+            oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), runtime_state.nav_keys_index % 2 == 0);
             oled_write_char('\n', false);
 
             break;

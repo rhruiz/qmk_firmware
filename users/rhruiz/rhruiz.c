@@ -52,6 +52,7 @@ void next_default_layer(rhruiz_runtime_state *state) {
 #ifdef SPLIT_KEYBOARD
 void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
     const master_to_slave_t *mstate = (const master_to_slave_t*)in_data;
+
     runtime_state.nav_keys_index = mstate->nav_keys_index;
 #   ifdef CAPS_WORD_ENABLE
     runtime_state.caps_word_enabled = mstate->caps_word_enabled;
@@ -115,7 +116,16 @@ void caps_word_set_user(bool active) {
 layer_state_t default_layer_state_set_user(layer_state_t state) {
     state = default_layer_state_set_keymap(state);
 
-    runtime_state.base_layer = get_highest_layer(state);
+    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+    uint8_t highest_layer = get_highest_layer(state);
+
+    for (uint8_t i = 0; i < count; i++) {
+        if (highest_layer == pgm_read_byte(_base_layers + i)) {
+            runtime_state.base_layer = i;
+            break;
+        }
+    }
+
 #ifdef SPLIT_KEYBOARD
     runtime_state.needs_runtime_state_sync = true;
 #endif

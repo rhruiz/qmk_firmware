@@ -27,13 +27,15 @@ extern "C" {
 using testing::_;
 using testing::InSequence;
 
+extern rhruiz_runtime_state runtime_state;
+
 class NextDefaultLayout : public TestFixture {};
 
 TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
     TestDriver driver;
     InSequence s;
     auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
-    auto colemak = KeymapKey(_COLEMAK, 0, 0, KC_T);
+    auto colemak = KeymapKey(_CODH, 0, 0, KC_T);
     auto next_layout = KeymapKey(0, 0, 1, KC_LAYO);
 
     set_keymap({qwerty, colemak, next_layout});
@@ -57,16 +59,16 @@ TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
     tap_key(colemak);
     testing::Mock::VerifyAndClearExpectations(&driver);
 
-    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _COLEMAK), true);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _CODH), true);
 }
 
 TEST_F(NextDefaultLayout, LayersLoop) {
     TestDriver driver;
     InSequence s;
     auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
-    auto colemak = KeymapKey(_COLEMAK, 0, 0, KC_T);
+    auto colemak = KeymapKey(_CODH, 0, 0, KC_T);
     auto next_layout = KeymapKey(_BL, 0, 1, KC_LAYO);
-    auto transparent = KeymapKey(_COLEMAK, 0, 1, KC_TRNS);
+    auto transparent = KeymapKey(_CODH, 0, 1, KC_TRNS);
 
     set_keymap({qwerty, colemak, next_layout, transparent});
     default_layer_set(0);
