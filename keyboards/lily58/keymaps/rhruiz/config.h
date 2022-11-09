@@ -22,13 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define BASE_LAYERS _BL, _CODH
 
-//#define USE_MATRIX_I2C
-
 /* Select hand configuration */
-
 #define EE_HANDS
-
-#define USE_SERIAL_PD2
 
 // space saving
 #define NO_ACTION_MACRO
