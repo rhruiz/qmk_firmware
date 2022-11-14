@@ -8,3 +8,4 @@ void keyboard_post_init_keymap(void);
 void matrix_init_keymap(void);
 void matrix_scan_keymap(void);
 void housekeeping_task_keymap(void);
+void caps_word_set_keymap(bool active);

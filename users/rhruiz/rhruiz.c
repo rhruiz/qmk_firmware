@@ -106,10 +106,14 @@ void matrix_scan_user(void) {
     matrix_scan_keymap();
 }
 
-#if defined(SPLIT_KEYBOARD) && defined(CAPS_WORD_ENABLE)
+#ifdef CAPS_WORD_ENABLE
 void caps_word_set_user(bool active) {
+#   ifdef SPLIT_KEYBOARD
     runtime_state.caps_word_enabled = active;
     runtime_state.needs_runtime_state_sync = true;
+#   endif
+
+    caps_word_set_keymap(active);
 }
 #endif
 

@@ -13,3 +13,5 @@ __attribute__((weak)) void housekeeping_task_keymap(void) {}
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 __attribute__((weak)) void matrix_init_keymap(void) {}
+
+__attribute__((weak)) void caps_word_set_keymap(bool active) {}
