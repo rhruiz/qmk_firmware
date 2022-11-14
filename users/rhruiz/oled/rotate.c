@@ -1,7 +1,9 @@
 /*
+OLED 32x128 - 6x8 font
+
 +-----+     +-----+     +-----+     +-----+
-|     |     |     |     |     |     |     |
-|     |     |     |     |     |     |     |
+| N⌂  |     | N⌂  |     | N⌂  |     | N⌂  |
+| ⇧⌂  |     | ⇧⌂  |     | ⇪⌂  |     | ⇧⌂  |
 |     |     |     |     |     |     |     |
 |     |     |     |     |     |     |     |
 | /\  |     | \/  |     | /\  |     | |+| |
@@ -9,12 +11,12 @@
 | /\  |     | \/  |     | /\  |     | ||+ |
 | /\  |     | \/  |     | \/  |     |     |
 | /\  |     | \/  |     | /\  |     |     |
-| /\  |     | \/  |     | \/  |     |     |
-|     |     |     |     |     |     |     |
-|     |     |     |     |     |     |CO DH|
+| /\  |     | \/  |     | \/  |     |CO DH|
 |     |     |     |     |     |     | mac |
 |     |     |     |     |     |     |     |
 |⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|
+|⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|     |⌘⌘ ⇧⇧|
+|⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|
 |⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|     |⌃⌃ ⌥⌥|
 +-----+     +-----+     +-----+     +-----+
 */
@@ -44,7 +46,7 @@ void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
 }
 
 void oled_clear_half_except(uint8_t lines) {
-    for (uint8_t j = 0; j < (oled_max_lines() - 4 - lines) / 2; j++) {
+    for (uint8_t j = 0; j < (oled_max_lines() - 6 - lines) / 2; j++) {
         oled_write_char('\n', false);
     }
 }
@@ -64,15 +66,30 @@ void oled_demux_cond_write_P(bool left, bool right, const char *when_none, const
 }
 
 bool rhruiz_render_oled(void) {
+    if (
+#ifdef CAPS_WORD_ENABLE
+#   ifdef SPLIT_KEYBOARD
+    runtime_state.caps_word_enabled ||
+#   else
+    is_caps_word_on() ||
+#   endif
+#endif
+    host_keyboard_led_state().caps_lock
+    ) {
+        oled_write_padded_P(PSTR("\x8D\x8E\x8A"), false, 2);
+    } else {
+        oled_write_char('\n', false);
+    }
+
+    if (IS_LAYER_ON(_NUM)) {
+        oled_write_padded_P(PSTR("\x88\x89\x8a"), false, 2);
+    } else {
+        oled_write_char('\n', false);
+    }
+
     layer_state_t layer = get_highest_layer(layer_state);
 
     switch (layer) {
-        case _NUM:
-            oled_clear_half_except(1);
-            oled_write_padded_P(PSTR("\x88\x89\x8a"), false, 2);
-            oled_clear_half_except(1);
-            break;
-
         case _FN1:
         case _FN2:
             oled_clear_half_except(6);
@@ -95,11 +112,14 @@ bool rhruiz_render_oled(void) {
             break;
 
         case _CFG:
-            oled_clear_half_except(6);
+            oled_clear_half_except(8);
             oled_write_padded_P(PSTR("\xc6\xc7\xc6"), false, 2);
             oled_write_padded_P(PSTR("\xc7\xc6\xc6"), false, 2);
             oled_write_padded_P(PSTR("\xc6\xc6\xc7"), false, 2);
-            oled_clear_half_except(6);
+            oled_clear_half_except(8);
+
+            oled_write_char('\n', false);
+            oled_write_char('\n', false);
 
             if (IS_LAYER_ON(_GAME)) {
                 oled_write_P(_layer_names[_GAME], false);
@@ -142,30 +162,16 @@ bool rhruiz_render_oled(void) {
             break;
     }
 
+
     uint8_t mods = get_mods();
 
-#ifdef CAPS_WORD_ENABLE
-    if (
-#   ifdef SPLIT_KEYBOARD
-    runtime_state.caps_word_enabled
-#   else
-    is_caps_word_on()
-#   endif
-    ) {
-        oled_write_P(PSTR("\x20\xc4\x86\x87\x20"), false);
-        oled_write_P(PSTR("\x20\xc5\xa6\xa7\x20"), false);
-    } else {
-#endif
-        oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\x80\x81"), PSTR("\x20\x20"));
-        oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"));
-        oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\x86\x87"), PSTR("\x20\x20"));
+    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\x80\x81"), PSTR("\x20\x20"));
+    oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"));
+    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\x86\x87"), PSTR("\x20\x20"));
 
-        oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
-        oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"));
-        oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\xa6\xa7"), PSTR("\x20\x20"));
-#ifdef CAPS_WORD_ENABLE
-    }
-#endif
+    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
+    oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"));
+    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\xa6\xa7"), PSTR("\x20\x20"));
 
     oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\x84\x85"), PSTR("\x20\x20"));
     oled_demux_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\x20"), PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"));
