@@ -35,8 +35,8 @@
 #define CT_SPC LCTL_T(KC_SPACE)
 #define CT_ESC LCTL_T(KC_ESC)
 #define AT_BS RALT_T(KC_BSPC)
-#define AT_0 RALT_T(KC_0)
 #define AT_DEL LALT_T(KC_DEL)
+#define AT_DOT LALT_T(KC_DOT)
 #define GT_BS LGUI_T(KC_BSPC)
 
 // mod + key
