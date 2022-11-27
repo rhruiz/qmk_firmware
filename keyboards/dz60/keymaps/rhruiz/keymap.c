@@ -53,19 +53,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_FN2] = LAYOUT(
-		KC_GRV ,   KC_SLCK,  KC_PAUS,  NV_MICT,  _______,  RGB_VAD,   RGB_VAI,  KC_MRWD,  KC_MPLY,  KC_MFFD,  KC_MUTE,  KC__VOLDOWN,  KC__VOLUP,  _______,  _______,
-		KC_CAPS,   KC_PIPE,  KC_LCBR,  KC_RCBR,  KC_UNDS,  KC_PLUS,   _______,  _______,  _______,  _______,  _______,  _______,      _______,    _______,
-		_______,   KC_BSLS,  KC_LBRC,  KC_RBRC,  KC_MINS,  KC_EQL ,   _______,  KC_LEFT,  KC_DOWN,  KC_UP  ,  KC_RGHT,  _______,      KC_PENT,
-		_______,   _______,  KC_EPIP,  KC_LPRN,  KC_RPRN,  _______,   _______,  _______,  _______,  _______,  _______,  _______,      _______,    _______,
+		KC_GRV ,   KC_SCRL,  KC_PAUS,  NV_MICT,  _______,  RGB_VAD,   RGB_VAI,  KC_MRWD,  KC_MPLY,  KC_MFFD,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,
+		KC_CAPS,   KC_PIPE,  KC_LCBR,  KC_RCBR,  KC_UNDS,  KC_PLUS,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
+		_______,   KC_BSLS,  KC_LBRC,  KC_RBRC,  KC_MINS,  KC_EQL ,   _______,  KC_LEFT,  KC_DOWN,  KC_UP  ,  KC_RGHT,  _______,  KC_PENT,
+		_______,   _______,  KC_EPIP,  KC_LPRN,  KC_RPRN,  _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
 		_______,   _______,  _______,  _______,  _______,  _DELFN1,   _______,  _______,  _______,  _______,  _______
   ),
 
   [_CFG] = LAYOUT(
-		_______,  RGB_M_P,    RGB_M_B,      RGB_M_R,  RGB_M_SW,  RGB_M_SN,  RGB_M_K,  RGB_M_X,  RGB_M_G,  RGB_M_T,  _______,  RGB_SPD,  RGB_SPI,  KC_MAKE,  KC_KBVSN,
-		_______,  RGB_TOG,    RGB_MOD,      RGB_HUI,  RGB_HUD,   RGB_SAI,   RGB_SAD,  RGB_VAI,  RGB_VAD,  _______,  _______,  _______,  _______,  QK_BOOT,
-		_______,  KC__VOLUP,  KC__VOLDOWN,  KC_MUTE,  KC_EJCT,   _______,   KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   _______,  _______,  _______,
-		_______,  _______,    BL_TOGG,      BL_STEP,  BL_BRTG,   _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-		_______,  _______,    _______,      _______,  _______,   _______,   _______,  _______,  _______,  _______,  _______
+		_______,  RGB_M_P,  RGB_M_B,  RGB_M_R,  RGB_M_SW,  RGB_M_SN,  RGB_M_K,  RGB_M_X,  RGB_M_G,  RGB_M_T,  _______,  RGB_SPD,  RGB_SPI,  KC_MAKE,  KC_KBVSN,
+		_______,  RGB_TOG,  RGB_MOD,  RGB_HUI,  RGB_HUD,   RGB_SAI,   RGB_SAD,  RGB_VAI,  RGB_VAD,  _______,  _______,  _______,  _______,  QK_BOOT,
+		_______,  KC_VOLU,  KC_VOLD,  KC_MUTE,  KC_EJCT,   _______,   KC_HOME,  KC_PGDN,  KC_PGUP,  KC_END,   _______,  _______,  _______,
+		_______,  _______,  BL_TOGG,  BL_STEP,  BL_BRTG,   _______,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
+		_______,  _______,  _______,  _______,  _______,   _______,   _______,  _______,  _______,  _______,  _______
   ),
 };
 

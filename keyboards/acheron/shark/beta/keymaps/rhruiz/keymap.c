@@ -1,6 +1,8 @@
 #include QMK_KEYBOARD_H
 #include "rhruiz.h"
 
+#define LAYOUT_ortho_4x12_wrapper(...) LAYOUT_ortho_4x12(__VA_ARGS__)
+
 #define LAYOUT_base_wrapper(...) LAYOUT_base(__VA_ARGS__)
 #define LAYOUT_base( \
     K01, K02, K03, K04, K05, K06, K07, K08, K09, K0A, \
@@ -19,7 +21,6 @@
 /*  `--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------' */ \
   )
 
-#define LAYOUT_ortho_4x12_wrapper(...) LAYOUT_ortho_4x12(__VA_ARGS__)
 
 #define LAYOUT_kc( \
   L00, L01, L02, L03, L04, L05, R00, R01, R02, R03, R04, R05, \
@@ -186,11 +187,11 @@ typedef enum {
 RHRUIZ_ENCODER_MODE _current_encoder_mode;
 
 void _encoder_volume_up(void) {
-    tap_code_delay(KC__VOLUP, 10);
+    tap_code_delay(KC_VOLU, 10);
 }
 
 void _encoder_volume_down(void) {
-    tap_code_delay(KC__VOLDOWN, 10);
+    tap_code_delay(KC_VOLD, 10);
 }
 
 void (*rhruiz_encoder_handlers[][2]) (void) = {
@@ -252,8 +253,8 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 #endif
 
 #ifdef ENCODER_ENABLE
-            case KC__VOLUP:
-            case KC__VOLDOWN:
+            case KC_VOLU:
+            case KC_VOLD:
             case KC_MUTE:
                 _current_encoder_mode = ENC_VOLUME;
                 return true;
