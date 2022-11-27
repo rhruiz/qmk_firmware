@@ -28,7 +28,7 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         case id_bootloader_jump: {
             raw_hid_send(data, length);
             wait_ms(100);
-            bootloader_jump();
+            reset_keyboard();
             break;
         }
 

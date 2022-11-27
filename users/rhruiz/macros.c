@@ -36,15 +36,16 @@ void without_mods(
 }
 
 void send_make_args(bool should_flash, bool parallel) {
-    SEND_STRING("qmk ");
-
     if (should_flash) {
-        SEND_STRING("flash");
+        SEND_STRING("qmk flash");
     } else {
-        SEND_STRING("compile");
+        SEND_STRING("qmk compile");
     }
 
     SEND_STRING(" -kb " QMK_KEYBOARD " -km " QMK_KEYMAP);
+#    if defined(CONVERTER_ENABLED)
+    SEND_STRING(" -e CONVERT_TO=" CONVERTER_TARGET);
+#    endif
 
     if (parallel) {
         SEND_STRING(" -j 8");
