@@ -1,4 +1,4 @@
-/* Copyright 2022 Jesus Climent  (@climent)
+/* Copyright 2018-2022 TheAmarin (@theamarin)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,8 @@
 
 #pragma once
 
-#if defined(KEYBOARD_atreyu_rev1)
-# include "rev1.h"
-#elif defined(KEYBOARD_atreyu_rev2)
-# include "rev2.h"
-#endif
+// Tune the tapping term for dual-use `y`/`MOD3` key
+#define TAPPING_TERM 150
+
+#define NO_ACTION_ONESHOT
+#define NO_MUSIC_MODE
