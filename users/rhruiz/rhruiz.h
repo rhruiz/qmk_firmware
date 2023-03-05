@@ -29,7 +29,7 @@ typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAM
 
 typedef enum custom_keycodes {
     // macro keys
-    KC_MAKE = SAFE_RANGE,
+    KC_MAKE = QK_USER,
     KC_EPIP,
     KC_FARW,
     KC_ARRW,
@@ -58,7 +58,7 @@ typedef enum custom_keycodes {
     NV_PSTE,
     NV_WSWT,
     NV_END = NV_WSWT,
-    NEW_SAFE_RANGE
+    USER_SAFE_RANGE
 } rhruiz_keycodes;
 
 typedef struct _rhruiz_runtime_state {
