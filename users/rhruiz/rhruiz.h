@@ -5,6 +5,10 @@
 #include "layouts/wrappers.h"
 #include "rgblight/rgblight.h"
 
+#if defined(OS_DETECTION_ENABLE)
+#include "os_detection.h"
+#endif
+
 #ifdef SPLIT_KEYBOARD
 #    include "transactions.h"
 #endif
@@ -59,6 +63,9 @@ typedef enum custom_keycodes {
 
 typedef struct _rhruiz_runtime_state {
     uint8_t nav_keys_index;
+#ifdef OS_DETECTION_ENABLE
+    os_variant_t host_os;
+#endif
     bool is_window_switcher_active;
     uint8_t base_layer;
     uint16_t copy_paste_timer;

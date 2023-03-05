@@ -7,6 +7,9 @@ rhruiz_runtime_state runtime_state;
 void reset_runtime_state() {
     runtime_state = (rhruiz_runtime_state) {
         .nav_keys_index = 0,
+#ifdef OS_DETECTION_ENABLE
+        .host_os = OS_UNSURE,
+#endif
         .is_window_switcher_active = false,
         .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
@@ -83,6 +86,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+#ifdef OS_DETECTION_ENABLE
+uint32_t os_detection(uint32_t trigger_time, void *cb_arg) {
+    runtime_state.host_os = detected_host_os();
+
+    if (runtime_state.host_os) {
+        runtime_state.needs_runtime_state_sync = true;
+
+        switch (runtime_state.host_os) {
+            case OS_MACOS:
+            case OS_IOS:
+                runtime_state.nav_keys_index = 0;
+                break;
+
+            default:
+                runtime_state.nav_keys_index = 1;
+                break;
+        }
+    }
+
+    return runtime_state.host_os ? 0 : 500;
+}
+#endif
+
 void keyboard_post_init_user() {
     reset_runtime_state();
 #if defined(BOOTLOADER_CATERINA) || defined(PRO_MICRO)
@@ -95,6 +121,13 @@ void keyboard_post_init_user() {
 #ifdef SPLIT_KEYBOARD
     transaction_register_rpc(USER_SYNC_RUNTIME_STATE, sync_runtime_state_handler);
 #endif
+
+#ifdef OS_DETECTION_ENABLE
+    if (is_keyboard_master()) {
+        defer_exec(100, os_detection, NULL);
+    }
+#endif
+
     keyboard_post_init_keymap();
 }
 
