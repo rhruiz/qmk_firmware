@@ -74,6 +74,11 @@ void send_make(bool should_flash, bool parallel) {
 
 bool process_record_macros(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+        case KC_TQUO:
+            if (record->event.pressed) {
+                SEND_STRING("```");
+            }
+            break;
         case KC_ARRW:
             if (record->event.pressed) {
                 without_mods(lambda (void, (uint8_t mods) {

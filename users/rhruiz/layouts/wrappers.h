@@ -145,7 +145,7 @@
 //                                 |--------+--------+--------+--------+--------|
 #define ________R_AUG_2________      TG_CFG , NV_BOL , NV_SCBT, NV_SCTP, NV_EOL
 //                                 |--------+--------+--------+--------+--------|
-#define ________R_AUG_3________      _______, NV_WLFT, KC_PGDN, KC_PGUP, NV_WRGH
+#define ________R_AUG_3________      KC_TQUO, NV_WLFT, KC_PGDN, KC_PGUP, NV_WRGH
 //                                 |--------+--------+--------+--------+--------|
 #define ________R_AUG_4________      TG_NUM , KC_DEL , KC_MRWD, KC_MFFD, KC_MPLY
 //                                 `--------+--------+--------+--------+--------'

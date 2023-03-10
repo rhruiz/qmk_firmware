@@ -34,6 +34,7 @@ typedef enum custom_keycodes {
     KC_FARW,
     KC_ARRW,
     KC_PDIR,
+    KC_TQUO,
     KC_CCCP,
     // config keys
     KC_LAYO,
