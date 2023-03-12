@@ -43,6 +43,7 @@
 #define AT_BS RALT_T(KC_BSPC)
 #define AT_DEL LALT_T(KC_DEL)
 #define AT_DOT LALT_T(KC_DOT)
+#define AT_TAB LALT_T(KC_TAB)
 #define GT_BS LGUI_T(KC_BSPC)
 
 // mod + key
