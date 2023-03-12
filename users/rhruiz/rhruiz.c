@@ -128,6 +128,10 @@ void keyboard_post_init_user() {
     }
 #endif
 
+#if defined(TRI_LAYER_ENABLE)
+    set_tri_layer_layers(_FN1, _FN2, _AUG);
+#endif
+
     keyboard_post_init_keymap();
 }
 
@@ -172,9 +176,17 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     if (layer_state_is(_GAME)) {
+#if defined(TRI_LAYER_ENABLE)
+        set_tri_layer_lower_layer(_GAMEFN1);
+#else
         state = update_tri_layer_state(state, _GAMEFN1, _FN2, _AUG);
+#endif
     } else {
+#if defined(TRI_LAYER_ENABLE)
+        set_tri_layer_lower_layer(_FN1);
+#else
         state = update_tri_layer_state(state, _FN1, _FN2, _AUG);
+#endif
     }
 
     state = layer_state_set_keymap(state);

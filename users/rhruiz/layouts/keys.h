@@ -2,8 +2,14 @@
 #include "quantum.h"
 
 // layers: mo
-#define MO_LWR MO(_FN1)
-#define MO_RSE MO(_FN2)
+
+#if defined(TRI_LAYER_ENABLE)
+#    define MO_LWR TL_LOWR
+#    define MO_RSE TL_UPPR
+#else
+#    define MO_LWR MO(_FN1)
+#    define MO_RSE MO(_FN2)
+#endif
 #define MO_NUM MO(_NUM)
 #define MO_CFG MO(_CFG)
 #define MO_AUG MO(_AUG)
