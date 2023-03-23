@@ -33,7 +33,3 @@ __attribute__((weak)) bool oled_task_user(void) {
 
     return rhruiz_render_oled();
 }
-
-void suspend_power_down_user(void) { oled_off(); }
-
-void suspend_wakeup_init_user(void) { oled_on(); }

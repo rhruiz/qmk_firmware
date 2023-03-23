@@ -194,6 +194,20 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+void suspend_power_down_user(void) {
+#if defined(OLED_ENABLE)
+    oled_off();
+#endif
+    suspend_power_down_keymap();
+}
+
+void suspend_wakeup_init_user(void) {
+#if defined(OLED_ENABLE)
+    oled_on();
+#endif
+    suspend_wakeup_init_keymap();
+}
+
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
     if (runtime_state.needs_runtime_state_sync) {
