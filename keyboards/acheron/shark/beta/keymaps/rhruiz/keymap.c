@@ -296,3 +296,7 @@ void keyboard_post_init_keymap(void) {
     rgblight_layers = _rgb_layers;
 #endif
 }
+
+void suspend_wakeup_init_keymap(void) {
+    NVIC_SystemReset();
+}
