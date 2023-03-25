@@ -42,12 +42,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      ________L_BL_R4________, ________R_BL_R4________
   ),
 
-  [_COLEMAK] = LAYOUT_base_wrapper(
-     _______L_COLE_R2_______, _______R_COLE_R2_______,
-     _______L_COLE_R3_______, _______R_COLE_R3_______,
-     _______L_COLE_R4_______, _______R_COLE_R4_______
-  ),
-
   [_CODH] = LAYOUT_base_wrapper(
      _______L_CODH_R2_______, _______R_COLE_R2_______,
      _______L_CODH_R3_______, _______R_COLE_R3_______,
