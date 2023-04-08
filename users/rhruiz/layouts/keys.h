@@ -16,7 +16,9 @@
 
 // layers: osl
 #define OSL_GLWR OSL(_GAMEFN1)
+#define OSL_LWR OSL(_FN1)
 #define OSL_RSE OSL(_FN2)
+#define OSL_AUG OSL(_AUG)
 #define OSL_FUN OSL(_FUNC)
 
 // layers: default
