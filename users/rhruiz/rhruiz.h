@@ -43,21 +43,23 @@ typedef enum custom_keycodes {
     KC_CTAB,
     // os independent nav keys
     NV_START,
-    NV_NWIN = NV_START,
-    NV_SCTP,
-    NV_SCBT,
+    NV_NWIN = NV_START, // next window
+    NV_SCTP, // scroll to bottom
+    NV_SCBT, // scroll to top
     NV_EOL,
     NV_BOL,
-    NV_WLFT,
-    NV_WRGH,
+    NV_WLFT, // word left
+    NV_WRGH, // word right
     NV_BCK,
     NV_FWD,
-    NV_TAN,
-    NV_TAP,
-    NV_MICT,
+    NV_TAN, // next tab
+    NV_TAP, // previous tab
+    NV_MICT,  // mission control
     NV_COPY,
     NV_PSTE,
-    NV_WSWT,
+    NV_SCSH, // screenshot
+    NV_WSCH, // window screenshot
+    NV_WSWT, // window switcher key
     NV_END = NV_WSWT,
     USER_SAFE_RANGE
 } rhruiz_keycodes;
