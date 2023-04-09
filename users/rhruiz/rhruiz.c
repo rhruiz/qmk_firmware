@@ -189,6 +189,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif
     }
 
+    state = default_layer_state_set_user_nav(state, &runtime_state);
     state = layer_state_set_keymap(state);
 
     return state;

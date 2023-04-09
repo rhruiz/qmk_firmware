@@ -51,8 +51,8 @@ void perform_nav_key(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state
     handler(nav_keycode);
 }
 
-void stop_window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
-    if (!record->event.pressed && state->is_window_switcher_active) {
+void stop_window_switcher(bool nav_layer_is_on, rhruiz_runtime_state *state) {
+    if (!nav_layer_is_on && state->is_window_switcher_active) {
         unregister_code(get_nav_code(NV_WSWT, state));
         state->is_window_switcher_active = false;
     }
@@ -69,13 +69,16 @@ void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
     handler(KC_TAB);
 }
 
+layer_state_t default_layer_state_set_user_nav(layer_state_t state, rhruiz_runtime_state *runtime_state) {
+    if (!layer_state_cmp(state, _FN2)) {
+        stop_window_switcher(false, runtime_state);
+    }
+
+    return state;
+}
+
 bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state) {
     switch (keycode) {
-        case LT_RSE_ENT:
-        case MO_RSE:
-            stop_window_switcher(record, runtime_state);
-            return true;
-
         case KC_CTAB:
             window_switcher(record, runtime_state);
             break;
