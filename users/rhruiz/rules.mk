@@ -21,3 +21,7 @@ endif
 ifeq ($(strip $(RGBLIGHT_LAYERS)), yes)
 	OPT_DEFS += -DRGBLIGHT_LAYERS -DRGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 endif
+
+ifeq ($(strip $(LOCK_LAYERS)), yes)
+	OPT_DEFS += -DLOCK_LAYERS
+endif
