@@ -85,3 +85,24 @@ TEST_F(NextDefaultLayout, LayersLoop) {
 
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
 }
+
+TEST_F(NextDefaultLayout, SettingDefaultLayerUpdatesRuntimeState) {
+    TestDriver driver;
+    InSequence s;
+    auto colemak  = KeymapKey(_BL, 0, 0, DF(_CODH));
+    auto transparent = KeymapKey(_CODH, 0, 0, KC_TRNS);
+
+    set_keymap({colemak, transparent});
+    default_layer_set(0);
+    reset_runtime_state();
+
+    EXPECT_EQ(runtime_state.base_layer, 0);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
+
+    EXPECT_NO_REPORT(driver);
+    tap_key(colemak);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _CODH), true);
+    EXPECT_EQ(runtime_state.base_layer, 1);
+}
