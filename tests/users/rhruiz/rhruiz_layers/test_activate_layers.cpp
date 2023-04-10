@@ -34,10 +34,11 @@ TEST_F(ActivateLayers, LowerGonnaLower) {
 
     auto lower = KeymapKey(_BL, 0, 0, MO_LWR);
     auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    layer_t layers[2] = { _FN1, _FN2 };
 
     add_key(lower);
     add_key(raise);
-    setup_trns((layer_t[2]) { _FN1, _FN2 }, 2, 2);
+    setup_trns(layers, 2, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -60,10 +61,11 @@ TEST_F(ActivateLayers, RaiseGonnaRaise) {
 
     auto lower = KeymapKey(0, 0, 0, MO_LWR);
     auto raise = KeymapKey(0, 0, 1, MO_RSE);
+    layer_t layers[2] = { _FN1, _FN2 };
 
     add_key(lower);
     add_key(raise);
-    setup_trns((layer_t[2]) { _FN1, _FN2 }, 2, 2);
+    setup_trns(layers , 2, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -86,10 +88,11 @@ TEST_F(ActivateLayers, RaiseAndLowerActivateAugmented) {
 
     auto lower = KeymapKey(_BL, 0, 0, MO_LWR);
     auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    layer_t layers[3] = { _FN1, _FN2, _AUG };
 
     add_key(lower);
     add_key(raise);
-    setup_trns((layer_t[3]) { _FN1, _FN2, _AUG }, 3, 2);
+    setup_trns(layers, 3, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -112,10 +115,11 @@ TEST_F(ActivateLayers, GameLowerActivates) {
 
     auto lower = KeymapKey(_BL, 0, 0, OSL_GLWR);
     auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    layer_t layers[3] = { _GAMEFN1, _FN2, _AUG };
 
     add_key(lower);
     add_key(raise);
-    setup_trns((layer_t[3]) { _GAMEFN1, _FN2, _AUG }, 3, 2);
+    setup_trns(layers, 3, 2);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -125,8 +129,6 @@ TEST_F(ActivateLayers, GameLowerActivates) {
     EXPECT_NO_REPORT(driver);
     EXPECT_EQ(IS_LAYER_ON(_GAMEFN1), true);
     testing::Mock::VerifyAndClearExpectations(&driver);
-
-    lower.release();
 }
 
 TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
@@ -136,12 +138,13 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     auto lower = KeymapKey(_BL, 0, 0, OSL_GLWR);
     auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
     auto tg_game = KeymapKey(_BL, 0, 2, TG_GAME);
+    layer_t layers[4] = { _GAME, _GAMEFN1, _FN2, _AUG };
 
     add_key(lower);
     add_key(raise);
     add_key(tg_game);
 
-    setup_trns((layer_t[4]) { _GAME, _GAMEFN1, _FN2, _AUG }, 4, 3);
+    setup_trns(layers, 4, 3);
 
     default_layer_set(0);
     reset_runtime_state();
@@ -156,7 +159,10 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     run_one_scan_loop();
     EXPECT_NO_REPORT(driver);
 
-    tap_key(lower);
+    lower.press();
+    run_one_scan_loop();
+    EXPECT_NO_REPORT(driver);
+
     testing::Mock::VerifyAndClearExpectations(&driver);
 
     EXPECT_EQ(IS_LAYER_ON(_AUG), true);

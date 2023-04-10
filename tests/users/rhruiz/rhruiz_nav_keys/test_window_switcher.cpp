@@ -54,7 +54,6 @@ TEST_F(WindowSwitcher, MacWindowSwitching) {
     testing::Mock::VerifyAndClearExpectations(&driver);
 
     /* tap window switcher again - mod must stay on */
-    window_switcher.press();
     EXPECT_REPORT(driver, (KC_LGUI, KC_TAB));
     EXPECT_REPORT(driver, (KC_LGUI));
     tap_key(window_switcher);
@@ -93,7 +92,6 @@ TEST_F(WindowSwitcher, WinLinuxWindowSwitching) {
     testing::Mock::VerifyAndClearExpectations(&driver);
 
     /* tap window switcher again - mod must stay on */
-    window_switcher.press();
     EXPECT_REPORT(driver, (KC_LALT, KC_TAB));
     EXPECT_REPORT(driver, (KC_LALT));
     tap_key(window_switcher);

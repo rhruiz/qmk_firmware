@@ -15,9 +15,7 @@
  */
 
 #include "keyboard_report_util.hpp"
-#include "keycode.h"
 #include "test_common.hpp"
-#include "test_keymap_key.hpp"
 
 extern "C" {
 #include "quantum.h"
