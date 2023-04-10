@@ -26,13 +26,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BLINK_LED_PIN B0
 #endif
 
-#if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
-#    define RGBLIGHT_EFFECT_RAINBOW_MOOD
-#    undef RGB_DI_PIN
-#    undef RGBLED_NUM
-#    undef RGBLED_SPLIT
-#    define RGB_DI_PIN 25U
-#    define RGBLED_NUM 1
+#if defined(CONVERT_TO_PROMICRO_RP2040)
+#    if defined(RGBLIGHT_ENABLE)
+#        define RGBLIGHT_EFFECT_RAINBOW_MOOD
+#        undef RGB_DI_PIN
+#        undef RGBLED_NUM
+#        undef RGBLED_SPLIT
+#        define RGB_DI_PIN 25U
+#        define RGBLED_NUM 1
+#    endif
 #endif
 
 #define EE_HANDS

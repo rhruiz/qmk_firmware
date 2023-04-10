@@ -258,6 +258,9 @@ void keyboard_post_init_keymap() {
     oled_set_brightness(0x0);
 #endif
 #if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
+    debug_enable = true;
+    debug_matrix = true;
+    debug_keyboard = true;
     rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD);
 #endif
 #ifdef COMBO_ENABLE
