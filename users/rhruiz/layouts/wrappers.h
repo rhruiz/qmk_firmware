@@ -110,7 +110,7 @@
 #ifdef LOCK_LAYERS
 #define ________R_LWR_4________      KC_TILD, KC_AMPR, KC_FARW, KC_ARRW, TO_RSE
 #else
-#define ________R_LWR_4________      KC_TILD, KC_AMPR, KC_FARW, KC_ARRW, _______
+#define ________R_LWR_4________      KC_TILD, KC_AMPR, KC_FARW, KC_ARRW, KC_DQUO
 #endif
 //                                 `--------+--------+--------+--------+--------'
 
