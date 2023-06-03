@@ -19,5 +19,4 @@
 #include "test_common.h"
 #define HOME_ROW_MODS
 #define QUICK_TAP_TERM_PER_KEY
-#define IGNORE_MOD_TAP_INTERRUPT
 #define PERMISSIVE_HOLD
