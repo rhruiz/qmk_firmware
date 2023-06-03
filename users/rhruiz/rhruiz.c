@@ -42,14 +42,16 @@ tap_dance_action_t tap_dance_actions[] = {
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
-void next_default_layer(rhruiz_runtime_state *state) {
-    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+void default_layer_by_index(size_t index) {
+    rhruiz_layers layer = pgm_read_byte(_base_layers + index);
     layer_state_t mask = (layer_state_t)~(1 << (MAX_LAYER - 1));
 
-    state->base_layer = (state->base_layer + 1) % count;
-
-    rhruiz_layers layer = pgm_read_byte(_base_layers + state->base_layer);
     default_layer_set(1 << (layer & mask));
+}
+
+void next_default_layer(rhruiz_runtime_state *state) {
+    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
+    default_layer_by_index((state->base_layer + 1) % count);
 }
 
 #ifdef SPLIT_KEYBOARD
@@ -75,6 +77,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+        case KC_LAY0:
+            if (record->event.pressed) {
+                default_layer_by_index(0);
+            }
+            return false;
+
+        case KC_LAY1:
+            if (record->event.pressed) {
+                default_layer_by_index(1);
+            }
+            return false;
+
         case KC_LAYO:
             if (record->event.pressed) {
                 next_default_layer(&runtime_state);

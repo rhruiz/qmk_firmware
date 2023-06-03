@@ -38,6 +38,8 @@ typedef enum custom_keycodes {
     KC_CCCP,
     // config keys
     KC_LAYO,
+    KC_LAY0,
+    KC_LAY1,
     KC_NOS,
     // window switcher
     KC_CTAB,
