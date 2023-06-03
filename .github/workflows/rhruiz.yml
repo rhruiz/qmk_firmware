@@ -1,0 +1,24 @@
+name: Unit Tests
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+    - rhruiz
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    container: ghcr.io/qmk/qmk_cli
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Install dependencies
+      run: pip3 install -r requirements-dev.txt
+    - name: Run tests
+      run: make test:rhruiz
