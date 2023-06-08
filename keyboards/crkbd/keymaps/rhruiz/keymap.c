@@ -255,7 +255,7 @@ void housekeeping_task_keymap(void) {
 
 void keyboard_post_init_keymap() {
 #ifdef OLED_ENABLE
-    oled_set_brightness(0x0);
+    // oled_set_brightness(0x0);
 #endif
 #if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
     debug_enable = true;

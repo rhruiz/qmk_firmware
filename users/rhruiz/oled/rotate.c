@@ -32,8 +32,8 @@ const char _layer_names[][6] PROGMEM = {
     [_GAME] = "GAME ",
 };
 
-void oled_pad_if(uint8_t size, bool cond) {
-    if (cond) {
+void oled_wear_save_pad(uint8_t size, bool cond) {
+    if (cond ^ ((timer_read() / 10000) % 2 == 0)) {
         for (uint8_t i = 0; i < size; i++) {
             oled_write_char(0x20, false);
         }
@@ -41,9 +41,9 @@ void oled_pad_if(uint8_t size, bool cond) {
 }
 
 void oled_write_padded_P(const char *str, bool inverse, uint8_t size) {
-    oled_pad_if(size, is_keyboard_left());
+    oled_wear_save_pad(size, is_keyboard_left());
     oled_write_P(str, inverse);
-    oled_pad_if(size, !is_keyboard_left());
+    oled_wear_save_pad(size, !is_keyboard_left());
 }
 
 void oled_clear_half_except(uint8_t lines) {
@@ -95,10 +95,10 @@ bool rhruiz_render_oled(void) {
         case _FN2:
             oled_clear_half_except(6);
             for (uint8_t i = 0; i < 6; i++) {
-                oled_pad_if(3, is_keyboard_left());
+                oled_wear_save_pad(3, is_keyboard_left());
                 oled_write_char(0x8C - (layer - _FN1), i % 2 == 1);
                 oled_write_char(0x8B + (layer - _FN1), i % 2 == 1);
-                oled_pad_if(3, !is_keyboard_left());
+                oled_wear_save_pad(3, !is_keyboard_left());
             }
             oled_clear_half_except(6);
             break;
