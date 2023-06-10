@@ -45,6 +45,9 @@ const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 void default_layer_by_index(size_t index) {
     rhruiz_layers layer = pgm_read_byte(_base_layers + index);
     layer_state_t mask = (layer_state_t)~(1 << (MAX_LAYER - 1));
+#ifdef BLINK_LED_PIN
+    blink_led(200/(index+1), index + 1);
+#endif
 
     default_layer_set(1 << (layer & mask));
 }
