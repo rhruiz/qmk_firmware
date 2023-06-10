@@ -214,25 +214,18 @@ layer_state_t layer_state_set_keymap(layer_state_t state) {
         combo_disable();
     }
 #endif
-#ifndef OLED_ENABLE
     writePin(D5, !layer_state_cmp(state, _NUM));
-#endif
 
     return state;
 }
 
-#ifndef OLED_ENABLE
 void housekeeping_task_keymap(void) {
     if (!is_keyboard_master()) {
         writePin(D5, !layer_state_cmp(layer_state, _NUM));
     }
 }
-#endif
 
 void keyboard_post_init_keymap() {
-#ifdef OLED_ENABLE
-    // oled_set_brightness(0x0);
-#endif
 #if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
     debug_enable = true;
     debug_matrix = true;
