@@ -5,7 +5,6 @@
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
 #define ___ KC_TRNS
-#define KC__TGN TG_NUM
 
 // clang-format off
 #define LAYOUT_base( \

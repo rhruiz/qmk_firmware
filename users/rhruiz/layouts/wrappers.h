@@ -1,8 +1,5 @@
 #pragma once
 
-#define LAYOUT_kc_wrapper(...) LAYOUT_kc(__VA_ARGS__)
-#define KC_ KC_TRNS
-
 #ifdef HOME_ROW_MODS
 #    define HRL(k1, k2, k3, k4, k5) LCTL_T(k1), LSFT_T(k2), LALT_T(k3), LGUI_T(k4), k5
 #    define HRR(k1, k2, k3, k4, k5) k1, RGUI_T(k2), RALT_T(k3), RSFT_T(k4), RCTL_T(k5)
