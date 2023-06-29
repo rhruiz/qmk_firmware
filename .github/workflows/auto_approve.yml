@@ -2,10 +2,6 @@ name: Automatic Approve
 
 permissions: {}
 
-on:
-  schedule:
-    - cron: "*/5 * * * *"
-
 jobs:
   automatic_approve:
     runs-on: ubuntu-latest
