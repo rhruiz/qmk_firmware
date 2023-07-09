@@ -28,11 +28,7 @@ uint16_t get_nav_code(uint16_t keycode, rhruiz_runtime_state *state) {
 void next_nav_keys(rhruiz_runtime_state *state) {
     state->nav_keys_index = (state->nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
 #ifdef BLINK_LED_PIN
-    if (state->nav_keys_index == 0) {
-        blink_led(100, 6);
-    } else {
-        blink_led(150, 2);
-    }
+    blink_led(100 + 50 * state->nav_keys_index, 6 - state->nav_keys_index * 4);
 #endif
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {

@@ -23,7 +23,7 @@ void reset_runtime_state() {
 
 #ifdef SPLIT_KEYBOARD
 typedef struct _master_to_slave_t {
-    size_t nav_keys_index;
+    uint8_t nav_keys_index;
 #   ifdef CAPS_WORD_ENABLE
     bool caps_word_enabled;
 #   endif
