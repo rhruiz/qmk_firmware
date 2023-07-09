@@ -18,9 +18,6 @@ void reset_runtime_state() {
         .caps_word_enabled = false,
 #   endif
 #endif
-#ifdef OLED_ENABLE
-        .oled_timer = timer_read(),
-#endif
     };
 }
 
@@ -69,10 +66,6 @@ void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t 
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef OLED_ENABLE
-    rhruiz_oled_activity();
-
-#endif
     if (!(process_record_keymap(keycode, record)
         && process_record_nav(keycode, record, &runtime_state)
         && process_record_macros(keycode, record))) {

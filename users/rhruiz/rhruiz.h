@@ -3,7 +3,10 @@
 #include "keymap_callbacks/keymap_callbacks.h"
 #include "layouts/keys.h"
 #include "layouts/wrappers.h"
+
+#if defined(RGBLIGHT_ENABLE)
 #include "rgblight/rgblight.h"
+#endif
 
 #if defined(OS_DETECTION_ENABLE)
 #include "os_detection.h"
@@ -84,9 +87,6 @@ typedef struct _rhruiz_runtime_state {
 #   ifdef CAPS_WORD_ENABLE
     bool caps_word_enabled;
 #   endif
-#ifdef OLED_ENABLE
-    uint16_t oled_timer;
-#endif
 #endif
 } rhruiz_runtime_state;
 

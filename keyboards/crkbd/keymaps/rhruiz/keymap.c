@@ -181,33 +181,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-layer_state_t layer_state_set_keymap(layer_state_t state) {
-#ifdef COMBO_ENABLE
-    if (layer_state_cmp(state, _GAME)) {
-        combo_enable();
-    } else {
-        combo_disable();
-    }
-#endif
-    writePin(D5, !layer_state_cmp(state, _NUM));
-
-    return state;
-}
-
 void housekeeping_task_keymap(void) {
     if (!is_keyboard_master()) {
         writePin(D5, !layer_state_cmp(layer_state, _NUM));
     }
 }
 
-void keyboard_post_init_keymap() {
 #if defined(CONVERT_TO_PROMICRO_RP2040) && defined(RGBLIGHT_ENABLE)
+void keyboard_post_init_keymap() {
     debug_enable = true;
     debug_matrix = true;
     debug_keyboard = true;
     rgblight_mode_noeeprom(RGBLIGHT_MODE_RAINBOW_MOOD);
-#endif
-#ifdef COMBO_ENABLE
-    combo_disable();
-#endif
 }
+#endif

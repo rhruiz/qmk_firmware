@@ -49,12 +49,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define QMK_LED D5
 #define QMK_SPEAKER B0
 
-// combos
-#ifdef COMBO_ENABLE
-#    define COMBO_TERM 100
-#    define COMBO_COUNT 29
-#endif
-
 #ifdef AUDIO_ENABLE
 #    define B5_AUDIO
 #    define AUDIO_CLICKY
