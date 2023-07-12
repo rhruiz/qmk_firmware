@@ -4,6 +4,15 @@
 
 rhruiz_runtime_state runtime_state;
 
+/* space saving overrides */
+uint16_t keycode_config(uint16_t keycode) {
+    return keycode;
+}
+
+uint8_t mod_config(uint8_t mod) {
+    return mod;
+}
+
 void reset_runtime_state() {
     runtime_state = (rhruiz_runtime_state) {
         .nav_keys_index = 0,
@@ -39,7 +48,7 @@ tap_dance_action_t tap_dance_actions[] = {
 
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
-void default_layer_by_index(size_t index) {
+void default_layer_by_index(uint8_t index) {
     rhruiz_layers layer = pgm_read_byte(_base_layers + index);
     layer_state_t mask = (layer_state_t)~(1 << (MAX_LAYER - 1));
 #ifdef BLINK_LED_PIN
