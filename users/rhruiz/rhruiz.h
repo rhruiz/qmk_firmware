@@ -30,6 +30,8 @@
 
 typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
 
+#define FIRST_NON_BASE_LAYER _FN1
+
 typedef enum custom_keycodes {
     // macro keys
     KC_MAKE = QK_USER,
