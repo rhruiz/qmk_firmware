@@ -2,7 +2,7 @@
 const char _spacer[] PROGMEM = "          ";
 
 static const char lc[][4][3] PROGMEM = {
-    [_BL]      = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
+    [_QWER]    = {"\x20\x20", "\x20\x20", "\x20\x20", "\x20\x20"},
     [_FN1]     = {"\x20\x20", "\xb2\xb3", "\x92\x93", "\x20\x20"},
     [_FN2]     = {"\x20\x20", "\x92\x93", "\xb2\xb3", "\x20\x20"},
     [_CFG]     = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},

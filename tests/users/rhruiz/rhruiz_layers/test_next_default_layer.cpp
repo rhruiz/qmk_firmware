@@ -34,7 +34,7 @@ class NextDefaultLayout : public TestFixture {};
 TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
     TestDriver driver;
     InSequence s;
-    auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
+    auto qwerty = KeymapKey(_QWER, 0, 0, KC_F);
     auto colemak = KeymapKey(_CODH, 0, 0, KC_T);
     auto next_layout = KeymapKey(0, 0, 1, KC_LAYO);
 
@@ -42,7 +42,7 @@ TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
     default_layer_set(0);
     reset_runtime_state();
 
-    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 
     EXPECT_REPORT(driver, (KC_F));
     EXPECT_EMPTY_REPORT(driver);
@@ -65,16 +65,16 @@ TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {
 TEST_F(NextDefaultLayout, LayersLoop) {
     TestDriver driver;
     InSequence s;
-    auto qwerty = KeymapKey(_BL, 0, 0, KC_F);
+    auto qwerty = KeymapKey(_QWER, 0, 0, KC_F);
     auto colemak = KeymapKey(_CODH, 0, 0, KC_T);
-    auto next_layout = KeymapKey(_BL, 0, 1, KC_LAYO);
+    auto next_layout = KeymapKey(_QWER, 0, 1, KC_LAYO);
     auto transparent = KeymapKey(_CODH, 0, 1, KC_TRNS);
 
     set_keymap({qwerty, colemak, next_layout, transparent});
     default_layer_set(0);
     reset_runtime_state();
 
-    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 
     /* tap for next default layout */
     for (uint8_t i = 0; i < 2; i++) {
@@ -83,13 +83,13 @@ TEST_F(NextDefaultLayout, LayersLoop) {
         testing::Mock::VerifyAndClearExpectations(&driver);
     }
 
-    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 }
 
 TEST_F(NextDefaultLayout, SettingDefaultLayerUpdatesRuntimeState) {
     TestDriver driver;
     InSequence s;
-    auto colemak  = KeymapKey(_BL, 0, 0, DF(_CODH));
+    auto colemak  = KeymapKey(_QWER, 0, 0, DF(_CODH));
     auto transparent = KeymapKey(_CODH, 0, 0, KC_TRNS);
 
     set_keymap({colemak, transparent});
@@ -97,7 +97,7 @@ TEST_F(NextDefaultLayout, SettingDefaultLayerUpdatesRuntimeState) {
     reset_runtime_state();
 
     EXPECT_EQ(runtime_state.base_layer, 0);
-    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _BL), true);
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 
     EXPECT_NO_REPORT(driver);
     tap_key(colemak);

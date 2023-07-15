@@ -32,8 +32,8 @@ TEST_F(ActivateLayers, LowerGonnaLower) {
     TestDriver driver;
     InSequence s;
 
-    auto lower = KeymapKey(_BL, 0, 0, MO_LWR);
-    auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    auto lower = KeymapKey(_QWER, 0, 0, MO_LWR);
+    auto raise = KeymapKey(_QWER, 0, 1, MO_RSE);
     layer_t layers[2] = { _FN1, _FN2 };
 
     add_key(lower);
@@ -86,8 +86,8 @@ TEST_F(ActivateLayers, RaiseAndLowerActivateAugmented) {
     TestDriver driver;
     InSequence s;
 
-    auto lower = KeymapKey(_BL, 0, 0, MO_LWR);
-    auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    auto lower = KeymapKey(_QWER, 0, 0, MO_LWR);
+    auto raise = KeymapKey(_QWER, 0, 1, MO_RSE);
     layer_t layers[3] = { _FN1, _FN2, _AUG };
 
     add_key(lower);
@@ -113,8 +113,8 @@ TEST_F(ActivateLayers, GameLowerActivates) {
     TestDriver driver;
     InSequence s;
 
-    auto lower = KeymapKey(_BL, 0, 0, OSL_GLWR);
-    auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
+    auto lower = KeymapKey(_QWER, 0, 0, OSL_GLWR);
+    auto raise = KeymapKey(_QWER, 0, 1, MO_RSE);
     layer_t layers[3] = { _GAMEFN1, _FN2, _AUG };
 
     add_key(lower);
@@ -135,9 +135,9 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     TestDriver driver;
     InSequence s;
 
-    auto lower = KeymapKey(_BL, 0, 0, OSL_GLWR);
-    auto raise = KeymapKey(_BL, 0, 1, MO_RSE);
-    auto tg_game = KeymapKey(_BL, 0, 2, TG_GAME);
+    auto lower = KeymapKey(_QWER, 0, 0, OSL_GLWR);
+    auto raise = KeymapKey(_QWER, 0, 1, MO_RSE);
+    auto tg_game = KeymapKey(_QWER, 0, 2, TG_GAME);
     layer_t layers[4] = { _GAME, _GAMEFN1, _FN2, _AUG };
 
     add_key(lower);

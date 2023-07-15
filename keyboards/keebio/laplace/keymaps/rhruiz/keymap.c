@@ -39,10 +39,10 @@
 #define LAYOUT_wrapper(...) LAYOUT_mine(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BL] = LAYOUT_base_wrapper(
-    ________L_BL_R2________, ________R_BL_R2________,
-    ________L_BL_R3________, ________R_BL_R3________,
-    ________L_BL_R4________, ________R_BL_R4________
+  [_QWER] = LAYOUT_base_wrapper(
+    _______L_QWER_R2_______, _______R_QWER_R2_______,
+    _______L_QWER_R3_______, _______R_QWER_R3_______,
+    _______L_QWER_R4_______, _______R_QWER_R4_______
   ),
 
   [_FN1] = LAYOUT_wrapper(

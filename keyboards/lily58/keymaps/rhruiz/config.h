@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#define BASE_LAYERS _BL, _CODH
+#define BASE_LAYERS _QWER, _CODH
 
 /* Select hand configuration */
 #define EE_HANDS

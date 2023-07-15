@@ -25,10 +25,10 @@
 #endif
 
 #ifndef BASE_LAYERS
-#    define BASE_LAYERS _BL
+#    define BASE_LAYERS _QWER
 #endif
 
-typedef enum rhruiz_layers { _BL, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
+typedef enum rhruiz_layers { _QWER, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
 
 #define FIRST_NON_BASE_LAYER _FN1
 

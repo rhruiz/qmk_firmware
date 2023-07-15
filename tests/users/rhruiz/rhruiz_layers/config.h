@@ -17,6 +17,6 @@
 #pragma once
 
 #include "test_common.h"
-#define BASE_LAYERS _BL, _CODH
+#define BASE_LAYERS _QWER, _CODH
 #define QMK_KEYBOARD "test"
 #define QMK_KEYMAP "rhruiz"

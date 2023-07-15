@@ -25,8 +25,7 @@ OLED 32x128 - 6x8 font
 bool is_keyboard_left(void);
 
 const char _layer_names[][6] PROGMEM = {
-    [_BL] = "QWERT",
-    [_COLEMAK] = "COLEM",
+    [_QWER] = "QWERT",
     [_CODH] = "CO-DH",
     [_FUNC] = "FUNC ",
     [_GAME] = "GAME ",

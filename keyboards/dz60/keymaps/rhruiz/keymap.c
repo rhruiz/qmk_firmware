@@ -28,11 +28,11 @@ const rgblight_segment_t* const PROGMEM _rgb_layers[] = RGBLIGHT_LAYERS_LIST(fn1
 #define LAYOUT_wrapper(...) LAYOUT(__VA_ARGS__)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BL] = LAYOUT_wrapper(
-		KC_GRV ,   ________L_BL_R1________, ________R_BL_R1________,  KC_MINS,  KC_EQL,   KC_BSLS,   KC_PIPE,
-		KC_TAB ,   ________L_BL_R2________, ________R_BL_R2________,  KC_LBRC,  KC_RBRC,  KC_BSPC,
-		CT_ESC ,   ________L_BL_R3________, ________R_BL_R3________,  KC_QUOT,  KC_ENT,
-		KC_LSFT,   KC_NO,    ________L_BL_R4________, ________R_BL_R4________,  CLUP,     MO_RSE ,
+  [_QWER] = LAYOUT_wrapper(
+		KC_GRV ,   _______L_QWER_R1_______, _______R_QWER_R1_______,  KC_MINS,  KC_EQL,   KC_BSLS,   KC_PIPE,
+		KC_TAB ,   _______L_QWER_R2_______, _______R_QWER_R2_______,  KC_LBRC,  KC_RBRC,  KC_BSPC,
+		CT_ESC ,   _______L_QWER_R3_______, _______R_QWER_R3_______,  KC_QUOT,  KC_ENT,
+		KC_LSFT,   KC_NO,    _______L_QWER_R4_______, _______R_QWER_R4_______,  CLUP,     MO_RSE ,
 		MO_LWR ,   KC_LALT,  KC_LGUI,  CT_SPC , MO_LWR ,  LT_RSE_ENT,  AT_BS  , CLLEFT,  KC_NO,  CLDOWN,   CLRIGHT
   ),
 
