@@ -95,7 +95,7 @@ bool process_record_macros(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 without_mods(lambda (void, (uint8_t mods) {
                     if (shifted(mods)) {
-                        SEND_STRING("<> ");
+                        SEND_STRING("<>");
                     } else {
                         SEND_STRING("=> ");
                     }
