@@ -37,4 +37,10 @@ void blink_led_task() {
         }
     }
 }
+
+void blink_led_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
+    const uint8_t *blink_data = (const uint8_t*)in_data;
+
+    blink_led(blink_data[0], blink_data[1]);
+}
 #endif

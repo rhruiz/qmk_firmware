@@ -99,6 +99,7 @@ void reset_runtime_state(void);
 #ifdef BLINK_LED_PIN
 void blink_led(uint16_t duration_ms, uint8_t times);
 void blink_led_task(void);
+void blink_led_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data);
 #endif
 
 #define NUM_NAV_KEYS_OSES 2

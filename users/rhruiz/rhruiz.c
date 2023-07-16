@@ -72,14 +72,6 @@ void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t 
     runtime_state.caps_word_enabled = mstate->caps_word_enabled;
 #   endif
 }
-
-#    ifdef BLINK_LED_PIN
-void blink_led_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    const uint8_t *blink_data = (const uint8_t*)in_data;
-
-    blink_led(blink_data[0], blink_data[1]);
-}
-#    endif
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
