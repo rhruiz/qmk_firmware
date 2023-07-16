@@ -14,6 +14,13 @@ void blink_led(uint16_t duration_ms, uint8_t times) {
     runtime_state.blink_repeat_timer = sync_timer_read();
 
     blink_led_task();
+#ifdef SPLIT_KEYBOARD
+
+    if (is_keyboard_master()) {
+        const uint8_t data[] = { (uint8_t)duration_ms, times };
+        transaction_rpc_send(USER_SYNC_BLINK_LED, sizeof(data), &data);
+    }
+#endif
 }
 
 void blink_led_task() {
