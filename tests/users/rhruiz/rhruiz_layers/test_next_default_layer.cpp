@@ -86,23 +86,47 @@ TEST_F(NextDefaultLayout, LayersLoop) {
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 }
 
-TEST_F(NextDefaultLayout, SettingDefaultLayerUpdatesRuntimeState) {
+TEST_F(NextDefaultLayout, SetDefaultLayerByIndex) {
     TestDriver driver;
     InSequence s;
-    auto colemak  = KeymapKey(_QWER, 0, 0, DF(_CODH));
-    auto transparent = KeymapKey(_CODH, 0, 0, KC_TRNS);
+    auto qwerty = KeymapKey(_QWER, 0, 0, KC_F);
+    auto colemak = KeymapKey(_CODH, 0, 0, KC_T);
+    auto layout0 = KeymapKey(_QWER, 0, 1, KC_LAY0);
+    auto layout1 = KeymapKey(_QWER, 0, 2, KC_LAY1);
+    auto transparent0 = KeymapKey(_CODH, 0, 1, KC_TRNS);
+    auto transparent1 = KeymapKey(_CODH, 0, 2, KC_TRNS);
 
-    set_keymap({colemak, transparent});
+    set_keymap({qwerty, colemak, layout0, layout1, transparent0, transparent1});
     default_layer_set(0);
     reset_runtime_state();
 
-    EXPECT_EQ(runtime_state.base_layer, 0);
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 
+    // tap layout0
     EXPECT_NO_REPORT(driver);
-    tap_key(colemak);
+    tap_key(layout0);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
+
+    // tap layout1
+    EXPECT_NO_REPORT(driver);
+    tap_key(layout1);
     testing::Mock::VerifyAndClearExpectations(&driver);
 
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _CODH), true);
-    EXPECT_EQ(runtime_state.base_layer, 1);
+
+    // tap layout1
+    EXPECT_NO_REPORT(driver);
+    tap_key(layout1);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _CODH), true);
+
+    // tap layout0
+    EXPECT_NO_REPORT(driver);
+    tap_key(layout0);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 }

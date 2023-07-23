@@ -16,6 +16,7 @@
 SRC += users/rhruiz/rhruiz.c \
 	   users/rhruiz/keymap_callbacks/keymap_callbacks.c \
 	   users/rhruiz/nav_keys.c \
+	   users/rhruiz/base_layers.c \
 	   users/rhruiz/macros.c \
 	   platforms/test/timer.c
 

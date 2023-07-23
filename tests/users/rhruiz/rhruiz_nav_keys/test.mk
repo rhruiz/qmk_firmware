@@ -17,6 +17,7 @@ SRC += users/rhruiz/nav_keys.c \
 	   users/rhruiz/keymap_callbacks/keymap_callbacks.c \
 	   users/rhruiz/rhruiz.c \
 	   users/rhruiz/macros.c \
+	   users/rhruiz/base_layers.c \
 	   platforms/test/timer.c
 
 DEBOUNCE_TYPE = none
