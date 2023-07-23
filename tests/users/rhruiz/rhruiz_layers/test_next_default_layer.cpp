@@ -76,12 +76,15 @@ TEST_F(NextDefaultLayout, LayersLoop) {
 
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 
-    /* tap for next default layout */
-    for (uint8_t i = 0; i < 2; i++) {
-        EXPECT_NO_REPORT(driver);
-        tap_key(next_layout);
-        testing::Mock::VerifyAndClearExpectations(&driver);
-    }
+    EXPECT_NO_REPORT(driver);
+    tap_key(next_layout);
+    testing::Mock::VerifyAndClearExpectations(&driver);
+
+    EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _CODH), true);
+
+    EXPECT_NO_REPORT(driver);
+    tap_key(next_layout);
+    testing::Mock::VerifyAndClearExpectations(&driver);
 
     EXPECT_EQ(IS_LAYER_ON_STATE(default_layer_state, _QWER), true);
 }
