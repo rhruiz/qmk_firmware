@@ -1,6 +1,9 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
+uint16_t copy_paste_timer;
+bool is_window_switcher_active;
+
 const uint16_t nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_NWIN - NV_START] = {LCMD(KC_GRV), LALT(KC_TAB)},
     [NV_SCTP - NV_START] = {LCMD(KC_UP), LGUI(KC_HOME)},
@@ -39,9 +42,9 @@ void next_nav_keys(rhruiz_runtime_state *state) {
 
 void perform_copy_paste(keyrecord_t *record, rhruiz_runtime_state *state) {
     if (record->event.pressed) {
-        state->copy_paste_timer = timer_read();
+        copy_paste_timer = timer_read();
     } else {
-        if (timer_elapsed(state->copy_paste_timer) > TAPPING_TERM) {
+        if (timer_elapsed(copy_paste_timer) > TAPPING_TERM) {
             tap_code16(get_nav_code(NV_COPY, state));
         } else {
             tap_code16(get_nav_code(NV_PSTE, state));
@@ -60,7 +63,7 @@ void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
     void (*handler)(uint16_t) = record->event.pressed ? register_code16 : unregister_code16;
 
     if (record->event.pressed) {
-        state->is_window_switcher_active = true;
+        is_window_switcher_active = true;
         handler(get_nav_code(NV_WSWT, state));
     }
 
@@ -68,9 +71,9 @@ void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
 }
 
 layer_state_t default_layer_state_set_user_nav(layer_state_t state, rhruiz_runtime_state *runtime_state) {
-    if (state < FIRST_NON_BASE_LAYER && runtime_state->is_window_switcher_active) {
+    if (state < FIRST_NON_BASE_LAYER && is_window_switcher_active) {
         unregister_code(get_nav_code(NV_WSWT, runtime_state));
-        runtime_state->is_window_switcher_active = false;
+        is_window_switcher_active = false;
     }
 
     return state;

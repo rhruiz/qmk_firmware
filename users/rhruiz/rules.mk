@@ -1,5 +1,5 @@
 SRC += rhruiz.c get_tapping_term.c nav_keys.c macros.c rgblight/rgblight.c \
-	   blink_led.c keymap_callbacks/keymap_callbacks.c
+	   base_layers.c blink_led.c keymap_callbacks/keymap_callbacks.c
 
 GRAVE_ESC_ENABLE=no
 SPACE_CADET_ENABLE=no

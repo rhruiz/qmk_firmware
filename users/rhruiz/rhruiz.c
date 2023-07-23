@@ -16,11 +16,6 @@ uint8_t mod_config(uint8_t mod) {
 void reset_runtime_state() {
     runtime_state = (rhruiz_runtime_state) {
         .nav_keys_index = 0,
-#ifdef OS_DETECTION_ENABLE
-        .host_os = OS_UNSURE,
-#endif
-        .is_window_switcher_active = false,
-        .base_layer = 0,
 #ifdef SPLIT_KEYBOARD
         .needs_runtime_state_sync = false,
 #   ifdef CAPS_WORD_ENABLE
@@ -45,23 +40,6 @@ tap_dance_action_t tap_dance_actions[] = {
 };
 
 #endif
-
-const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
-
-void default_layer_by_index(uint8_t index) {
-    rhruiz_layers layer = pgm_read_byte(_base_layers + index);
-    layer_state_t mask = (layer_state_t)~(1 << (MAX_LAYER - 1));
-#ifdef BLINK_LED_PIN
-    blink_led(200/(index+1), index + 1);
-#endif
-
-    default_layer_set(1 << (layer & mask));
-}
-
-void next_default_layer(rhruiz_runtime_state *state) {
-    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
-    default_layer_by_index((state->base_layer + 1) % count);
-}
 
 #ifdef SPLIT_KEYBOARD
 void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
@@ -107,12 +85,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef OS_DETECTION_ENABLE
 uint32_t os_detection(uint32_t trigger_time, void *cb_arg) {
-    runtime_state.host_os = detected_host_os();
+    os_variant_t host_os = detected_host_os();
 
-    if (runtime_state.host_os) {
+    if (host_os) {
+#   ifdef SPLIT_KEYBOARD
         runtime_state.needs_runtime_state_sync = true;
 
-        switch (runtime_state.host_os) {
+#   endif
+        switch (host_os) {
             case OS_MACOS:
             case OS_IOS:
                 runtime_state.nav_keys_index = 0;
@@ -122,9 +102,11 @@ uint32_t os_detection(uint32_t trigger_time, void *cb_arg) {
                 runtime_state.nav_keys_index = 1;
                 break;
         }
+
+        return 0;
     }
 
-    return runtime_state.host_os ? 0 : 500;
+    return 500;
 }
 #endif
 
@@ -176,25 +158,6 @@ void caps_word_set_user(bool active) {
 }
 #endif
 
-layer_state_t default_layer_state_set_user(layer_state_t state) {
-    state = default_layer_state_set_keymap(state);
-
-    uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
-    uint8_t highest_layer = get_highest_layer(state);
-
-    for (uint8_t i = 0; i < count; i++) {
-        if (highest_layer == pgm_read_byte(_base_layers + i)) {
-            runtime_state.base_layer = i;
-            break;
-        }
-    }
-
-#ifdef SPLIT_KEYBOARD
-    runtime_state.needs_runtime_state_sync = true;
-#endif
-
-    return state;
-}
 
 layer_state_t layer_state_set_user(layer_state_t state) {
     if (layer_state_is(_GAME)) {

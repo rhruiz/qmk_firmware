@@ -73,17 +73,6 @@ typedef enum custom_keycodes {
 
 typedef struct _rhruiz_runtime_state {
     uint8_t nav_keys_index;
-#ifdef OS_DETECTION_ENABLE
-    os_variant_t host_os;
-#endif
-    bool is_window_switcher_active;
-    uint8_t base_layer;
-    uint16_t copy_paste_timer;
-#ifdef BLINK_LED_PIN
-    uint16_t blink_repeat_timer;
-    uint8_t  blink_times_remaining;
-    uint16_t blink_dur;
-#endif
 #ifdef SPLIT_KEYBOARD
     bool needs_runtime_state_sync;
 #   ifdef CAPS_WORD_ENABLE
@@ -96,6 +85,8 @@ bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_st
 bool process_record_macros(uint16_t keycode, keyrecord_t *record);
 layer_state_t default_layer_state_set_user_nav(layer_state_t state, rhruiz_runtime_state *runtime_state);
 void reset_runtime_state(void);
+void default_layer_by_index(uint8_t index);
+void next_default_layer(rhruiz_runtime_state *runtime_state);
 #ifdef BLINK_LED_PIN
 void blink_led(uint16_t duration_ms, uint8_t times);
 void blink_led_task(void);
