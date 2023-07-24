@@ -154,12 +154,11 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     EXPECT_EQ(IS_LAYER_ON(_GAME), true);
     testing::Mock::VerifyAndClearExpectations(&driver);
 
-    EXPECT_NO_REPORT(driver);
-    raise.press();
-    run_one_scan_loop();
+    tap_key(lower);
     EXPECT_NO_REPORT(driver);
 
-    lower.press();
+    EXPECT_NO_REPORT(driver);
+    raise.press();
     run_one_scan_loop();
     EXPECT_NO_REPORT(driver);
 
@@ -168,7 +167,6 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     EXPECT_EQ(IS_LAYER_ON(_AUG), true);
 
     EXPECT_NO_REPORT(driver);
-    lower.release();
     raise.release();
     run_one_scan_loop();
     testing::Mock::VerifyAndClearExpectations(&driver);
