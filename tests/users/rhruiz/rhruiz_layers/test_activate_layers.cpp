@@ -157,6 +157,8 @@ TEST_F(ActivateLayers, GameLowerAndRaiseActivateAugmentedWhenGameIsOn) {
     tap_key(lower);
     EXPECT_NO_REPORT(driver);
 
+    EXPECT_EQ(IS_LAYER_ON(_GAMEFN1), true);
+
     EXPECT_NO_REPORT(driver);
     raise.press();
     run_one_scan_loop();
