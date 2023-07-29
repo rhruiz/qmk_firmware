@@ -105,3 +105,7 @@ enum {
 #else
 #    define TD_SNU KC_RSFT
 #endif
+
+#ifdef SPLIT_KEYBOARD
+#    include "split.h"
+#endif

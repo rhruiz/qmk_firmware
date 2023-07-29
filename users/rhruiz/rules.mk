@@ -8,6 +8,10 @@ ifeq ($(strip $(RAW_ENABLE)), yes)
     SRC += raw_hid/raw_hid.c
 endif
 
+ifeq ($(strip $(SPLIT_KEYBOARD)), yes)
+	SRC += users/rhruiz/split.c
+endif
+
 ifeq ($(strip $(OLED_ROTATE)), yes)
 	OPT_DEFS += -DOLED_ROTATE -DRHRUIZ_OLED_FONT_H="\"users/rhruiz/oled/font_rotated.c\""
 else

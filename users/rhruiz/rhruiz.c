@@ -25,31 +25,11 @@ void reset_runtime_state() {
     };
 }
 
-#ifdef SPLIT_KEYBOARD
-typedef struct _master_to_slave_t {
-    uint8_t nav_keys_index;
-#   ifdef CAPS_WORD_ENABLE
-    bool caps_word_enabled;
-#   endif
-} master_to_slave_t;
-#endif
-
 #ifdef TAP_DANCE_ENABLE
 tap_dance_action_t tap_dance_actions[] = {
     [TD_RSHIFT_NUM] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _NUM),
 };
 
-#endif
-
-#ifdef SPLIT_KEYBOARD
-void sync_runtime_state_handler(uint8_t in_buflen, const void* in_data, uint8_t out_buflen, void* out_data) {
-    const master_to_slave_t *mstate = (const master_to_slave_t*)in_data;
-
-    runtime_state.nav_keys_index = mstate->nav_keys_index;
-#   ifdef CAPS_WORD_ENABLE
-    runtime_state.caps_word_enabled = mstate->caps_word_enabled;
-#   endif
-}
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -158,7 +138,6 @@ void caps_word_set_user(bool active) {
 }
 #endif
 
-
 layer_state_t layer_state_set_user(layer_state_t state) {
     if (layer_state_is(_GAME)) {
 #if defined(TRI_LAYER_ENABLE)
@@ -196,25 +175,10 @@ void suspend_wakeup_init_user(void) {
 
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
-    if (runtime_state.needs_runtime_state_sync) {
-        master_to_slave_t m2s = {
-            runtime_state.nav_keys_index,
-#    ifdef CAPS_WORD_ENABLE
-            runtime_state.caps_word_enabled
-#    endif
-        };
-
-        if (transaction_rpc_send(USER_SYNC_RUNTIME_STATE, sizeof(m2s), &m2s)) {
-            runtime_state.needs_runtime_state_sync = false;
-        } else {
-            dprintf("sync tx failed");
-        }
-    }
+    sync_master_state_task(&runtime_state);
 #endif
 #ifdef BLINK_LED_PIN
-
     blink_led_task();
 #endif
-
     housekeeping_task_keymap();
 }
