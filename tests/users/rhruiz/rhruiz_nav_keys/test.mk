@@ -14,6 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 SRC += users/rhruiz/nav_keys.c \
+	   users/rhruiz/runtime_state.c \
 	   users/rhruiz/keymap_callbacks/keymap_callbacks.c \
 	   users/rhruiz/rhruiz.c \
 	   users/rhruiz/macros.c \
