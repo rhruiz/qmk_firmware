@@ -1,5 +1,6 @@
 #pragma once
 #include "quantum.h"
+#include "runtime_state.h"
 #include "keymap_callbacks/keymap_callbacks.h"
 #include "layouts/keys.h"
 #include "layouts/wrappers.h"
@@ -71,22 +72,11 @@ typedef enum custom_keycodes {
     USER_SAFE_RANGE
 } rhruiz_keycodes;
 
-typedef struct _rhruiz_runtime_state {
-    uint8_t nav_keys_index;
-#ifdef SPLIT_KEYBOARD
-    bool needs_runtime_state_sync;
-#   ifdef CAPS_WORD_ENABLE
-    bool caps_word_enabled;
-#   endif
-#endif
-} rhruiz_runtime_state;
-
-bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state);
+bool process_record_nav(uint16_t keycode, keyrecord_t *record);
 bool process_record_macros(uint16_t keycode, keyrecord_t *record);
-layer_state_t default_layer_state_set_user_nav(layer_state_t state, rhruiz_runtime_state *runtime_state);
-void reset_runtime_state(void);
+layer_state_t default_layer_state_set_user_nav(layer_state_t state);
 void default_layer_by_index(uint8_t index);
-void next_default_layer(rhruiz_runtime_state *runtime_state);
+void next_default_layer(void);
 #ifdef BLINK_LED_PIN
 void blink_led(uint16_t duration_ms, uint8_t times);
 void blink_led_task(void);

@@ -1,7 +1,5 @@
 #include "rhruiz.h"
 
-extern rhruiz_runtime_state runtime_state;
-
 const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
 uint8_t base_layer = 0;
@@ -20,7 +18,7 @@ layer_state_t default_layer_state_set_user(layer_state_t state) {
     }
 #ifdef SPLIT_KEYBOARD
 
-    runtime_state.needs_runtime_state_sync = true;
+    set_needs_runtime_state_sync(true);
 #endif
 
     return state;
@@ -36,7 +34,7 @@ void default_layer_by_index(uint8_t index) {
     default_layer_set(1 << (layer & mask));
 }
 
-void next_default_layer(rhruiz_runtime_state *state) {
+void next_default_layer() {
     uint8_t count = sizeof(_base_layers)/sizeof(_base_layers[0]);
     default_layer_by_index((base_layer + 1) % count);
 }

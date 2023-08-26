@@ -1,8 +1,6 @@
 #include "oled.h"
 #include "rhruiz.h"
 
-extern rhruiz_runtime_state runtime_state;
-
 #ifdef OLED_ROTATE
 #include "users/rhruiz/oled/rotate.c"
 #else

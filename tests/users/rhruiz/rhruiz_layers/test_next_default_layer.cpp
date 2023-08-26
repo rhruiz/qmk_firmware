@@ -27,8 +27,6 @@ extern "C" {
 using testing::_;
 using testing::InSequence;
 
-extern rhruiz_runtime_state runtime_state;
-
 class NextDefaultLayout : public TestFixture {};
 
 TEST_F(NextDefaultLayout, TappingChangesBaseLayout) {

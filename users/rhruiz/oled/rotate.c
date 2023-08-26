@@ -69,7 +69,7 @@ bool rhruiz_render_oled(void) {
     if (
 #ifdef CAPS_WORD_ENABLE
 #   ifdef SPLIT_KEYBOARD
-    runtime_state.caps_word_enabled ||
+    caps_word_enabled() ||
 #   else
     is_caps_word_on() ||
 #   endif
@@ -127,7 +127,7 @@ bool rhruiz_render_oled(void) {
                 oled_write_P(_layer_names[get_highest_layer(default_layer_state)], false);
             }
 
-            oled_write_P(runtime_state.nav_keys_index == 0 ? PSTR(" mac ") : PSTR(" win "), runtime_state.nav_keys_index % 2 == 0);
+            oled_write_P(nav_keys_index() == 0 ? PSTR(" mac ") : PSTR(" win "), nav_keys_index() % 2 == 0);
             oled_write_char('\n', false);
 
             break;

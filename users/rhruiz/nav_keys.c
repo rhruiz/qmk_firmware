@@ -24,78 +24,78 @@ const uint16_t nav_keys[][NUM_NAV_KEYS_OSES] PROGMEM = {
     [NV_WSWT - NV_START] = {KC_LGUI, KC_LALT},
 };
 
-uint16_t get_nav_code(uint16_t keycode, rhruiz_runtime_state *state) {
-    return pgm_read_word(&(nav_keys[keycode - NV_START][state->nav_keys_index]));
+uint16_t get_nav_code(uint16_t keycode) {
+    return pgm_read_word(&(nav_keys[keycode - NV_START][nav_keys_index()]));
 }
 
-void next_nav_keys(rhruiz_runtime_state *state) {
-    state->nav_keys_index = (state->nav_keys_index + 1) % NUM_NAV_KEYS_OSES;
+void next_nav_keys(void) {
+    set_nav_keys_index((nav_keys_index() + 1) % NUM_NAV_KEYS_OSES);
 #ifdef BLINK_LED_PIN
-    blink_led(100 + 50 * state->nav_keys_index, 6 - state->nav_keys_index * 4);
+    blink_led(100 + 50 * nav_keys_index(), 6 - nav_keys_index() * 4);
 #endif
 #ifdef SPLIT_KEYBOARD
     if (is_keyboard_master()) {
-        state->needs_runtime_state_sync = true;
+        set_needs_runtime_state_sync(true);
     }
 #endif
 }
 
-void perform_copy_paste(keyrecord_t *record, rhruiz_runtime_state *state) {
+void perform_copy_paste(keyrecord_t *record) {
     if (record->event.pressed) {
         copy_paste_timer = timer_read();
     } else {
         if (timer_elapsed(copy_paste_timer) > TAPPING_TERM) {
-            tap_code16(get_nav_code(NV_COPY, state));
+            tap_code16(get_nav_code(NV_COPY));
         } else {
-            tap_code16(get_nav_code(NV_PSTE, state));
+            tap_code16(get_nav_code(NV_PSTE));
         }
     }
 }
 
-void perform_nav_key(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *state) {
-    uint16_t nav_keycode = get_nav_code(keycode, state);
+void perform_nav_key(uint16_t keycode, keyrecord_t *record) {
+    uint16_t nav_keycode = get_nav_code(keycode);
 
     void (*handler)(uint16_t) = record->event.pressed ? register_code16 : unregister_code16;
     handler(nav_keycode);
 }
 
-void window_switcher(keyrecord_t *record, rhruiz_runtime_state *state) {
+void window_switcher(keyrecord_t *record) {
     void (*handler)(uint16_t) = record->event.pressed ? register_code16 : unregister_code16;
 
     if (record->event.pressed) {
         is_window_switcher_active = true;
-        handler(get_nav_code(NV_WSWT, state));
+        handler(get_nav_code(NV_WSWT));
     }
 
     handler(KC_TAB);
 }
 
-layer_state_t default_layer_state_set_user_nav(layer_state_t state, rhruiz_runtime_state *runtime_state) {
+layer_state_t default_layer_state_set_user_nav(layer_state_t state) {
     if (state < FIRST_NON_BASE_LAYER && is_window_switcher_active) {
-        unregister_code(get_nav_code(NV_WSWT, runtime_state));
+        unregister_code(get_nav_code(NV_WSWT));
         is_window_switcher_active = false;
     }
 
     return state;
 }
 
-bool process_record_nav(uint16_t keycode, keyrecord_t *record, rhruiz_runtime_state *runtime_state) {
+bool process_record_nav(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_CTAB:
-            window_switcher(record, runtime_state);
+            window_switcher(record);
             break;
 
         case NV_START ... NV_END:
-            perform_nav_key(keycode, record, runtime_state);
+            perform_nav_key(keycode, record);
             break;
 
         case KC_CCCP:
-            perform_copy_paste(record, runtime_state);
+            perform_copy_paste(record);
             break;
 
         case KC_NOS:
             if (record->event.pressed) {
-                next_nav_keys(runtime_state);
+                next_nav_keys();
             }
             break;
 

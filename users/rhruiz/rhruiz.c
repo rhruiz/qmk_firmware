@@ -2,8 +2,6 @@
 #include "quantum.h"
 #include "rhruiz.h"
 
-rhruiz_runtime_state runtime_state;
-
 /* space saving overrides */
 uint16_t keycode_config(uint16_t keycode) {
     return keycode;
@@ -11,18 +9,6 @@ uint16_t keycode_config(uint16_t keycode) {
 
 uint8_t mod_config(uint8_t mod) {
     return mod;
-}
-
-void reset_runtime_state() {
-    runtime_state = (rhruiz_runtime_state) {
-        .nav_keys_index = 0,
-#ifdef SPLIT_KEYBOARD
-        .needs_runtime_state_sync = false,
-#   ifdef CAPS_WORD_ENABLE
-        .caps_word_enabled = false,
-#   endif
-#endif
-    };
 }
 
 #ifdef TAP_DANCE_ENABLE
@@ -34,7 +20,7 @@ tap_dance_action_t tap_dance_actions[] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!(process_record_keymap(keycode, record)
-        && process_record_nav(keycode, record, &runtime_state)
+        && process_record_nav(keycode, record)
         && process_record_macros(keycode, record))) {
         return false;
     }
@@ -54,7 +40,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_LAYO:
             if (record->event.pressed) {
-                next_default_layer(&runtime_state);
+                next_default_layer();
             }
             return false;
 
@@ -69,17 +55,17 @@ uint32_t os_detection(uint32_t trigger_time, void *cb_arg) {
 
     if (host_os) {
 #   ifdef SPLIT_KEYBOARD
-        runtime_state.needs_runtime_state_sync = true;
+        set_needs_runtime_state_sync(true);
 
 #   endif
         switch (host_os) {
             case OS_MACOS:
             case OS_IOS:
-                runtime_state.nav_keys_index = 0;
+                set_nav_keys_index(0);
                 break;
 
             default:
-                runtime_state.nav_keys_index = 1;
+                set_nav_keys_index(1);
                 break;
         }
 
@@ -130,8 +116,8 @@ void matrix_scan_user(void) {
 #ifdef CAPS_WORD_ENABLE
 void caps_word_set_user(bool active) {
 #   ifdef SPLIT_KEYBOARD
-    runtime_state.caps_word_enabled = active;
-    runtime_state.needs_runtime_state_sync = true;
+    set_caps_word_enabled(active);
+    set_needs_runtime_state_sync(true);
 #   endif
 
     caps_word_set_keymap(active);
@@ -153,7 +139,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #endif
     }
 
-    state = default_layer_state_set_user_nav(state, &runtime_state);
+    state = default_layer_state_set_user_nav(state);
     state = layer_state_set_keymap(state);
 
     return state;
@@ -175,7 +161,7 @@ void suspend_wakeup_init_user(void) {
 
 void housekeeping_task_user(void) {
 #ifdef SPLIT_KEYBOARD
-    sync_master_state_task(&runtime_state);
+    sync_master_state_task();
 #endif
 #ifdef BLINK_LED_PIN
     blink_led_task();
