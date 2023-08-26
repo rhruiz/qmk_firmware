@@ -26,11 +26,17 @@ void reset_runtime_state(void) {
 }
 
 bool needs_runtime_state_sync(void) {
+#ifdef SPLIT_KEYBOARD
     return runtime_state.needs_runtime_state_sync;
+#else
+    return false;
+#endif
 }
 
 void set_needs_runtime_state_sync(bool value) {
+#ifdef SPLIT_KEYBOARD
     runtime_state.needs_runtime_state_sync = value;
+#endif
 }
 
 void set_nav_keys_index(uint8_t value) {
@@ -43,10 +49,14 @@ uint8_t nav_keys_index(void) {
 
 #ifdef CAPS_WORD_ENABLE
 void set_caps_word_enabled(bool enabled) {
+#ifdef SPLIT_KEYBOARD
     runtime_state.caps_word_enabled = enabled;
+#endif
 }
 
 bool caps_word_enabled(void) {
+#ifdef SPLIT_KEYBOARD
     return runtime_state.caps_word_enabled;
+#endif
 }
 #endif
