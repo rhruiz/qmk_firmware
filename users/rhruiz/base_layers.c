@@ -4,6 +4,10 @@ const rhruiz_layers _base_layers[] PROGMEM = { BASE_LAYERS };
 
 uint8_t base_layer = 0;
 
+uint8_t default_layer_index(void) {
+    return base_layer;
+}
+
 layer_state_t default_layer_state_set_user(layer_state_t state) {
     state = default_layer_state_set_keymap(state);
 

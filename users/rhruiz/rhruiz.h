@@ -77,6 +77,7 @@ bool process_record_macros(uint16_t keycode, keyrecord_t *record);
 layer_state_t default_layer_state_set_user_nav(layer_state_t state);
 void default_layer_by_index(uint8_t index);
 void next_default_layer(void);
+uint8_t default_layer_index(void);
 #ifdef BLINK_LED_PIN
 void blink_led(uint16_t duration_ms, uint8_t times);
 void blink_led_task(void);

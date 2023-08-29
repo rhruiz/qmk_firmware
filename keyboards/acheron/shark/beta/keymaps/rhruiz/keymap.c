@@ -146,8 +146,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-extern rhruiz_runtime_state runtime_state;
-
 #ifdef ENCODER_ENABLE
 typedef enum {
     ENC_VOLUME, ENC_RGB_MOD, ENC_RGB_VAL, ENC_RGB_HUE, ENC_RGB_SAT
@@ -213,11 +211,11 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         switch(keycode) {
 #ifdef RGBLIGHT_LAYERS
             case KC_LAYO:
-                rgblight_blink_layer_repeat(runtime_state.base_layer + 7, 200, 2);
+                rgblight_blink_layer_repeat(default_layer_index() + 7, 200, 2);
                 break;
 
             case KC_NOS:
-                rgblight_blink_layer_repeat(runtime_state.nav_keys_index + 10, 200, 2);
+                rgblight_blink_layer_repeat(nav_keys_index() + 10, 200, 2);
                 break;
 #endif
 
@@ -270,8 +268,4 @@ void keyboard_post_init_keymap(void) {
 #ifdef RGBLIGHT_LAYERS
     rgblight_layers = _rgb_layers;
 #endif
-}
-
-void suspend_wakeup_init_keymap(void) {
-    NVIC_SystemReset();
 }
