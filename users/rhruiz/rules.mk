@@ -19,6 +19,10 @@ else
 	OPT_DEFS += -DRHRUIZ_OLED_FONT_H="\"users/rhruiz/oled/glcdfont.c\""
 endif
 
+ifeq ($(strip $(OS_DETECTION_ENABLE)), yes)
+    DEFERRED_EXEC_ENABLE = yes
+endif
+
 ifeq ($(strip $(OLED_ENABLE)), yes)
     SRC += oled/oled.c
 endif

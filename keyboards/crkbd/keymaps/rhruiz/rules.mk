@@ -27,9 +27,6 @@ OPT_DEFS += -DPRO_MICRO
 COMBO_ENABLE=no
 
 OS_DETECTION_ENABLE ?= yes
-ifeq ($(strip $(OS_DETECTION_ENABLE)), yes)
-    DEFERRED_EXEC_ENABLE = yes
-endif
 
 ifeq ($(strip $(THUMBSTICK_ENABLE)), yes)
     POINTING_DEVICE_ENABLE = yes
