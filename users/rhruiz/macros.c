@@ -53,8 +53,8 @@ void send_make_args(bool should_flash, bool parallel) {
 #ifdef OLED_ENABLE
 
     SEND_STRING(" -e OLED_ENABLE=yes");
-#    ifdef OLED_ROTATE
-    SEND_STRING(" -e OLED_ROTATE=yes");
+#    ifdef OLED_ROTATE_ENABLE
+    SEND_STRING(" -e OLED_ROTATE_ENABLE=yes");
 #    endif
 #endif
 }

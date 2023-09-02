@@ -19,7 +19,7 @@
 #    endif
 #    define OLED_FONT_H RHRUIZ_OLED_FONT_H
 #    define OLED_SCROLL_TIMEOUT 8000
-#    ifdef OLED_ROTATE
+#    ifdef OLED_ROTATE_ENABLE
 #        define OLED_SCROLL_TIMEOUT_RIGHT
 #    endif
 #endif
