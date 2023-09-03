@@ -50,9 +50,7 @@ uint8_t nav_keys_index(void) {
 #ifdef SPLIT_KEYBOARD
 #ifdef CAPS_WORD_ENABLE
 void set_caps_word_enabled(bool enabled) {
-#ifdef SPLIT_KEYBOARD
     runtime_state.caps_word_enabled = enabled;
-#endif
 }
 
 bool caps_word_enabled(void) {

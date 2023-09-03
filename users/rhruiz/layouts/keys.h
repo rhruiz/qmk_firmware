@@ -1,5 +1,47 @@
 #pragma once
-#include "quantum.h"
+#include "quantum/quantum_keycodes.h"
+
+typedef enum rhruiz_layers { _QWER, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
+
+typedef enum custom_keycodes {
+    // macro keys
+    KC_MAKE = QK_USER,
+    KC_EPIP,
+    KC_FARW,
+    KC_ARRW,
+    KC_PDIR,
+    KC_TQUO,
+    KC_CCCP,
+    // config keys
+    KC_LAYO,
+    KC_LAY0,
+    KC_LAY1,
+    KC_NOS,
+    // window switcher
+    KC_CTAB,
+    // os independent nav keys
+    NV_START,
+    NV_NWIN = NV_START, // next window
+    NV_SCTP, // scroll to bottom
+    NV_SCBT, // scroll to top
+    NV_EOL,
+    NV_BOL,
+    NV_WLFT, // word left
+    NV_WRGH, // word right
+    NV_BCK,
+    NV_FWD,
+    NV_TAN, // next tab
+    NV_TAP, // previous tab
+    NV_MICT,  // mission control
+    NV_COPY,
+    NV_PSTE,
+    NV_SCSH, // screenshot
+    NV_WSCH, // window screenshot
+    NV_WSWT, // window switcher key
+    NV_END = NV_WSWT,
+    USER_SAFE_RANGE
+} rhruiz_keycodes;
+
 
 // layers: mo
 

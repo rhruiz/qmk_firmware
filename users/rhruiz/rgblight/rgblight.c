@@ -1,5 +1,5 @@
-#include "quantum.h"
 #ifdef RGBLIGHT_ENABLE
+#include "quantum.h"
 
 void rhruiz_rgblight_reset(void) {
 #ifndef RGBLIGHT_LAYERS
