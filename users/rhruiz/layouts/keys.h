@@ -1,7 +1,7 @@
 #pragma once
 #include "quantum/quantum_keycodes.h"
 
-typedef enum rhruiz_layers { _QWER, _COLEMAK, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
+typedef enum rhruiz_layers { _QWER, _CODH, _GAME, _NUM, _FN1, _FN2, _GAMEFN1, _AUG, _CFG, _FUNC } rhruiz_layers;
 
 typedef enum custom_keycodes {
     // macro keys
