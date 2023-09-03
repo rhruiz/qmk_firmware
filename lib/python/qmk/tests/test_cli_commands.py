@@ -282,8 +282,14 @@ def test_generate_config_h():
 def test_generate_rules_mk():
     result = check_subcommand('generate-rules-mk', '-kb', 'handwired/pytest/basic')
     check_returncode(result)
+    assest 'TESTING_ENABLED ?= yes' in result.stdout
     assert 'BOOTLOADER ?= atmel-dfu' in result.stdout
     assert 'MCU ?= atmega32u4' in result.stdout
+
+def test_generate_user_rules_mk():
+    result = check_subcommand('generate-rules-mk', 'keyboards/handwired/pytest/basic/keymaps/default_json/keymap.json')
+    check_returncode(result)
+    assert 'TESTING_ENABLED = no' in result.stdout
 
 
 def test_generate_version_h():

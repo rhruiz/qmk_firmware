@@ -1,4 +1,7 @@
 {
+    "features": {
+        "testing": true
+    },
     "layouts": {
         "LAYOUT_custom": {
             "layout": [

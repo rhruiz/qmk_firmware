@@ -14,7 +14,7 @@ from qmk.path import normpath, FileType
 from qmk.constants import GPL2_HEADER_SH_LIKE, GENERATED_HEADER_SH_LIKE
 
 
-def process_mapping_rule(kb_info_json, rules_key, info_dict):
+def process_mapping_rule(kb_info_json, rules_key, info_dict, operator):
     """Return the rules.mk line(s) for a mapping rule.
     """
     if not info_dict.get('to_c', True):
@@ -29,15 +29,15 @@ def process_mapping_rule(kb_info_json, rules_key, info_dict):
         return None
 
     if key_type in ['array', 'list']:
-        return f'{rules_key} ?= {" ".join(rules_value)}'
+        return f'{rules_key} {operator} {" ".join(rules_value)}'
     elif key_type == 'bool':
-        return f'{rules_key} ?= {"yes" if rules_value else "no"}'
+        return f'{rules_key} {operator} {"yes" if rules_value else "no"}'
     elif key_type == 'mapping':
-        return '\n'.join([f'{key} ?= {value}' for key, value in rules_value.items()])
+        return '\n'.join([f'{key} {operator} {value}' for key, value in rules_value.items()])
     elif key_type == 'str':
-        return f'{rules_key} ?= "{rules_value}"'
+        return f'{rules_key} {operator} "{rules_value}"'
 
-    return f'{rules_key} ?= {rules_value}'
+    return f'{rules_key} {operator} {rules_value}'
 
 
 @cli.argument('filename', nargs='?', arg_only=True, type=FileType('r'), completer=FilesCompleter('.json'), help='A configurator export JSON to be compiled and flashed or a pre-compiled binary firmware file (bin/hex) to be flashed.')
@@ -50,11 +50,13 @@ def generate_rules_mk(cli):
     """Generates a rules.mk file from info.json.
     """
     converter = None
+    operator = '?='
     # Determine our keyboard/keymap
     if cli.args.filename:
         user_keymap = parse_configurator_json(cli.args.filename)
         kb_info_json = dotty(user_keymap.get('config', {}))
         converter = user_keymap.get('converter', None)
+        operator = '='
     elif cli.args.keyboard:
         kb_info_json = dotty(info_json(cli.args.keyboard))
     else:
@@ -67,7 +69,7 @@ def generate_rules_mk(cli):
 
     # Iterate through the info_rules map to generate basic rules
     for rules_key, info_dict in info_rules_map.items():
-        new_entry = process_mapping_rule(kb_info_json, rules_key, info_dict)
+        new_entry = process_mapping_rule(kb_info_json, rules_key, info_dict, operator)
 
         if new_entry:
             rules_mk_lines.append(new_entry)
@@ -77,21 +79,21 @@ def generate_rules_mk(cli):
         for feature, enabled in kb_info_json['features'].items():
             feature = feature.upper()
             enabled = 'yes' if enabled else 'no'
-            rules_mk_lines.append(f'{feature}_ENABLE ?= {enabled}')
+            rules_mk_lines.append(f'{feature}_ENABLE {operator} {enabled}')
 
     # Set SPLIT_TRANSPORT, if needed
     if kb_info_json.get('split', {}).get('transport', {}).get('protocol') == 'custom':
-        rules_mk_lines.append('SPLIT_TRANSPORT ?= custom')
+        rules_mk_lines.append('SPLIT_TRANSPORT {operator} custom')
 
     # Set CUSTOM_MATRIX, if needed
     if kb_info_json.get('matrix_pins', {}).get('custom'):
         if kb_info_json.get('matrix_pins', {}).get('custom_lite'):
-            rules_mk_lines.append('CUSTOM_MATRIX ?= lite')
+            rules_mk_lines.append('CUSTOM_MATRIX {operator} lite')
         else:
-            rules_mk_lines.append('CUSTOM_MATRIX ?= yes')
+            rules_mk_lines.append('CUSTOM_MATRIX {operator} yes')
 
     if converter:
-        rules_mk_lines.append(f'CONVERT_TO ?= {converter}')
+        rules_mk_lines.append(f'CONVERT_TO {operator} {converter}')
 
     # Show the results
     dump_lines(cli.args.output, rules_mk_lines)
