@@ -11,13 +11,6 @@ uint8_t mod_config(uint8_t mod) {
     return mod;
 }
 
-#ifdef TAP_DANCE_ENABLE
-tap_dance_action_t tap_dance_actions[] = {
-    [TD_RSHIFT_NUM] = ACTION_TAP_DANCE_LAYER_TOGGLE(KC_RSFT, _NUM),
-};
-
-#endif
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!(process_record_keymap(keycode, record)
         && process_record_nav(keycode, record)
