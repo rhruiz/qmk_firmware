@@ -48,4 +48,4 @@ void keyboard_post_init_keymap(void) {
 }
 #endif
 
-#include "users/rhruiz/layouts/ortho_5x14.c"
+#include "layouts/ortho_5x14.c"
