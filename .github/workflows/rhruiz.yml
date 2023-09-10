@@ -21,4 +21,4 @@ jobs:
     - name: Install dependencies
       run: pip3 install -r requirements-dev.txt
     - name: Run tests
-      run: make test:rhruiz
+      run: "make $(find tests/users/rhruiz/ -mindepth 1 -maxdepth 1 -type d | rev | cut -d/ -f1 | rev | awk '{ print \"test:\" $1 }' | xargs -n 10 )"
