@@ -1,6 +1,7 @@
 #include "print.h"
 #include "quantum.h"
 #include "rhruiz.h"
+#include "lib/lib8tion/lib8tion.h"
 
 /* space saving overrides */
 uint16_t keycode_config(uint16_t keycode) {
@@ -19,6 +20,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+#ifdef OLED_ENABLE
+        case KC_OLBR:
+            if (record->event.pressed) {
+                if (get_mods() & MOD_MASK_SHIFT) {
+                    oled_set_brightness(qsub8(oled_get_brightness(), 32));
+                } else {
+                    oled_set_brightness(qadd8(oled_get_brightness(), 32));
+                }
+            }
+            return false;
+#endif
         case KC_LAY0:
             if (record->event.pressed) {
                 default_layer_by_index(0);

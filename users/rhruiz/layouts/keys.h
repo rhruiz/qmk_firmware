@@ -16,6 +16,7 @@ typedef enum custom_keycodes {
     KC_LAYO,
     KC_LAY0,
     KC_LAY1,
+    KC_OLBR, // oled brightness
     KC_NOS,
     // window switcher
     KC_CTAB,
