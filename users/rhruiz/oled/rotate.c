@@ -51,18 +51,15 @@ void oled_clear_half_except(uint8_t lines) {
     }
 }
 
-void oled_cond_write_P(bool cond, const char *when_true, const char *when_false) {
-    if (cond) {
-        oled_write_P(when_true, false);
-    } else {
-        oled_write_P(when_false, false);
-    }
-}
+void render_mod_pair(uint8_t offset, uint8_t mid_offset, bool left, bool right) {
+    oled_write_char(left ? offset : 0x20, false);
+    oled_write_char(left ? offset + 1 : 0x20, false);
 
-void oled_demux_cond_write_P(bool left, bool right, const char *when_none, const char *when_left, const char *when_right, const char *when_both) {
-    const char *outs[4] = {when_none, when_right, when_left, when_both};
+    uint8_t any = (left << 1) | right;
+    oled_write_char(any ? 0xc0 + mid_offset + any - 1 : 0x20, false);
 
-    oled_write_P(outs[(left << 1) + right], false);
+    oled_write_char(right ? offset + 2 : 0x20, false);
+    oled_write_char(right ? offset + 3 : 0x20, false);
 }
 
 bool rhruiz_render_oled(void) {
@@ -164,22 +161,12 @@ bool rhruiz_render_oled(void) {
 
 
     uint8_t mods = get_mods();
+    mods = (mods | (mods >> 4)) & 0b00001111;
 
-    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\x80\x81"), PSTR("\x20\x20"));
-    oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"));
-    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\x86\x87"), PSTR("\x20\x20"));
-
-    oled_cond_write_P(mods & MOD_MASK_GUI, PSTR("\xa0\xa1"), PSTR("\x20\x20"));
-    oled_demux_cond_write_P(mods & MOD_MASK_GUI, mods & MOD_MASK_SHIFT, PSTR("\x20"), PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"));
-    oled_cond_write_P(mods & MOD_MASK_SHIFT, PSTR("\xa6\xa7"), PSTR("\x20\x20"));
-
-    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\x84\x85"), PSTR("\x20\x20"));
-    oled_demux_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\x20"), PSTR("\xc0"), PSTR("\xc4"), PSTR("\xc2"));
-    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\x82\x83"), PSTR("\x20\x20"));
-
-    oled_cond_write_P(mods & MOD_MASK_CTRL, PSTR("\xa4\xa5"), PSTR("\x20\x20"));
-    oled_demux_cond_write_P(mods & MOD_MASK_CTRL, mods & MOD_MASK_ALT, PSTR("\x20"), PSTR("\xc1"), PSTR("\xc5"), PSTR("\xc3"));
-    oled_cond_write_P(mods & MOD_MASK_ALT, PSTR("\xa2\xa3"), PSTR("\x20\x20"));
+    render_mod_pair(0x80, 0, mods & MOD_LGUI, mods & MOD_LSFT);
+    render_mod_pair(0xa0, 3, mods & MOD_LGUI, mods & MOD_LSFT);
+    render_mod_pair(0x84, 0, mods & MOD_LCTL, mods & MOD_LALT);
+    render_mod_pair(0xa6, 3, mods & MOD_LCTL, mods & MOD_LALT);
 
     return false;
 }
