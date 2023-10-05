@@ -24,9 +24,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_OLBR:
             if (record->event.pressed) {
                 if (get_mods() & MOD_MASK_SHIFT) {
-                    oled_set_brightness(qsub8(oled_get_brightness(), 32));
+                    oled_set_brightness(qsub8(oled_get_brightness(), 8));
                 } else {
-                    oled_set_brightness(qadd8(oled_get_brightness(), 32));
+                    oled_set_brightness(qadd8(oled_get_brightness(), 8));
                 }
             }
             return false;
@@ -83,6 +83,7 @@ uint32_t os_detection(uint32_t trigger_time, void *cb_arg) {
 
 void keyboard_post_init_user() {
     reset_runtime_state();
+
 #if defined(BOOTLOADER_CATERINA) || defined(PRO_MICRO)
     setPinOutput(B0);
     writePinHigh(B0);
@@ -90,6 +91,7 @@ void keyboard_post_init_user() {
     setPinOutput(D5);
     writePinHigh(D5);
 #endif
+
 #ifdef SPLIT_KEYBOARD
     transaction_register_rpc(USER_SYNC_RUNTIME_STATE, sync_runtime_state_handler);
 #   ifdef BLINK_LED_PIN
