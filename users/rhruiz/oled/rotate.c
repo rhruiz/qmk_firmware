@@ -166,7 +166,7 @@ bool rhruiz_render_oled(void) {
     render_mod_pair(0x80, 0, mods & MOD_LGUI, mods & MOD_LSFT);
     render_mod_pair(0xa0, 3, mods & MOD_LGUI, mods & MOD_LSFT);
     render_mod_pair(0x84, 0, mods & MOD_LCTL, mods & MOD_LALT);
-    render_mod_pair(0xa6, 3, mods & MOD_LCTL, mods & MOD_LALT);
+    render_mod_pair(0xa4, 3, mods & MOD_LCTL, mods & MOD_LALT);
 
     return false;
 }
