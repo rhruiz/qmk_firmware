@@ -1,5 +1,17 @@
 const char _spacer[] PROGMEM = "          ";
 
+
++---------------------+
+|  ^^^                |
+| ^^^^^               |
+| ^^ ^^               |
+| ^   ^               |
+|  ^^^                |
+| ^^^^^               |
+| ^^ ^^               |
+| ^   ^               |
++---------------------+
+
 static const char lc[][4][3] PROGMEM = {
     [_CFG]     = {"\x80\x81", "\xa0\xa1", "\xc0\xc1", "\x80\x81"},
     [_NUM]     = {"\xae\xaf", "\xce\xcf", "\x20\x20", "\xd2\xd3"},
@@ -23,15 +35,15 @@ bool rhruiz_render_oled(void) {
 
     switch (layer) {
         case _FN1:
-            oled_write_P(arrow_up, false);
-            oled_write_P(arrow_up, true);
-            break;
-
-        case _FN2:
             oled_write_P(arrow_down0, false);
             oled_write_P(arrow_down1, false);
             oled_write_P(PSTR("\x8b\x20\x8f\x20\x89\n"), true);
             oled_write_P(arrow_down1, true);
+            break;
+
+        case _FN2:
+            oled_write_P(arrow_up, false);
+            oled_write_P(arrow_up, true);
             break;
 
         case _AUG:
