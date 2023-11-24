@@ -16,7 +16,3 @@ __attribute__((weak)) oled_rotation_t oled_init_keymap(oled_rotation_t rotation)
 }
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return oled_init_keymap(rotation); }
-
-__attribute__((weak)) bool oled_task_user(void) {
-    return rhruiz_render_oled();
-}

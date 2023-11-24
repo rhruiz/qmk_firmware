@@ -19,3 +19,7 @@ __attribute__((weak)) void caps_word_set_keymap(bool active) {}
 __attribute__((weak)) void suspend_power_down_keymap(void) {}
 
 __attribute__((weak)) void suspend_wakeup_init_keymap(void) {}
+
+#ifdef OLED_ENABLE
+__attribute__((weak)) bool oled_task_keymap(void) { return true; }
+#endif

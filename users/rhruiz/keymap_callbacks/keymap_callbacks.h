@@ -11,3 +11,6 @@ void housekeeping_task_keymap(void);
 void caps_word_set_keymap(bool active);
 void suspend_power_down_keymap(void);
 void suspend_wakeup_init_keymap(void);
+#ifdef OLED_ENABLE
+bool oled_task_keymap(void);
+#endif

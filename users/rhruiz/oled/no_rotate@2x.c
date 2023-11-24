@@ -30,7 +30,11 @@ static const char arrow_up[] PROGMEM = "\x20\x89\x8a\x8b\x20\n\x8c\xbe\xbe\xbe\x
 static const char arrow_down0[] PROGMEM = "\x8b\x20\x20\x20\x89\n";
 static const char arrow_down1[] PROGMEM = "\xbe\x90\x8e\x8c\xbe\n";
 
-bool rhruiz_render_oled(void) {
+__attribute__((weak)) bool oled_task_user(void) {
+    if (!oled_task_keymap()) {
+        return false;
+    }
+
     layer_state_t layer = get_highest_layer(layer_state);
 
     switch (layer) {

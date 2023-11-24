@@ -18,7 +18,11 @@ static const char _game_layer_logo[][4] PROGMEM = {
     "\xc2\xc3\xc4",
 };
 
-bool rhruiz_render_oled(void) {
+__attribute__((weak)) bool oled_task_user(void) {
+    if (!oled_task_keymap()) {
+        return false;
+    }
+
     layer_state_t layer = get_highest_layer(layer_state);
 
     switch (layer) {
