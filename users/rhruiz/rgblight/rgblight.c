@@ -10,10 +10,10 @@ void rhruiz_rgblight_reset(void) {
 void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
     rgblight_config_t eeprom_config;
     eeprom_config.raw = eeconfig_read_rgblight();
-    LED_TYPE *ledp;
+    rgb_led_t *ledp;
 
 #ifdef RGBLIGHT_LED_MAP
-    LED_TYPE led0[RGBLED_NUM];
+    rgb_led_t led0[RGBLED_NUM];
     for (uint8_t i = 0; i < RGBLED_NUM; i++) {
         led0[i] = led[pgm_read_byte(&led_map[i])];
     }
@@ -23,7 +23,7 @@ void rhruiz_change_leds_to(uint16_t hue, uint8_t sat) {
 #endif
 
     for (uint8_t i = RGBLED_NUM; i-- > 0;) {
-        sethsv(hue, sat, eeprom_config.val, (LED_TYPE *)&ledp[i]);
+        sethsv(hue, sat, eeprom_config.val, (rgb_led_t *)&ledp[i]);
     }
 
 #ifdef RGBW
