@@ -26,6 +26,11 @@ void raw_hid_receive(uint8_t *data, uint8_t length) {
         }
 
         case id_bootloader_jump: {
+#ifdef OLED_ENABLE
+            oled_clear();
+            oled_write_P(PSTR("BOOT\nLOAD"), false);
+            oled_render_dirty(true);
+#endif
             raw_hid_send(data, length);
             wait_ms(100);
             reset_keyboard();
