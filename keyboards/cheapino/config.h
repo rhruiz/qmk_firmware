@@ -33,8 +33,8 @@
 
 
 #ifdef ENCODER_ENABLE
-#define ENCODERS_PAD_A { GP12 }
-#define ENCODERS_PAD_B { GP13 }
+#define ENCODERS_PAD_A { GP17 }
+#define ENCODERS_PAD_B { GP19 }
 #define NUM_ENCODERS 1
 #define ENCODER_RESOLUTION 1
 #endif
