@@ -1,3 +1,5 @@
+#ifdef ENCODER_ENABLE
+
 #include "matrix.h"
 #include "quantum.h"
 
@@ -19,11 +21,9 @@
 static bool colABPressed = false;
 
 bool encoder_update_kb(uint8_t index, bool clockwise) {
-#ifdef ENCODER_ENABLE
     if (!encoder_update_user(index, clockwise)) {
         return false;
     }
-#endif
 
     return true;
 }
@@ -51,3 +51,5 @@ void fix_encoder_action(matrix_row_t current_matrix[]) {
         }
     }
 }
+
+#endif

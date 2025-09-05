@@ -143,10 +143,11 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
         read_rows_on_col(current_matrix, current_col);
     }
 
+#ifdef ENCODER_ENABLE
     fix_encoder_action(current_matrix);
+#endif
 
     fix_ghosting(current_matrix);
 
     return has_matrix_changed(current_matrix);
 }
-
